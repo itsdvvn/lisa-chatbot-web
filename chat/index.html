@@ -4,62 +4,39 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Chatbot LISA</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
         <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
             rel="stylesheet"
         />
-        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
         <script>
             tailwind.config = {
+                darkMode: "class",
                 theme: {
                     extend: {
-                        fontFamily: { sans: ["Inter", "sans-serif"] },
                         colors: {
-                            brand: {
-                                50: "#f0fdf4",
-                                100: "#d1fae5",
-                                200: "#a7f3d0",
-                                300: "#6ee7b7",
-                                400: "#34d399",
-                                500: "#10b981",
-                                600: "#059669",
-                                700: "#047857",
-                                800: "#065f46",
-                                900: "#064e3b",
-                            },
+                            primary: "#006c4b",
+                            "primary-variant": "#005238",
+                            secondary: "#4d6357",
+                            surface: "#f9f9f7",
+                            "surface-container": "#eeeeec",
+                            "on-surface": "#1a1c1b",
+                            "on-surface-variant": "#404943",
+                            outline: "#707973",
+                            "outline-variant": "#c0c9c1",
                         },
-                        animation: {
-                            "slide-in-right": "slideInRight 0.3s ease-out",
-                            "slide-in-left": "slideInLeft 0.3s ease-out",
-                            "bounce-dot": "bounceDot 1.4s infinite ease-in-out",
+                        fontFamily: {
+                            sans: ["Inter", "sans-serif"],
+                            display: ["Inter", "sans-serif"],
                         },
-                        keyframes: {
-                            slideInRight: {
-                                "0%": {
-                                    opacity: "0",
-                                    transform: "translateX(20px)",
-                                },
-                                "100%": {
-                                    opacity: "1",
-                                    transform: "translateX(0)",
-                                },
-                            },
-                            slideInLeft: {
-                                "0%": {
-                                    opacity: "0",
-                                    transform: "translateX(-20px)",
-                                },
-                                "100%": {
-                                    opacity: "1",
-                                    transform: "translateX(0)",
-                                },
-                            },
-                            bounceDot: {
-                                "0%,80%,100%": { transform: "scale(0)" },
-                                "40%": { transform: "scale(1)" },
-                            },
+                        borderRadius: {
+                            xl: "1rem",
+                            "2xl": "1.5rem",
+                            "3xl": "2rem",
                         },
                     },
                 },
@@ -74,38 +51,45 @@
                 height: 100%;
                 margin: 0;
             }
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
             #chatbox {
                 scrollbar-width: thin;
-                scrollbar-color: #d1d5db transparent;
+                scrollbar-color: #c0c9c1 transparent;
             }
             #chatbox::-webkit-scrollbar {
                 width: 4px;
             }
             #chatbox::-webkit-scrollbar-thumb {
-                background: #d1d5db;
+                background: #c0c9c1;
                 border-radius: 4px;
             }
             .bubble.user {
-                background: #059669;
+                background: #006c4b;
                 color: white;
-                border-radius: 18px 18px 4px 18px;
+                border-radius: 20px 20px 4px 20px;
             }
             .bubble.bot {
                 background: white;
-                color: #1f2937;
-                border-radius: 18px 18px 18px 4px;
+                color: #1a1c1b;
+                border-radius: 20px 20px 20px 4px;
                 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
             }
             .bubble.user .timestamp {
                 color: rgba(255, 255, 255, 0.7);
             }
             .bubble.bot .timestamp {
-                color: #9ca3af;
+                color: #707973;
             }
             .date-separator {
                 text-align: center;
                 font-size: 0.75rem;
-                color: #9ca3af;
+                color: #707973;
                 position: relative;
                 margin: 16px 0;
             }
@@ -116,15 +100,14 @@
                 top: 50%;
                 width: 30%;
                 height: 1px;
-                background: linear-gradient(to right, transparent, #e5e7eb);
             }
             .date-separator::before {
                 left: 0;
-                background: linear-gradient(to right, transparent, #e5e7eb);
+                background: linear-gradient(to right, transparent, #c0c9c1);
             }
             .date-separator::after {
                 right: 0;
-                background: linear-gradient(to left, transparent, #e5e7eb);
+                background: linear-gradient(to left, transparent, #c0c9c1);
             }
             .typing {
                 display: inline-flex;
@@ -135,7 +118,7 @@
             .dot {
                 width: 7px;
                 height: 7px;
-                background: #059669;
+                background: #006c4b;
                 border-radius: 50%;
                 animation: bounceDot 1.4s infinite ease-in-out;
             }
@@ -170,7 +153,7 @@
                 left: 0;
                 width: 100%;
                 background: white;
-                border-radius: 24px 24px 0 0;
+                border-radius: 2rem 2rem 0 0;
                 padding: 24px 24px max(24px, env(safe-area-inset-bottom));
                 z-index: 101;
                 transform: translateY(100%);
@@ -182,7 +165,7 @@
             }
             @media (min-width: 640px) {
                 .form-container {
-                    border-radius: 24px;
+                    border-radius: 2rem;
                     max-width: 440px;
                     left: 50%;
                     transform: translate(-50%, 100%);
@@ -197,19 +180,17 @@
             }
         </style>
     </head>
-    <body
-        class="font-sans bg-gradient-to-br from-brand-50 via-white to-brand-50"
-    >
+    <body class="font-sans bg-surface">
         <!-- Desktop wrapper -->
         <div
             class="sm:min-h-screen sm:flex sm:items-center sm:justify-center sm:p-4"
         >
             <div
-                class="sm:w-full sm:max-w-2xl sm:h-[860px] sm:max-h-[95vh] sm:bg-white sm:rounded-3xl sm:shadow-xl sm:flex sm:flex-col sm:overflow-hidden sm:border sm:border-gray-100"
+                class="sm:w-full sm:max-w-2xl sm:h-[860px] sm:max-h-[95vh] sm:bg-white sm:rounded-[2rem] sm:shadow-xl sm:flex sm:flex-col sm:overflow-hidden sm:border sm:border-outline-variant/30"
             >
                 <!-- HEADER -->
                 <header
-                    class="flex items-center px-4 py-3 bg-brand-600 text-white shrink-0 gap-3"
+                    class="flex items-center px-5 py-3.5 bg-primary text-white shrink-0 gap-3"
                 >
                     <img
                         src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg"
@@ -222,7 +203,7 @@
                             LISA Ai
                         </h1>
                         <p
-                            class="text-xs text-brand-100 flex items-center gap-1.5"
+                            class="text-xs text-white/70 flex items-center gap-1.5"
                         >
                             <span
                                 class="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse inline-block"
@@ -235,27 +216,16 @@
                         class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center shrink-0 transition active:scale-90"
                         aria-label="Kembali ke Beranda"
                     >
-                        <svg
-                            class="w-5 h-5 text-white"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                        <span class="material-symbols-outlined text-[20px]"
+                            >home</span
                         >
-                            <path
-                                d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
-                            ></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
                     </a>
                 </header>
 
                 <!-- CHAT MESSAGES -->
                 <div
                     id="chatbox"
-                    class="flex-1 overflow-y-auto px-4 py-4 space-y-1 bg-gray-50/50"
+                    class="flex-1 overflow-y-auto px-4 py-4 bg-surface/50"
                 ></div>
 
                 <!-- SCROLL TO BOTTOM -->
@@ -264,54 +234,51 @@
                     class="hidden absolute bottom-[90px] right-5 w-10 h-10 bg-white rounded-full shadow-lg items-center justify-center z-10 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
                     style="display: none"
                 >
-                    <svg class="w-5 h-5 fill-brand-600" viewBox="0 0 24 24">
-                        <path
-                            d="M17 13.41L12 18.41L7 13.41L8.41 12L12 15.59L15.59 12L17 13.41ZM17 7.41L12 12.41L7 7.41L8.41 6L12 9.59L15.59 6L17 7.41Z"
-                        />
-                    </svg>
+                    <span class="material-symbols-outlined text-primary"
+                        >keyboard_double_arrow_down</span
+                    >
                 </button>
 
                 <!-- INPUT AREA -->
                 <div
                     id="inputArea"
-                    class="bg-white border-t border-gray-100 px-4 py-3 shrink-0 relative"
+                    class="bg-white border-t border-outline-variant/30 px-4 py-3 shrink-0 relative"
                 >
                     <div
                         id="filePreview"
                         style="display: none"
-                        class="flex items-center gap-2 mb-2 px-3 py-1.5 bg-brand-50 rounded-lg text-sm animate-fade-in"
+                        class="flex items-center gap-2 mb-2 px-3 py-1.5 bg-primary/10 rounded-lg text-sm"
                     >
                         <span
                             id="fileName"
-                            class="text-brand-700 truncate flex-1 text-xs"
+                            class="text-primary truncate flex-1 text-xs"
                             >namafilepanjang.jpg</span
                         >
                         <button
                             id="removeFileBtn"
-                            class="text-gray-400 hover:text-gray-600 text-lg leading-none cursor-pointer bg-transparent border-none"
+                            class="text-outline hover:text-on-surface text-lg leading-none cursor-pointer bg-transparent border-none"
                         >
                             &times;
                         </button>
                     </div>
                     <div class="flex items-end gap-2">
                         <div
-                            class="flex-1 flex items-end gap-2 bg-gray-100 rounded-2xl px-4 py-2 focus-within:ring-2 focus-within:ring-brand-500/30 focus-within:bg-white transition-all"
+                            class="flex-1 flex items-end gap-2 bg-surface rounded-2xl px-4 py-2 focus-within:ring-2 focus-within:ring-primary/30 focus-within:bg-white transition-all border border-outline-variant/30"
                         >
                             <textarea
                                 id="userInput"
                                 placeholder="Tulis pesanmu..."
                                 rows="1"
-                                class="flex-1 resize-none bg-transparent outline-none text-sm text-gray-800 leading-relaxed max-h-32 py-1 font-sans"
+                                class="flex-1 resize-none bg-transparent outline-none text-sm text-on-surface leading-relaxed max-h-32 py-1 font-sans"
                             ></textarea>
                             <label
                                 for="fileInput"
-                                class="cursor-pointer p-1.5 rounded-full hover:bg-gray-200 transition shrink-0"
+                                class="cursor-pointer p-1.5 rounded-full hover:bg-surface-container transition shrink-0"
                             >
-                                <img
-                                    src="https://files.lingkungansehatasri.my.id/attach-file-hijau.png"
-                                    alt="Attach"
-                                    class="w-5 h-5 opacity-50 hover:opacity-80 transition"
-                                />
+                                <span
+                                    class="material-symbols-outlined text-[20px] text-outline hover:text-primary"
+                                    >attach_file</span
+                                >
                             </label>
                             <input
                                 type="file"
@@ -322,13 +289,11 @@
                         </div>
                         <button
                             id="sendBtn"
-                            class="w-11 h-11 rounded-full bg-brand-600 hover:bg-brand-700 flex items-center justify-center shrink-0 active:scale-90 transition-all shadow-md hover:shadow-lg"
+                            class="w-11 h-11 rounded-full bg-primary hover:bg-primary-variant flex items-center justify-center shrink-0 active:scale-90 transition-all shadow-md hover:shadow-lg"
                         >
-                            <img
-                                src="https://files.lingkungansehatasri.my.id/send-putih.png"
-                                alt="Send"
-                                class="w-5 h-5"
-                            />
+                            <span class="material-symbols-outlined text-white"
+                                >send</span
+                            >
                         </button>
                     </div>
                 </div>
@@ -340,57 +305,62 @@
             <div class="form-container" id="formContainer">
                 <button
                     id="closeFormBtn"
-                    class="absolute top-3 right-4 bg-transparent border-none text-gray-400 hover:text-gray-600 text-2xl cursor-pointer leading-none"
+                    class="absolute top-4 right-5 bg-transparent border-none text-outline hover:text-on-surface cursor-pointer"
                 >
-                    &times;
+                    <span class="material-symbols-outlined">close</span>
                 </button>
-                <h3 class="text-lg font-bold text-brand-700 text-center mb-5">
+                <div
+                    class="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-4"
+                >
+                    <span class="material-symbols-outlined">edit_note</span>
+                </div>
+                <h3 class="text-lg font-bold text-on-surface mb-5">
                     Kasih Saran & Masukan
                 </h3>
                 <form class="space-y-4">
                     <div>
                         <label
                             for="formId"
-                            class="block text-xs font-semibold text-gray-500 mb-1"
+                            class="block text-xs font-bold text-on-surface-variant mb-1 uppercase tracking-wide"
                             >ID Sesi (Otomatis)</label
                         >
                         <input
                             type="text"
                             id="formId"
                             readonly
-                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-600 outline-none font-sans"
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-surface text-sm text-on-surface outline-none font-sans"
                         />
                     </div>
                     <div>
                         <label
                             for="formDate"
-                            class="block text-xs font-semibold text-gray-500 mb-1"
+                            class="block text-xs font-bold text-on-surface-variant mb-1 uppercase tracking-wide"
                             >Tanggal (Otomatis)</label
                         >
                         <input
                             type="text"
                             id="formDate"
                             readonly
-                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-600 outline-none font-sans"
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-surface text-sm text-on-surface outline-none font-sans"
                         />
                     </div>
                     <div>
                         <label
                             for="formSaran"
-                            class="block text-xs font-semibold text-gray-500 mb-1"
+                            class="block text-xs font-bold text-on-surface-variant mb-1 uppercase tracking-wide"
                             >Saran & Masukan Kamu</label
                         >
                         <textarea
                             id="formSaran"
                             placeholder="Tulis saran/masukanmu soal lingkungan sekolah di sini..."
                             rows="4"
-                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 outline-none text-sm resize-none font-sans"
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none text-sm resize-none font-sans"
                         ></textarea>
                     </div>
                     <button
                         type="submit"
                         id="submitFormBtn"
-                        class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-full active:scale-[0.98] transition-all text-sm shadow-md"
+                        class="w-full py-3 bg-primary hover:bg-primary-variant text-white font-bold rounded-full active:scale-[0.98] transition-all text-sm shadow-md"
                     >
                         Kirim Saran
                     </button>
@@ -427,7 +397,6 @@
                     filePreview.style.display = "none";
                 }
             });
-
             removeFileBtn.addEventListener("click", () => {
                 fileInput.value = null;
                 filePreview.style.display = "none";
@@ -493,7 +462,7 @@
                     return (
                         '<a href="' +
                         href +
-                        '" target="_blank" rel="noopener noreferrer" style="color:#059669;text-decoration:underline;">' +
+                        '" target="_blank" rel="noopener noreferrer" style="color:#006c4b;text-decoration:underline;">' +
                         url +
                         "</a>"
                     );
@@ -518,16 +487,15 @@
                     "bubble",
                     sender,
                     "p-3",
-                    "mb-2",
+                    "mb-2.5",
                     "max-w-[85%]",
                     "sm:max-w-[70%]",
                     "text-sm",
                     "leading-relaxed",
                     "relative",
                 );
-                if (sender === "user")
-                    msg.classList.add("ml-auto", "animate-slide-in-right");
-                else msg.classList.add("mr-auto", "animate-slide-in-left");
+                if (sender === "user") msg.classList.add("ml-auto");
+                else msg.classList.add("mr-auto");
                 const content = document.createElement("div");
                 if (
                     typeof text === "string" &&
@@ -582,8 +550,8 @@
             }
 
             function removeTyping() {
-                const typing = document.getElementById("typing");
-                if (typing) typing.remove();
+                const t = document.getElementById("typing");
+                if (t) t.remove();
             }
 
             async function sendMessage() {
@@ -603,24 +571,20 @@
                 fileInput.value = null;
                 filePreview.style.display = "none";
                 fileName.textContent = "";
-                if (text)
-                    addMessage({ text: text, time: time, date: date }, "user");
+                if (text) addMessage({ text, time, date }, "user");
                 const formData = new FormData();
                 formData.append("text", text);
                 formData.append("sessionId", sessionId);
                 if (file) {
                     try {
-                        const base64src = await readFileAsDataURL(file);
-                        addMessage(
-                            { text: base64src, time: time, date: date },
-                            "user",
-                        );
+                        const b = await readFileAsDataURL(file);
+                        addMessage({ text: b, time, date }, "user");
                     } catch (e) {
                         addMessage(
                             {
                                 text: "[Gagal memuat preview gambar]",
-                                time: time,
-                                date: date,
+                                time,
+                                date,
                             },
                             "user",
                         );
@@ -643,28 +607,30 @@
                         })
                         .replace(".", ":");
                     const botDate = botNow.toLocaleDateString("id-ID");
-                    const botReply =
-                        data.output || JSON.stringify(data, null, 2);
                     addMessage(
-                        { text: botReply, time: botTime, date: botDate },
+                        {
+                            text: data.output || JSON.stringify(data, null, 2),
+                            time: botTime,
+                            date: botDate,
+                        },
                         "bot",
                     );
                     if (data.userInput && data.userInput.includes("https://"))
                         updateHistoryWithURL(data.userInput);
                 } catch (e) {
                     removeTyping();
-                    const errTime = new Date()
+                    const et = new Date()
                         .toLocaleTimeString("id-ID", {
                             hour: "2-digit",
                             minute: "2-digit",
                         })
                         .replace(".", ":");
-                    const errDate = new Date().toLocaleDateString("id-ID");
+                    const ed = new Date().toLocaleDateString("id-ID");
                     addMessage(
                         {
                             text: "⚠️ Gagal terhubung ke server. Coba lagi nanti.",
-                            time: errTime,
-                            date: errDate,
+                            time: et,
+                            date: ed,
                         },
                         "bot",
                     );
@@ -672,66 +638,58 @@
                 }
             }
 
-            function updateHistoryWithURL(messageWithUrl) {
-                const urlMatch = messageWithUrl.match(/https?:\/\/[^\s\]]+/);
-                if (!urlMatch) return;
-                const s3Url = urlMatch[0];
-                const stored = localStorage.getItem(HISTORY_KEY);
-                if (!stored) return;
+            function updateHistoryWithURL(m) {
+                const u = m.match(/https?:\/\/[^\s\]]+/);
+                if (!u) return;
+                const s = u[0];
+                const st = localStorage.getItem(HISTORY_KEY);
+                if (!st) return;
                 try {
-                    let data = JSON.parse(stored);
-                    for (let i = data.chats.length - 1; i >= 0; i--) {
+                    let d = JSON.parse(st);
+                    for (let i = d.chats.length - 1; i >= 0; i--) {
                         if (
-                            data.chats[i].sender === "user" &&
-                            data.chats[i].message.text ===
-                                "[Gambar dilampirkan]"
+                            d.chats[i].sender === "user" &&
+                            d.chats[i].message.text === "[Gambar dilampirkan]"
                         ) {
-                            data.chats[i].message.text = s3Url;
+                            d.chats[i].message.text = s;
                             break;
                         }
                     }
-                    localStorage.setItem(HISTORY_KEY, JSON.stringify(data));
-                } catch (e) {
-                    console.error("Gagal update history dengan URL S3:", e);
-                }
+                    localStorage.setItem(HISTORY_KEY, JSON.stringify(d));
+                } catch (e) {}
             }
 
             function saveChatHistory(message, sender) {
-                const stored = localStorage.getItem(HISTORY_KEY);
+                const st = localStorage.getItem(HISTORY_KEY);
                 let chats = [];
-                if (stored) {
+                if (st) {
                     try {
-                        chats = JSON.parse(stored).chats || [];
-                    } catch (e) {
-                        chats = [];
-                    }
+                        chats = JSON.parse(st).chats || [];
+                    } catch (e) {}
                 }
-                chats.push({ message: message, sender: sender });
+                chats.push({ message, sender });
                 localStorage.setItem(
                     HISTORY_KEY,
-                    JSON.stringify({
-                        timestamp: new Date().getTime(),
-                        chats: chats,
-                    }),
+                    JSON.stringify({ timestamp: new Date().getTime(), chats }),
                 );
             }
 
             function loadChatHistory() {
-                const stored = localStorage.getItem(HISTORY_KEY);
-                if (!stored) {
-                    const now = new Date();
-                    const time = now
+                const st = localStorage.getItem(HISTORY_KEY);
+                if (!st) {
+                    const n = new Date();
+                    const t = n
                         .toLocaleTimeString("id-ID", {
                             hour: "2-digit",
                             minute: "2-digit",
                         })
                         .replace(".", ":");
-                    const date = now.toLocaleDateString("id-ID");
+                    const d = n.toLocaleDateString("id-ID");
                     addMessage(
                         {
                             text: "haii! 👋 aku LISA.\naku siap bantu kamuu urusan sampah & lingkungan sekolah.\n\nketik 'menu' ajaa kalau mau liat apa yang bisa aku bantu yaa! 😉",
-                            time: time,
-                            date: date,
+                            time: t,
+                            date: d,
                         },
                         "bot",
                         false,
@@ -739,7 +697,7 @@
                     return;
                 }
                 try {
-                    const data = JSON.parse(stored);
+                    const data = JSON.parse(st);
                     const now = new Date().getTime();
                     if (
                         now - data.timestamp >
@@ -761,7 +719,6 @@
             }
 
             sendBtn.addEventListener("click", sendMessage);
-
             const isMobile = /Mobi/i.test(navigator.userAgent);
             input.addEventListener("keydown", (e) => {
                 if (e.key === "Enter") {
@@ -770,12 +727,10 @@
                     sendMessage();
                 }
             });
-
             input.addEventListener("input", () => {
                 input.style.height = "auto";
                 input.style.height = input.scrollHeight + "px";
             });
-
             window.addEventListener("resize", () => {
                 if (document.activeElement === input)
                     setTimeout(
@@ -787,14 +742,12 @@
                         200,
                     );
             });
-
             fileInput.value = null;
             filePreview.style.display = "none";
             fileName.textContent = "";
-
             loadChatHistory();
 
-            // --- FORM JS ---
+            // --- FORM ---
             const formOverlay = document.getElementById("formOverlay");
             const formContainer = document.getElementById("formContainer");
             const closeFormBtn = document.getElementById("closeFormBtn");
@@ -802,7 +755,6 @@
             const formId = document.getElementById("formId");
             const formDate = document.getElementById("formDate");
             const formSaran = document.getElementById("formSaran");
-
             function openForm() {
                 formId.value = sessionId.substring(0, 8);
                 formDate.value = new Date().toLocaleDateString("id-ID", {
@@ -810,18 +762,15 @@
                 });
                 formSaran.value = "";
                 formOverlay.style.display = "block";
-                setTimeout(() => {
-                    formContainer.classList.add("form-visible");
-                }, 10);
+                setTimeout(
+                    () => formContainer.classList.add("form-visible"),
+                    10,
+                );
             }
-
             function closeForm() {
                 formContainer.classList.remove("form-visible");
-                setTimeout(() => {
-                    formOverlay.style.display = "none";
-                }, 300);
+                setTimeout(() => (formOverlay.style.display = "none"), 300);
             }
-
             closeFormBtn.addEventListener("click", (e) => {
                 e.preventDefault();
                 closeForm();
@@ -829,16 +778,15 @@
             formOverlay.addEventListener("click", (e) => {
                 if (e.target === formOverlay) closeForm();
             });
-
             submitFormBtn.addEventListener("click", (e) => {
                 e.preventDefault();
-                const saran = formSaran.value.trim();
-                if (!saran) {
+                const s = formSaran.value.trim();
+                if (!s) {
                     alert("Harap isi saran atau masukan kamu ya!");
                     return;
                 }
                 input.value =
-                    "Saran & Masukan (ID: " + formId.value + "):\n" + saran;
+                    "Saran & Masukan (ID: " + formId.value + "):\n" + s;
                 closeForm();
                 sendMessage();
             });
@@ -857,7 +805,6 @@
                     scrollToBottomBtn.classList.remove("visible");
                 }
             });
-
             scrollToBottomBtn.addEventListener("click", () => {
                 chatbox.scrollTo({
                     top: chatbox.scrollHeight,
