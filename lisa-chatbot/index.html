@@ -1,437 +1,1169 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LISA - Lingkungan</title> Sehat dan Asri | Gerakan Bicara Lingkungan</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: {
-            brand: {
-              50: '#f0fdf4', 100: '#d1fae5', 200: '#a7f3d0',
-              300: '#6ee7b7', 400: '#34d399', 500: '#10b981',
-              600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b',
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            LISA - Lingkungan Sehat dan Asri | Gerakan Bicara Lingkungan
+        </title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: "#006c4b",
+                            "primary-variant": "#005238",
+                            secondary: "#4d6357",
+                            tertiary: "#3d6373",
+                            error: "#ba1a1a",
+                            surface: "#f9f9f7",
+                            "surface-container": "#eeeeec",
+                            "on-surface": "#1a1c1b",
+                            "on-surface-variant": "#404943",
+                            outline: "#707973",
+                            "outline-variant": "#c0c9c1",
+                            csr: {
+                                orange: "#D99324",
+                                green: "#19946C",
+                                gray: "#EAECEF",
+                            },
+                        },
+                        fontFamily: {
+                            sans: ["Inter", "sans-serif"],
+                            display: ["Inter", "sans-serif"],
+                        },
+                        borderRadius: {
+                            xl: "1rem",
+                            "2xl": "1.5rem",
+                            "3xl": "2rem",
+                        },
+                        spacing: { 18: "4.5rem", 22: "5.5rem" },
+                    },
+                },
+            };
+        </script>
+        <style>
+            html {
+                scroll-behavior: smooth;
             }
-          },
-          animation: {
-            'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
-            'fade-in': 'fadeIn 0.5s ease-out forwards',
-          },
-          keyframes: {
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(24px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
-            fadeIn: {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' },
+            body {
+                background-color: #f9f9f7;
+                color: #1a1c1b;
+                -webkit-font-smoothing: antialiased;
             }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s ease-out; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; padding: 1rem; }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-box { background: white; width: 100%; max-width: 400px; border-radius: 1.5rem; padding: 2rem; position: relative; transform: translateY(20px); transition: transform 0.3s ease; }
-    .modal-overlay.active .modal-box { transform: translateY(0); }
-    .scroll-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 44px; height: 44px; background: white; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; border: none; }
-    .scroll-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
-    #docPreviewModal .modal-box { max-width: 900px; height: 85vh; padding: 0; display: flex; flex-direction: column; overflow: hidden; }
-    .doc-iframe { width: 100%; height: 100%; border: none; display: block; }
-    .hidden { display: none !important; }
-  </style>
-</head>
-<body class="font-sans text-gray-800 bg-brand-50 antialiased">
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
+            .hidden-spa {
+                display: none !important;
+            }
+            .modal-overlay {
+                opacity: 0;
+                visibility: hidden;
+                transition:
+                    opacity 0.3s ease,
+                    visibility 0.3s ease;
+            }
+            .modal-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            .modal-box {
+                transform: translateY(20px) scale(0.95);
+                transition: transform 0.3s
+                    cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .modal-overlay.active .modal-box {
+                transform: translateY(0) scale(1);
+            }
+            .scroll-to-top {
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(10px);
+                transition: all 0.3s ease;
+            }
+            .scroll-to-top.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            .hero-bg-mask {
+                -webkit-mask-image: linear-gradient(
+                    to bottom,
+                    black 40%,
+                    transparent 100%
+                );
+                mask-image: linear-gradient(
+                    to bottom,
+                    black 40%,
+                    transparent 100%
+                );
+            }
+            .csr-stack {
+                position: relative;
+                padding-bottom: 2rem;
+            }
+            .csr-card-1 {
+                z-index: 10;
+            }
+            .csr-card-2 {
+                z-index: 20;
+                margin-top: -3rem;
+            }
+            .csr-card-3 {
+                z-index: 30;
+                margin-top: -3rem;
+            }
+            @media (min-width: 1024px) {
+                .csr-card-2,
+                .csr-card-3 {
+                    margin-top: 0;
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-surface text-on-surface">
+        <div
+            class="max-w-md mx-auto min-h-screen bg-white relative shadow-xl overflow-x-hidden pb-20 sm:max-w-lg lg:max-w-2xl xl:max-w-5xl"
+        >
+            <!-- ========================= -->
+            <!-- VIEW: HOME                -->
+            <!-- ========================= -->
+            <div id="view-home">
+                <!-- HEADER -->
+                <header
+                    class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-outline-variant/30 px-6 py-4 flex justify-between items-center shadow-sm rounded-b-3xl"
+                    id="header"
+                >
+                    <div
+                        class="flex items-center gap-3 cursor-pointer group"
+                        onclick="navigateTo('home')"
+                    >
+                        <div
+                            class="w-12 h-12 bg-surface-container rounded-xl flex items-center justify-center shadow-sm overflow-hidden group-hover:scale-105 transition-transform"
+                        >
+                            <img
+                                alt="Logo GBL"
+                                class="w-10 h-10 object-contain"
+                                src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png"
+                            />
+                        </div>
+                        <span
+                            class="font-display font-extrabold text-xl tracking-tight text-primary"
+                            >LISA</span
+                        >
+                    </div>
+                    <div
+                        class="flex items-center cursor-pointer group"
+                        id="subscribeTrigger"
+                    >
+                        <div
+                            class="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary hover:bg-primary/20 transition-colors"
+                        >
+                            <span class="material-symbols-outlined text-[20px]"
+                                >chat_bubble_outline</span
+                            >
+                            <span
+                                class="font-semibold text-sm hidden sm:inline-block"
+                                >Masukan</span
+                            >
+                        </div>
+                    </div>
+                </header>
 
-  <!-- APP WRAPPER -->
-  <div class="max-w-5xl mx-auto bg-white min-h-screen shadow-sm relative overflow-hidden">
+                <!-- HERO -->
+                <section
+                    class="relative pt-16 pb-24 px-6 text-center z-10 overflow-hidden"
+                >
+                    <div
+                        class="absolute inset-0 z-0 h-[600px] hero-bg-mask pointer-events-none"
+                    >
+                        <img
+                            alt="Hero Background"
+                            class="w-full h-full object-cover opacity-15"
+                            src="https://files.lingkungansehatasri.my.id/landingPage/IMG_0638.jpg"
+                        />
+                    </div>
+                    <div
+                        class="relative z-10 max-w-xl mx-auto flex flex-col items-center"
+                    >
+                        <div
+                            class="inline-block px-3 py-1 mb-6 bg-primary/10 text-primary rounded-full text-xs font-medium tracking-wide"
+                        >
+                            GERAKAN BICARA LINGKUNGAN PROUDLY PRESENTS
+                        </div>
+                        <h1
+                            class="font-display text-6xl xl:text-7xl font-black text-primary mb-2 tracking-tight"
+                        >
+                            LISA
+                        </h1>
+                        <div
+                            class="text-xl xl:text-2xl font-bold text-on-surface-variant mb-8 tracking-wide"
+                        >
+                            Lingkungan Sehat dan Asri
+                        </div>
+                        <p
+                            class="text-base xl:text-lg text-on-surface-variant leading-relaxed mb-6 font-medium max-w-md"
+                        >
+                            LISA membantu siswa memahami sampah dengan cara yang
+                            cepat dan jelas. Dibuat oleh mahasiswa Ilmu
+                            Komunikasi UBSI Ciledug x Ciputat, LISA merangkum
+                            data klasifikasi sampah, cara olah sederhana, dan
+                            lokasi bank sampah dalam satu percakapan praktis.
+                        </p>
+                        <p
+                            class="text-sm xl:text-base text-outline leading-relaxed mb-8 max-w-sm"
+                        >
+                            Melalui edukasi singkat yang mudah diikuti, LISA
+                            mengajak siswa memulai kebiasaan bersih yang
+                            sederhana dan konsisten.
+                        </p>
+                        <div
+                            class="text-primary font-bold text-lg xl:text-xl mb-10 bg-primary/5 px-6 py-3 rounded-2xl inline-block border border-primary/10"
+                        >
+                            Satu chat cukup untuk memulai perubahan.
+                        </div>
+                        <div
+                            class="flex flex-col w-full sm:flex-row gap-4 justify-center items-center max-w-md mx-auto"
+                        >
+                            <a
+                                class="w-full sm:w-auto bg-primary text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-primary-variant hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
+                                href="/chat/"
+                            >
+                                <span>Mulai Chat</span>
+                                <span
+                                    class="material-symbols-outlined text-[20px]"
+                                    >arrow_forward</span
+                                >
+                            </a>
+                            <a
+                                class="w-full sm:w-auto bg-surface-container text-primary font-bold py-4 px-8 rounded-full hover:bg-outline-variant/30 transition-colors"
+                                href="#csr"
+                                >Program CSR</a
+                            >
+                        </div>
+                    </div>
+                </section>
 
-    <!-- ============ VIEW: HOME ============ -->
-    <div id="view-home">
+                <!-- CSR CARDS -->
+                <section
+                    class="pt-16 pb-24 px-6 bg-surface-container/50 rounded-t-[3rem]"
+                    id="csr"
+                >
+                    <div
+                        class="max-w-md mx-auto xl:max-w-4xl xl:flex xl:flex-col xl:items-center"
+                    >
+                        <div class="text-center mb-12">
+                            <h2
+                                class="font-display text-3xl font-extrabold text-primary mb-3"
+                            >
+                                Program CSR Kami
+                            </h2>
+                            <p class="text-on-surface-variant text-sm">
+                                Langkah nyata untuk lingkungan yang lebih baik.
+                            </p>
+                        </div>
+                        <div
+                            class="csr-stack flex flex-col xl:flex-row xl:gap-6 xl:pb-0"
+                        >
+                            <!-- Card 1: Orange -->
+                            <div
+                                class="csr-card-1 bg-csr-orange text-white p-8 rounded-[2rem] shadow-lg relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300 xl:flex-1"
+                            >
+                                <div
+                                    class="absolute top-0 right-0 p-6 opacity-20 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-6xl"
+                                        >campaign</span
+                                    >
+                                </div>
+                                <h3
+                                    class="font-bold text-xl mb-3 relative z-10"
+                                >
+                                    Edukasi Sampah Era Digital
+                                </h3>
+                                <p
+                                    class="text-sm leading-relaxed opacity-90 relative z-10"
+                                >
+                                    Memberikan pengetahuan dasar mengenai
+                                    pengurangan sampah dan penerapan 3R melalui
+                                    media digital seperti Instagram dan Tiktok.
+                                </p>
+                            </div>
+                            <!-- Card 2: Green -->
+                            <div
+                                class="csr-card-2 bg-csr-green text-white p-8 pt-16 rounded-[2rem] shadow-xl relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300 xl:flex-1 xl:pt-8"
+                            >
+                                <div
+                                    class="absolute top-0 right-0 p-6 opacity-20 transform translate-x-4 group-hover:scale-110 transition-transform xl:top-8"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-6xl"
+                                        >groups</span
+                                    >
+                                </div>
+                                <h3
+                                    class="font-bold text-xl mb-3 relative z-10"
+                                >
+                                    Seminar Edukasi Lingkungan
+                                </h3>
+                                <p
+                                    class="text-sm leading-relaxed opacity-90 relative z-10"
+                                >
+                                    Kegiatan seminar langsung untuk memperdalam
+                                    pemahaman masyarakat mengenai pengelolaan
+                                    sampah dan 3R.
+                                </p>
+                            </div>
+                            <!-- Card 3: Gray -->
+                            <div
+                                class="csr-card-3 bg-white border border-outline-variant/30 text-on-surface p-8 pt-16 rounded-[2rem] shadow-2xl relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300 xl:flex-1 xl:pt-8"
+                            >
+                                <div
+                                    class="absolute top-0 right-0 p-6 opacity-10 text-primary transform translate-x-4 group-hover:scale-110 transition-transform xl:top-8"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-6xl"
+                                        >smart_toy</span
+                                    >
+                                </div>
+                                <h3
+                                    class="font-bold text-xl text-primary mb-3 relative z-10"
+                                >
+                                    Chatbot AI Lisa
+                                </h3>
+                                <p
+                                    class="text-sm text-on-surface-variant leading-relaxed relative z-10"
+                                >
+                                    Fasilitas digital yang dapat membantu
+                                    masyarakat mendapatkan informasi praktis
+                                    mengenai sampah, 3R dan Bank Sampah.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-      <!-- STICKY HEADER -->
-      <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-              <img src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png" alt="Logo GBL" class="w-9 h-9 sm:w-10 sm:h-10 object-contain" />
-              <span class="text-lg font-bold text-brand-700 hidden sm:block">LISA</span>
+                <!-- BEHIND LISA -->
+                <section class="py-24 px-6 bg-white relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"
+                    ></div>
+                    <div
+                        class="max-w-lg mx-auto xl:max-w-4xl flex flex-col xl:flex-row xl:items-center xl:gap-12 text-center xl:text-left"
+                    >
+                        <div class="xl:w-5/12">
+                            <div
+                                class="w-full max-w-sm xl:max-w-full aspect-video rounded-3xl overflow-hidden shadow-2xl mb-10 xl:mb-0 border-4 border-white transform rotate-1 hover:rotate-0 transition-transform duration-300"
+                            >
+                                <img
+                                    alt="Behind LISA"
+                                    class="w-full h-full object-cover"
+                                    src="https://files.lingkungansehatasri.my.id/landingPage/Screenshot%202025-11-26%20142206.jpg"
+                                />
+                            </div>
+                        </div>
+                        <div class="xl:w-7/12 xl:text-left">
+                            <h2
+                                class="font-display text-3xl font-extrabold text-primary mb-12 xl:mb-8"
+                            >
+                                Di Balik Chatbot Lisa
+                            </h2>
+                            <div
+                                class="bg-surface-container/30 p-8 rounded-3xl border border-outline-variant/20"
+                            >
+                                <p
+                                    class="text-base xl:text-lg text-on-surface-variant leading-relaxed font-medium"
+                                >
+                                    Bukan sekadar bot, LISA adalah hasil
+                                    <span
+                                        class="text-primary font-bold bg-primary/10 px-2 py-0.5 rounded"
+                                        >kurasi ratusan data lapangan yang
+                                        solid.</span
+                                    >
+                                    Dengan kecerdasan Google Gemini Flash dan
+                                    automasi n8n, ia aktif 24 jam untuk menjawab
+                                    pertanyaan lingkungan dengan bahasa yang
+                                    luwes dan akrab bagi siswa.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PARTNERS -->
+                <section
+                    class="py-24 px-6 bg-surface-container-low rounded-3xl mx-4 lg:mx-12 my-12"
+                >
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h2
+                            class="font-display text-3xl font-extrabold text-primary mb-4"
+                        >
+                            Mitra &amp; Sponsor
+                        </h2>
+                        <p
+                            class="text-on-surface-variant text-sm mb-16 max-w-md mx-auto"
+                        >
+                            Terima kasih telah menjadi bagian dari perubahan dan
+                            tumbuh bersama Gerakan Bicara Lingkungan.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                            <!-- Media Partner -->
+                            <div class="flex flex-col items-center">
+                                <h3
+                                    class="text-sm font-bold text-outline tracking-wider uppercase mb-6 flex items-center gap-2"
+                                >
+                                    <span
+                                        class="w-8 h-px bg-outline-variant"
+                                    ></span>
+                                    Media Partner
+                                    <span
+                                        class="w-8 h-px bg-outline-variant"
+                                    ></span>
+                                </h3>
+                                <div
+                                    class="flex flex-wrap justify-center gap-4"
+                                >
+                                    <div
+                                        class="w-24 h-24 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-3 flex items-center justify-center hover:shadow-md transition-shadow"
+                                    >
+                                        <img
+                                            alt="Hima Manajemen"
+                                            class="max-w-full max-h-full object-contain"
+                                            src="https://files.lingkungansehatasri.my.id/landingPage/1_20251125_183529_0000.png"
+                                        />
+                                    </div>
+                                    <div
+                                        class="w-24 h-24 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-3 flex items-center justify-center hover:shadow-md transition-shadow"
+                                    >
+                                        <img
+                                            alt="Himakom"
+                                            class="max-w-full max-h-full object-contain"
+                                            src="https://files.lingkungansehatasri.my.id/landingPage/2_20251125_183529_0001.png"
+                                        />
+                                    </div>
+                                    <div
+                                        class="w-24 h-24 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-3 flex items-center justify-center hover:shadow-md transition-shadow"
+                                    >
+                                        <img
+                                            alt="Event Mahasiswa"
+                                            class="max-w-full max-h-full object-contain"
+                                            src="https://files.lingkungansehatasri.my.id/landingPage/3_20251125_183529_0002.png"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Partnership -->
+                            <div class="flex flex-col items-center">
+                                <h3
+                                    class="text-sm font-bold text-outline tracking-wider uppercase mb-6 flex items-center gap-2"
+                                >
+                                    <span
+                                        class="w-8 h-px bg-outline-variant"
+                                    ></span>
+                                    Partnership
+                                    <span
+                                        class="w-8 h-px bg-outline-variant"
+                                    ></span>
+                                </h3>
+                                <div
+                                    class="flex flex-wrap justify-center gap-4"
+                                >
+                                    <div
+                                        class="w-28 h-28 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-4 flex items-center justify-center hover:shadow-md transition-shadow"
+                                    >
+                                        <img
+                                            alt="GUA"
+                                            class="max-w-full max-h-full object-contain"
+                                            src="https://files.lingkungansehatasri.my.id/landingPage/4_20251125_183529_0003.png"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Sponsorship -->
+                            <div class="flex flex-col items-center">
+                                <h3
+                                    class="text-sm font-bold text-outline tracking-wider uppercase mb-6 flex items-center gap-2"
+                                >
+                                    <span
+                                        class="w-8 h-px bg-outline-variant"
+                                    ></span>
+                                    Sponsorship
+                                    <span
+                                        class="w-8 h-px bg-outline-variant"
+                                    ></span>
+                                </h3>
+                                <div
+                                    class="flex flex-wrap justify-center gap-4"
+                                >
+                                    <div
+                                        class="w-28 h-28 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-4 flex items-center justify-center hover:shadow-md transition-shadow"
+                                    >
+                                        <img
+                                            alt="Izifill"
+                                            class="max-w-full max-h-full object-contain"
+                                            src="https://files.lingkungansehatasri.my.id/landingPage/izifill.png"
+                                        />
+                                    </div>
+                                    <div
+                                        class="w-28 h-28 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-4 flex items-center justify-center hover:shadow-md transition-shadow"
+                                    >
+                                        <img
+                                            alt="Siul"
+                                            class="max-w-full max-h-full object-contain"
+                                            src="https://files.lingkungansehatasri.my.id/landingPage/logo%20siul.png"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SOCIAL MEDIA -->
+                <section
+                    class="py-24 px-6 bg-primary text-white text-center rounded-t-[3rem]"
+                >
+                    <div class="max-w-md mx-auto">
+                        <div
+                            class="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-full mb-6"
+                        >
+                            <span class="material-symbols-outlined text-3xl"
+                                >photo_camera</span
+                            >
+                        </div>
+                        <h2 class="font-display text-3xl font-extrabold mb-4">
+                            Ikuti Perjalanan Kami
+                        </h2>
+                        <p class="text-white/80 mb-10 font-medium">
+                            Intip keseruan di balik layar dan aktivitas terbaru
+                            kami di Instagram.
+                        </p>
+                        <a
+                            class="inline-flex items-center gap-3 bg-csr-orange text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-orange-500 hover:shadow-xl hover:-translate-y-1 transition-all"
+                            href="https://instagram.com/gerakanbicaralingkungan_"
+                        >
+                            <svg
+                                fill="none"
+                                height="24"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2.5"
+                                viewbox="0 0 24 24"
+                                width="24"
+                            >
+                                <rect
+                                    height="20"
+                                    rx="5"
+                                    ry="5"
+                                    width="20"
+                                    x="2"
+                                    y="2"
+                                ></rect>
+                                <path
+                                    d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                                ></path>
+                                <line
+                                    x1="17.5"
+                                    x2="17.51"
+                                    y1="6.5"
+                                    y2="6.5"
+                                ></line>
+                            </svg>
+                            <span>@gerakanbicaralingkungan_</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- FOOTER HOME -->
+                <footer
+                    class="bg-surface-dim pt-12 pb-8 px-6 text-center border-t border-outline-variant/20"
+                >
+                    <div class="max-w-md mx-auto">
+                        <div
+                            class="text-sm font-bold text-on-surface-variant mb-6"
+                        >
+                            © 2025 LISA • Dibuat dengan ❤ untuk Bumi.
+                        </div>
+                        <button
+                            class="inline-flex items-center gap-2 text-sm font-semibold text-primary bg-white border border-outline-variant px-6 py-2.5 rounded-full hover:bg-surface-container transition-colors shadow-sm"
+                            onclick="navigateTo('mediakit')"
+                        >
+                            <span class="material-symbols-outlined text-[18px]"
+                                >folder_open</span
+                            >
+                            Akses Media Kit
+                        </button>
+                    </div>
+                </footer>
             </div>
-            <div id="subscribeTrigger" class="flex items-center gap-2 cursor-pointer hover:opacity-70 transition active:scale-95">
-              <svg class="w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-              <div class="text-left hidden sm:block">
-                <div class="text-sm font-semibold text-brand-700">Beri Masukan</div>
-                <div class="text-xs text-gray-400">Bantu kami lebih baik</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+            <!-- End view-home -->
 
-      <!-- HERO -->
-      <section class="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-600 to-brand-500 text-white">
-        <!-- Decorative blobs -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-          <div class="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/5 blur-3xl"></div>
-          <div class="absolute top-40 -left-20 w-60 h-60 rounded-full bg-emerald-300/10 blur-3xl"></div>
-          <div class="absolute bottom-20 right-20 w-40 h-40 rounded-full bg-white/5 blur-2xl"></div>
-        </div>
-        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
-          <div class="lg:flex lg:items-center lg:gap-16">
-            <!-- Left: Text -->
-            <div class="lg:w-3/5 text-center lg:text-left">
-              <p class="text-brand-200 text-sm sm:text-base font-medium tracking-wide mb-2">Gerakan Bicara Lingkungan Proudly Present :</p>
-              <h1 class="text-5xl sm:text-6xl lg:text-8xl xl:text-9xl font-black tracking-widest text-white leading-none mb-3">L I S A</h1>
-              <p class="text-xl sm:text-2xl font-bold text-brand-100 mb-6">Lingkungan Sehat dan Asri</p>
-              <div class="space-y-4 text-brand-50/90 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
-                <p></p>LISA membantu siswa memahami sampah dengan cara yang cepat dan jelas. Dibuat oleh mahasiswa Ilmu Komunikasi UBSI Ciledug x Ciputat, LISA merangkum data klasifikasi sampah, cara olah sederhana, dan lokasi bank sampah dalam satu percakapan praktis.</p>
-                <p>Mel</p>alui edukasi singkat yang mudah diikuti, LISA mengajak siswa memulai kebiasaan bersih yang sederhana dan konsisten.</p>
-              </div>
-              <p class="text-brand-200 font-semibold text-base sm:text-lg mt-6">Satu chat cukup untuk memulai perubahan.</p>
-              <div class="flex flex-col sm:flex-row items-center gap-4 mt-8 justify-center lg:justify-start">
-                <a href="/chat/" class="inline-flex items-center justify-center px-8 py-3.5 bg-white text-brand-700 font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-200 text-base">Mulai Chat</a>
-                <a href="#csr" class="inline-flex items-center justify-center px-8 py-3.5 border-2 border-white/70 text-white font-bold rounded-full hover:bg-white/10 active:scale-95 transition-all duration-200 text-base">Lihat Program CSR</a>
-              </div>
+            <!-- ========================= -->
+            <!-- VIEW: MEDIA KIT           -->
+            <!-- ========================= -->
+            <div
+                class="hidden-spa bg-surface-container-low min-h-screen"
+                id="view-mediakit"
+            >
+                <header
+                    class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-outline-variant/30 px-6 py-4 flex justify-between items-center shadow-sm"
+                >
+                    <div
+                        class="flex items-center gap-3 cursor-pointer group"
+                        onclick="navigateTo('home')"
+                    >
+                        <div
+                            class="w-10 h-10 bg-surface-container rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform"
+                        >
+                            <img
+                                alt="Logo GBL"
+                                class="w-8 h-8 object-contain"
+                                src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png"
+                            />
+                        </div>
+                    </div>
+                    <button
+                        class="flex items-center gap-2 px-4 py-2 bg-surface hover:bg-surface-container border border-outline-variant/50 rounded-full text-on-surface transition-colors font-medium text-sm"
+                        onclick="navigateTo('home')"
+                    >
+                        <span class="material-symbols-outlined text-[18px]"
+                            >arrow_back</span
+                        >
+                        Kembali
+                    </button>
+                </header>
+                <section class="pt-20 pb-16 px-6 text-center">
+                    <div class="max-w-lg mx-auto">
+                        <div
+                            class="inline-block px-3 py-1 mb-4 bg-primary/10 text-primary rounded-full text-xs font-bold tracking-widest uppercase"
+                        >
+                            Media Center
+                        </div>
+                        <h1
+                            class="font-display text-4xl font-extrabold text-on-surface mb-4"
+                        >
+                            Media Kit
+                        </h1>
+                        <p
+                            class="text-on-surface-variant leading-relaxed max-w-sm mx-auto"
+                        >
+                            Akses resmi materi publikasi, siaran pers, profil
+                            perusahaan, dan materi pendukung kampanye LISA.
+                        </p>
+                    </div>
+                </section>
+                <section class="px-4 sm:px-8 pb-24">
+                    <div
+                        class="max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-[2rem] shadow-sm border border-outline-variant/20"
+                    >
+                        <div
+                            class="flex items-center gap-3 font-bold text-xl text-on-surface mb-8"
+                        >
+                            <span class="material-symbols-outlined text-primary"
+                                >description</span
+                            >
+                            Dokumen Publik
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <!-- Doc items -->
+                            <a
+                                class="group flex items-center gap-4 p-4 rounded-2xl border border-outline-variant/30 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer bg-surface"
+                                href="javascript:void(0)"
+                                onclick="
+                                    openDocPreview(
+                                        'https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Company%20Profile.pdf',
+                                        'Company Profile',
+                                    )
+                                "
+                            >
+                                <div
+                                    class="w-12 h-12 bg-white rounded-xl shadow-sm border border-outline-variant/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"
+                                >
+                                    <span class="material-symbols-outlined"
+                                        >business</span
+                                    >
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4
+                                        class="font-bold text-on-surface group-hover:text-primary transition-colors truncate"
+                                    >
+                                        Company Profile
+                                    </h4>
+                                    <div
+                                        class="text-xs text-outline flex items-center gap-2 mt-1"
+                                    >
+                                        <span
+                                            class="bg-outline-variant/30 text-on-surface-variant px-2 py-0.5 rounded font-semibold text-[10px] tracking-wider"
+                                            >PDF</span
+                                        >
+                                        Profil Lengkap GBL
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors shadow-sm shrink-0"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-[20px]"
+                                        >visibility</span
+                                    >
+                                </div>
+                            </a>
+                            <a
+                                class="group flex items-center gap-4 p-4 rounded-2xl border border-outline-variant/30 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer bg-surface"
+                                href="javascript:void(0)"
+                                onclick="
+                                    openDocPreview(
+                                        'https://files.lingkungansehatasri.my.id/media-kit-pr-awards/PRESS%20RELEASE%20GBL.pdf',
+                                        'Press Release',
+                                    )
+                                "
+                            >
+                                <div
+                                    class="w-12 h-12 bg-white rounded-xl shadow-sm border border-outline-variant/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"
+                                >
+                                    <span class="material-symbols-outlined"
+                                        >newspaper</span
+                                    >
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4
+                                        class="font-bold text-on-surface group-hover:text-primary transition-colors truncate"
+                                    >
+                                        Press Release
+                                    </h4>
+                                    <div
+                                        class="text-xs text-outline flex items-center gap-2 mt-1"
+                                    >
+                                        <span
+                                            class="bg-outline-variant/30 text-on-surface-variant px-2 py-0.5 rounded font-semibold text-[10px] tracking-wider"
+                                            >PDF</span
+                                        >
+                                        Rilis Resmi Media
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors shadow-sm shrink-0"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-[20px]"
+                                        >visibility</span
+                                    >
+                                </div>
+                            </a>
+                            <a
+                                class="group flex items-center gap-4 p-4 rounded-2xl border border-outline-variant/30 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer bg-surface"
+                                href="javascript:void(0)"
+                                onclick="
+                                    openDocPreview(
+                                        'https://files.lingkungansehatasri.my.id/media-kit-pr-awards/PRESS%20CONFERENCE%20GBL.pdf',
+                                        'Press Conference',
+                                    )
+                                "
+                            >
+                                <div
+                                    class="w-12 h-12 bg-white rounded-xl shadow-sm border border-outline-variant/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"
+                                >
+                                    <span class="material-symbols-outlined"
+                                        >mic</span
+                                    >
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4
+                                        class="font-bold text-on-surface group-hover:text-primary transition-colors truncate"
+                                    >
+                                        Press Conference
+                                    </h4>
+                                    <div
+                                        class="text-xs text-outline flex items-center gap-2 mt-1"
+                                    >
+                                        <span
+                                            class="bg-outline-variant/30 text-on-surface-variant px-2 py-0.5 rounded font-semibold text-[10px] tracking-wider"
+                                            >PDF</span
+                                        >
+                                        Materi Konferensi
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors shadow-sm shrink-0"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-[20px]"
+                                        >visibility</span
+                                    >
+                                </div>
+                            </a>
+                            <a
+                                class="group flex items-center gap-4 p-4 rounded-2xl border border-outline-variant/30 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer bg-surface"
+                                href="javascript:void(0)"
+                                onclick="
+                                    openDocPreview(
+                                        'https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Advertorial.pdf',
+                                        'Advertorial',
+                                    )
+                                "
+                            >
+                                <div
+                                    class="w-12 h-12 bg-white rounded-xl shadow-sm border border-outline-variant/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"
+                                >
+                                    <span class="material-symbols-outlined"
+                                        >article</span
+                                    >
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4
+                                        class="font-bold text-on-surface group-hover:text-primary transition-colors truncate"
+                                    >
+                                        Advertorial
+                                    </h4>
+                                    <div
+                                        class="text-xs text-outline flex items-center gap-2 mt-1"
+                                    >
+                                        <span
+                                            class="bg-outline-variant/30 text-on-surface-variant px-2 py-0.5 rounded font-semibold text-[10px] tracking-wider"
+                                            >PDF</span
+                                        >
+                                        Artikel &amp; Berita
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors shadow-sm shrink-0"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-[20px]"
+                                        >visibility</span
+                                    >
+                                </div>
+                            </a>
+                            <a
+                                class="group flex items-center gap-4 p-4 rounded-2xl border border-outline-variant/30 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer bg-surface"
+                                href="javascript:void(0)"
+                                onclick="
+                                    openDocPreview(
+                                        'https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Backgrounders.pdf',
+                                        'Backgrounders',
+                                    )
+                                "
+                            >
+                                <div
+                                    class="w-12 h-12 bg-white rounded-xl shadow-sm border border-outline-variant/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"
+                                >
+                                    <span class="material-symbols-outlined"
+                                        >info</span
+                                    >
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4
+                                        class="font-bold text-on-surface group-hover:text-primary transition-colors truncate"
+                                    >
+                                        Backgrounders
+                                    </h4>
+                                    <div
+                                        class="text-xs text-outline flex items-center gap-2 mt-1"
+                                    >
+                                        <span
+                                            class="bg-outline-variant/30 text-on-surface-variant px-2 py-0.5 rounded font-semibold text-[10px] tracking-wider"
+                                            >PDF</span
+                                        >
+                                        Latar Belakang Isu
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-white transition-colors shadow-sm shrink-0"
+                                >
+                                    <span
+                                        class="material-symbols-outlined text-[20px]"
+                                        >visibility</span
+                                    >
+                                </div>
+                            </a>
+                        </div>
+                        <div
+                            class="mt-12 pt-8 border-t border-outline-variant/20 text-center"
+                        >
+                            <p class="text-sm text-outline mb-4">
+                                Butuh informasi lebih lanjut?
+                            </p>
+                            <a
+                                class="inline-flex items-center gap-2 bg-surface-container hover:bg-primary hover:text-white text-on-surface font-semibold py-3 px-6 rounded-full transition-colors border border-outline-variant/30 hover:border-transparent"
+                                href="mailto:publicrelation2344@gmail.com"
+                            >
+                                <span
+                                    class="material-symbols-outlined text-[20px]"
+                                    >mail</span
+                                >
+                                Hubungi Tim PR
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                <footer class="text-center py-8 text-sm font-bold text-outline">
+                    © 2025 LISA • Media Kit Official
+                </footer>
             </div>
-            <!-- Right: Decorative (desktop) -->
-            <div class="hidden lg:block lg:w-2/5">
-              <div class="relative flex items-center justify-center">
-                <div class="w-72 h-72 rounded-full bg-gradient-to-br from-emerald-300/20 to-white/10 border border-white/10 backdrop-blur-sm"></div>
-                <div class="absolute w-48 h-48 rounded-full bg-gradient-to-br from-emerald-200/20 to-white/5 -top-8 -right-4"></div>
-                <div class="absolute w-32 h-32 rounded-full bg-gradient-to-br from-brand-300/20 to-white/5 -bottom-4 -left-4"></div>
-                <div class="absolute w-20 h-20 rounded-full bg-white/10 top-12 -right-8"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            <!-- End view-mediakit -->
 
-      <!-- CSR CARDS -->
-      <section id="csr" class="py-16 sm:py-20 bg-gradient-to-b from-brand-50 to-white reveal">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-700 text-center mb-2">Program CSR Kami</h2>
-          <div class="w-16 h-1 bg-brand-500 rounded-full mx-auto mb-10"></div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Card 1: Orange -->
-            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group reveal">
-              <div class="h-2 bg-gradient-to-r from-orange-400 to-orange-500"></div>
-              <div class="p-6 sm:p-8">
-                <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
-                  <svg class="w-6 h-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            <!-- SCROLL TO TOP -->
+            <button
+                aria-label="Kembali ke atas"
+                class="scroll-to-top fixed bottom-6 right-6 w-12 h-12 bg-white text-primary rounded-full shadow-lg border border-outline-variant/20 flex items-center justify-center hover:bg-surface-container transition-colors z-[100]"
+                id="scrollToTopBtn"
+            >
+                <span class="material-symbols-outlined">keyboard_arrow_up</span>
+            </button>
+
+            <!-- FEEDBACK MODAL -->
+            <div
+                class="modal-overlay fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+                id="subModal"
+            >
+                <div
+                    class="modal-box bg-white w-full max-w-sm rounded-[2rem] p-8 shadow-2xl relative"
+                >
+                    <button
+                        aria-label="Tutup Modal"
+                        class="modal-close absolute top-6 right-6 text-outline hover:text-on-surface transition-colors"
+                        id="closeSubModal"
+                    >
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                    <div
+                        class="w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6"
+                    >
+                        <span class="material-symbols-outlined text-2xl"
+                            >chat</span
+                        >
+                    </div>
+                    <h3
+                        class="font-display text-2xl font-bold text-on-surface mb-2"
+                    >
+                        Kirim Masukan
+                    </h3>
+                    <p
+                        class="text-sm text-on-surface-variant mb-6 leading-relaxed"
+                    >
+                        Program LISA terus berkembang. Beritahu kami apa yang
+                        perlu diperbaiki atau ditambahkan.
+                    </p>
+                    <form class="flex flex-col gap-4" id="subscribeForm">
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant mb-1 ml-1 uppercase tracking-wide"
+                                >Email</label
+                            >
+                            <input
+                                class="w-full bg-surface border border-outline-variant/50 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                                name="email"
+                                placeholder="alamat@email.com"
+                                required
+                                type="email"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant mb-1 ml-1 uppercase tracking-wide"
+                                >Pesan</label
+                            >
+                            <textarea
+                                class="w-full bg-surface border border-outline-variant/50 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all resize-none"
+                                name="feedback"
+                                placeholder="Tulis masukan atau saranmu di sini..."
+                                required
+                                rows="4"
+                            ></textarea>
+                        </div>
+                        <button
+                            class="w-full bg-primary text-white font-bold py-3.5 rounded-xl shadow-md hover:bg-primary-variant transition-colors mt-2"
+                            type="submit"
+                        >
+                            Kirim Masukan
+                        </button>
+                    </form>
                 </div>
-                <h3 class="text-lg font-bold text-gray-800 mb-2">Edukasi Sampah Era Digital</h3>
-                <p class="text-gray-500 text-sm leading-relaxed">Memberikan pengetahuan dasar mengenai pengurangan sampah dan penerapan 3R melalui media digital seperti Instagram dan Tiktok.</p>
-              </div>
             </div>
-            <!-- Card 2: Green -->
-            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group reveal">
-              <div class="h-2 bg-gradient-to-r from-brand-500 to-brand-600"></div>
-              <div class="p-6 sm:p-8">
-                <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center mb-4">
-                  <svg class="w-6 h-6 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+
+            <!-- DOCUMENT PREVIEW MODAL -->
+            <div
+                class="modal-overlay fixed inset-0 bg-on-surface/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-2 sm:p-6"
+                id="docPreviewModal"
+            >
+                <div
+                    class="modal-box bg-surface-container w-full max-w-4xl h-[85vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+                >
+                    <div
+                        class="bg-white px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center shrink-0"
+                    >
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            <span class="material-symbols-outlined text-primary"
+                                >description</span
+                            >
+                            <h3
+                                class="font-bold text-on-surface truncate"
+                                id="docPreviewTitle"
+                            >
+                                Document Preview
+                            </h3>
+                        </div>
+                        <button
+                            aria-label="Tutup Preview"
+                            class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors shrink-0"
+                            onclick="closeDocPreview()"
+                        >
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                    <div class="flex-1 bg-surface-dim relative">
+                        <iframe
+                            allowfullscreen
+                            class="w-full h-full border-none block"
+                            id="docPreviewFrame"
+                            src=""
+                        ></iframe>
+                        <div
+                            class="absolute inset-0 flex items-center justify-center text-outline gap-2 -z-10"
+                            id="docLoading"
+                        >
+                            <span class="material-symbols-outlined animate-spin"
+                                >progress_activity</span
+                            >
+                            <span class="font-medium text-sm"
+                                >Memuat dokumen...</span
+                            >
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-lg font-bold text-gray-800 mb-2">Seminar Edukasi Lingkungan</h3>
-                <p class="text-gray-500 text-sm leading-relaxed">Kegiatan seminar langsung untuk memperdalam pemahaman masyarakat mengenai pengelolaan sampah dan 3R.</p>
-              </div>
             </div>
-            <!-- Card 3: Gray -->
-            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group reveal">
-              <div class="h-2 bg-gradient-to-r from-gray-300 to-gray-400"></div>
-              <div class="p-6 sm:p-8">
-                <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mb-4">
-                  <svg class="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-                </div>
-                <h3 class="text-lg font-bold text-gray-800 mb-2">Chatbot AI Lisa</h3>
-                <p class="text-gray-500 text-sm leading-relaxed">Fasilitas digital yang dapat membantu masyarakat mendapatkan informasi praktis mengenai sampah, 3R dan Bank Sampah.</p>
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
+        <!-- End app wrapper -->
 
-      <!-- BEHIND LISA -->
-      <section class="py-16 sm:py-20 bg-white reveal">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-700 text-center mb-2">Di Balik Chatbot Lisa</h2>
-          <div class="w-16 h-1 bg-brand-500 rounded-full mx-auto mb-10"></div>
-          <div class="lg:flex lg:items-center lg:gap-12">
-            <div class="lg:w-5/12 mb-8 lg:mb-0 reveal">
-              <img src="https://files.lingkungansehatasri.my.id/landingPage/Screenshot%202025-11-26%20142206.jpg" alt="Behind LISA" class="w-full rounded-2xl shadow-lg" />
-            </div>
-            <div class="lg:w-7/12 reveal">
-              <p class="text-gray-600 text-base sm:text-lg leading-relaxed">
-                Bukan sekadar bot, LISA adalah hasil <span class="text-brand-600 font-bold">kurasi ratusan data lapangan yang solid.</span> Dengan kecerdasan Google Gemini Flash dan automasi n8n, ia aktif 24 jam untuk menjawab pertanyaan lingkungan dengan bahasa yang luwes dan akrab bagi siswa.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+        <script>
+            // --- NAVIGATION ---
+            function navigateTo(viewId) {
+                const homeView = document.getElementById("view-home");
+                const mediaKitView = document.getElementById("view-mediakit");
+                window.scrollTo({ top: 0, behavior: "auto" });
+                if (viewId === "mediakit") {
+                    homeView.classList.add("hidden-spa");
+                    mediaKitView.classList.remove("hidden-spa");
+                } else {
+                    mediaKitView.classList.add("hidden-spa");
+                    homeView.classList.remove("hidden-spa");
+                }
+            }
 
-      <!-- SOCIAL MEDIA -->
-      <section class="py-16 sm:py-20 bg-gradient-to-br from-brand-800 to-brand-700 text-white text-center reveal">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 class="text-3xl sm:text-4xl font-extrabold mb-2">Social Media</h2>
-          <p class="text-brand-200 text-base sm:text-lg mb-8">Intip keseruan di balik layar kami di sini.</p>
-          <a href="https://instagram.com/gerakanbicaralingkungan_" target="_blank" class="inline-flex items-center gap-3 px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-full shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-            gerakanbicaralingkungan_
-          </a>
-        </div>
-      </section>
+            // --- DOCUMENT PREVIEW ---
+            const docModal = document.getElementById("docPreviewModal");
+            const docFrame = document.getElementById("docPreviewFrame");
+            const docTitle = document.getElementById("docPreviewTitle");
+            function openDocPreview(url, title) {
+                docTitle.innerText = title;
+                docFrame.src =
+                    "https://docs.google.com/viewer?url=" +
+                    encodeURIComponent(url) +
+                    "&embedded=true";
+                docModal.classList.add("active");
+            }
+            function closeDocPreview() {
+                docModal.classList.remove("active");
+                setTimeout(() => {
+                    docFrame.src = "";
+                }, 300);
+            }
+            docModal.addEventListener("click", (e) => {
+                if (e.target === docModal) closeDocPreview();
+            });
 
-      <!-- PARTNERS -->
-      <section class="py-16 sm:py-20 bg-white reveal">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-700 mb-2">Mitra & Sponsor</h2>
-          <div class="w-16 h-1 bg-brand-500 rounded-full mx-auto mb-4"></div>
-          <p class="text-gray-500 text-sm sm:text-base max-w-lg mx-auto mb-10">Terima kasih telah menjadi bagian dari perubahan dan tumbuh bersama Gerakan Bicara Lingkungan.</p>
+            // --- SCROLL TO TOP ---
+            const scrollBtn = document.getElementById("scrollToTopBtn");
+            window.addEventListener("scroll", () => {
+                scrollBtn.classList.toggle("show", window.scrollY > 300);
+            });
+            scrollBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
 
-          <!-- Media Partner -->
-          <div class="mb-10">
-            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Media Partner</h3>
-            <div class="flex flex-wrap justify-center gap-4">
-              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/1_20251125_183529_0000.png" alt="Hima Manajemen" class="max-w-full max-h-full object-contain" /></div>
-              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/2_20251125_183529_0001.png" alt="Himakom" class="max-w-full max-h-full object-contain" /></div>
-              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/3_20251125_183529_0002.png" alt="Event Mahasiswa" class="max-w-full max-h-full object-contain" /></div>
-            </div>
-          </div>
-
-          <!-- Partnership -->
-          <div class="mb-10">
-            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Partnership</h3>
-            <div class="flex flex-wrap justify-center gap-4">
-              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/4_20251125_183529_0003.png" alt="GUA" style="width:84px" class="object-contain" /></div>
-            </div>
-          </div>
-
-          <!-- Sponsorship -->
-          <div>
-            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Sponsorship</h3>
-            <div class="flex flex-wrap justify-center gap-4">
-              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/izifill.png" alt="Izifill" style="width:95px" class="object-contain" /></div>
-              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/logo%20siul.png" alt="Siul" style="width:102px" class="object-contain" /></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FOOTER -->
-      <footer class="bg-brand-900 text-white text-center py-10 px-4">
-        <p class="text-sm text-brand-200/80 mb-4">© 2025 LISA • Dibuat dengan ❤ untuk Bumi.</p>
-        <button onclick="navigateTo('mediakit')" class="inline-flex items-center gap-2 px-6 py-2.5 border border-white/30 text-white text-sm font-semibold rounded-full hover:bg-white/10 active:scale-95 transition-all duration-200">Akses Media Kit</button>
-      </footer>
-
-    </div> <!-- End view-home -->
-
-
-    <!-- ============ VIEW: MEDIA KIT ============ -->
-    <div id="view-mediakit" class="hidden">
-
-      <!-- HEADER MK -->
-      <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-              <img src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png" alt="Logo GBL" class="w-9 h-9 sm:w-10 sm:h-10 object-contain" />
-              <span class="text-lg font-bold text-brand-700 hidden sm:block">LISA</span>
-            </div>
-            <div onclick="navigateTo('home')" class="flex items-center gap-2 cursor-pointer hover:opacity-70 transition active:scale-95">
-              <svg class="w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-              <div class="text-left hidden sm:block">
-                <div class="text-sm font-semibold text-brand-700">Beranda</div>
-                <div class="text-xs text-gray-400">Kembali ke utama</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- HERO MK -->
-      <section class="bg-gradient-to-br from-brand-800 via-brand-600 to-brand-500 text-white py-16 sm:py-20 text-center">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p class="text-brand-200 text-sm font-medium mb-2">Gerakan Bicara Lingkungan</p>
-          <h1 class="text-4xl sm:text-6xl font-black tracking-wide">Media Kit</h1>
-          <p class="text-brand-50/80 text-base sm:text-lg max-w-lg mx-auto mt-4">Akses resmi materi publikasi, siaran pers, profil perusahaan, dan materi pendukung kampanye LISA.</p>
-        </div>
-      </section>
-
-      <!-- DOCUMENTS -->
-      <section class="py-12 sm:py-16 bg-brand-50/50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center gap-3 mb-8">
-            <svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-            <span class="text-lg font-bold text-brand-700">Dokumen Publik</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Doc 1 -->
-            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Company%20Profile.pdf','Company Profile')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100">
-              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg></div>
-              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Company Profile</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Profil Lengkap GBL</div></div>
-              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
-            </div>
-            <!-- Doc 2 -->
-            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/PRESS%20RELEASE%20GBL.pdf','Press Release')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100">
-              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8V6Z"></path></svg></div>
-              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Press Release</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Rilis Resmi Media</div></div>
-              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
-            </div>
-            <!-- Doc 3 -->
-            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/PRESS%20CONFERENCE%20GBL.pdf','Press Conference')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100">
-              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></div>
-              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Press Conference</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Materi Konferensi</div></div>
-              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
-            </div>
-            <!-- Doc 4 -->
-            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Advertorial.pdf','Advertorial')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100">
-              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
-              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Advertorial</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Artikel & Berita</div></div>
-              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
-            </div>
-            <!-- Doc 5 -->
-            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Backgrounders.pdf','Backgrounders')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100 sm:col-span-2 max-w-md mx-auto sm:mx-0">
-              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
-              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Backgrounders</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Latar Belakang Isu</div></div>
-              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
-            </div>
-          </div>
-          <div class="text-center mt-12">
-            <p class="text-sm text-gray-400 mb-4">Butuh informasi lebih lanjut?</p>
-            <a href="mailto:publicrelation2344@gmail.com" class="inline-flex items-center gap-2 px-6 py-2.5 border border-brand-600 text-brand-600 font-semibold rounded-full hover:bg-brand-50 active:scale-95 transition-all duration-200">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-              Hubungi Tim PR
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- FOOTER MK -->
-      <footer class="bg-brand-900 text-white text-center py-8 px-4">
-        <p class="text-sm text-brand-200/80">© 2025 LISA • Media Kit Official</p>
-      </footer>
-
-    </div> <!-- End view-mediakit -->
-
-
-    <!-- SCROLL TO TOP -->
-    <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Kembali ke atas">
-      <svg class="w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="17 11 12 6 7 11"></polyline>
-        <polyline points="17 18 12 13 7 18"></polyline>
-      </svg>
-    </button>
-
-    <!-- FEEDBACK MODAL -->
-    <div class="modal-overlay" id="subModal">
-      <div class="modal-box">
-        <button class="modal-close absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition cursor-pointer bg-transparent border-none p-1">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-        <h3 class="text-xl font-bold text-brand-700 text-center mb-2">Kirim Masukan</h3>
-        <p class="text-sm text-gray-400 text-center mb-6">Program LISA terus berkembang. Beritahu kami apa yang perlu diperbaiki atau ditambahkan agar tetap relevan.</p>
-        <form id="subscribeForm" class="space-y-4">
-          <input type="email" name="email" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition font-sans" placeholder="Alamat email kamu" required />
-          <textarea name="feedback" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition resize-none font-sans" placeholder="Tulis masukan atau saranmu di sini..." required></textarea>
-          <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl active:scale-[0.98] transition-all duration-200 text-sm">Kirim Masukan</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- DOCUMENT PREVIEW MODAL -->
-    <div class="modal-overlay" id="docPreviewModal">
-      <div class="modal-box" style="max-width:900px;height:85vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
-        <div class="flex items-center justify-between p-4 border-b border-gray-100 shrink-0">
-          <h3 id="docPreviewTitle" class="font-bold text-gray-800 truncate pr-4">Document Preview</h3>
-          <button onclick="closeDocPreview()" class="text-gray-400 hover:text-gray-600 transition cursor-pointer bg-transparent border-none p-1" aria-label="Tutup Preview">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-          </button>
-        </div>
-        <div class="flex-1 bg-gray-100">
-          <iframe id="docPreviewFrame" class="doc-iframe" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-
-  </div> <!-- End app-wrapper -->
-
-  <script>
-    // --- NAVIGATION ---
-    function navigateTo(viewId) {
-      const home = document.getElementById('view-home');
-      const mk = document.getElementById('view-mediakit');
-      window.scrollTo({ top: 0, behavior: 'auto' });
-      if (viewId === 'mediakit') { home.classList.add('hidden'); mk.classList.remove('hidden'); }
-      else { mk.classList.add('hidden'); home.classList.remove('hidden'); }
-    }
-
-    // --- DOCUMENT PREVIEW ---
-    const docModal = document.getElementById('docPreviewModal');
-    const docFrame = document.getElementById('docPreviewFrame');
-    const docTitle = document.getElementById('docPreviewTitle');
-    function openDocPreview(url, title) {
-      docTitle.innerText = title;
-      docFrame.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(url) + '&embedded=true';
-      docModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeDocPreview() {
-      docModal.classList.remove('active');
-      document.body.style.overflow = '';
-      setTimeout(() => { docFrame.src = ''; }, 300);
-    }
-    docModal.addEventListener('click', (e) => { if (e.target === docModal) closeDocPreview(); });
-
-    // --- SCROLL TO TOP ---
-    const scrollBtn = document.getElementById('scrollToTopBtn');
-    window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 300); });
-    scrollBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-
-    // --- FEEDBACK MODAL ---
-    const subTrigger = document.getElementById('subscribeTrigger');
-    const subModal = document.getElementById('subModal');
-    const subClose = document.querySelector('#subModal .modal-close');
-    const subForm = document.getElementById('subscribeForm');
-    subTrigger.addEventListener('click', () => { subModal.classList.add('active'); document.body.style.overflow = 'hidden'; });
-    subClose.addEventListener('click', () => { subModal.classList.remove('active'); document.body.style.overflow = ''; });
-    subModal.addEventListener('click', (e) => { if (e.target === subModal) { subModal.classList.remove('active'); document.body.style.overflow = ''; } });
-    subForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = subForm.querySelector('input[name="email"]').value;
-      const feedback = subForm.querySelector('textarea[name="feedback"]').value;
-      const btn = subForm.querySelector('button[type="submit"]');
-      const orig = btn.innerText;
-      btn.disabled = true; btn.innerText = 'Mengirim...';
-      fetch('https://n8n.terato.my.id/webhook/56e0a50d-c505-4ad4-b1a2-f9af17761ce2', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, feedback, source: 'LISA_Landing_Page_Feedback', timestamp: new Date().toISOString() })
-      }).then(r => { if(r.ok) { alert('Terima kasih! Masukan kamu sudah kami terima.'); subModal.classList.remove('active'); document.body.style.overflow = ''; subForm.reset(); } else alert('Terjadi kesalahan. Coba lagi.'); })
-      .catch(() => alert('Gagal menghubungi server. Periksa koneksi internetmu.'))
-      .finally(() => { btn.disabled = false; btn.innerText = orig; });
-    });
-
-    // --- INTERSECTION OBSERVER (Scroll Reveal) ---
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { root: null, rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-    });
-  </script>
-</body>
+            // --- FEEDBACK MODAL ---
+            const subscribeTrigger =
+                document.getElementById("subscribeTrigger");
+            const subModal = document.getElementById("subModal");
+            const closeSubModalBtn = document.getElementById("closeSubModal");
+            const subForm = document.getElementById("subscribeForm");
+            subscribeTrigger.addEventListener("click", () => {
+                subModal.classList.add("active");
+            });
+            closeSubModalBtn.addEventListener("click", () => {
+                subModal.classList.remove("active");
+            });
+            subModal.addEventListener("click", (e) => {
+                if (e.target === subModal) subModal.classList.remove("active");
+            });
+            subForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const emailInput = subForm.querySelector('input[name="email"]');
+                const feedbackInput = subForm.querySelector(
+                    'textarea[name="feedback"]',
+                );
+                const submitBtn = subForm.querySelector(
+                    'button[type="submit"]',
+                );
+                const originalBtnText = submitBtn.innerText;
+                const email = emailInput.value;
+                const feedback = feedbackInput.value;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML =
+                    '<span class="material-symbols-outlined animate-spin inline-block align-middle mr-2 text-[20px]">progress_activity</span>Mengirim...';
+                submitBtn.classList.add("opacity-70", "cursor-not-allowed");
+                const webhookUrl =
+                    "https://n8n.terato.my.id/webhook/56e0a50d-c505-4ad4-b1a2-f9af17761ce2";
+                fetch(webhookUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email,
+                        feedback,
+                        source: "LISA_Landing_Page_Feedback",
+                        timestamp: new Date().toISOString(),
+                    }),
+                })
+                    .then((r) => {
+                        if (r.ok) {
+                            alert(
+                                "Terima kasih! Masukan kamu sudah kami terima.",
+                            );
+                            subModal.classList.remove("active");
+                            subForm.reset();
+                        } else alert("Terjadi kesalahan. Coba lagi.");
+                    })
+                    .catch(() =>
+                        alert(
+                            "Gagal menghubungi server. Periksa koneksi internetmu.",
+                        ),
+                    )
+                    .finally(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = originalBtnText;
+                        submitBtn.classList.remove(
+                            "opacity-70",
+                            "cursor-not-allowed",
+                        );
+                    });
+            });
+        </script>
+    </body>
 </html>
