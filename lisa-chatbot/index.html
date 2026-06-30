@@ -3,1821 +3,435 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>L</title>ISA - Lingkungan Sehat dan Asri | Gerakan Bicara Lingkungan</title>
-
-  <!-- Font Inter -->
+  <title>LISA - Lingkungan</title> Sehat dan Asri | Gerakan Bicara Lingkungan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: {
+              50: '#f0fdf4', 100: '#d1fae5', 200: '#a7f3d0',
+              300: '#6ee7b7', 400: '#34d399', 500: '#10b981',
+              600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b',
+            }
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(24px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    /* ============================================================
-       COLOR TOKENS
-       ============================================================ */
-    :root {
-      --primary: #059669;
-      --primary-dark: #065f46;
-      --primary-light: #d1fae5;
-      --accent: #f59e0b;
-      --accent-light: #fef3c7;
-      --bg: #fafcfb;
-      --bg-alt: #f0fdf4;
-      --text-heading: #064e3b;
-      --text-body: #374151;
-      --text-muted: #9ca3af;
-      --white: #ffffff;
-
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-pill: 50px;
-
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07);
-      --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.08);
-      --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.10);
-
-      --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    /* ============================================================
-       RESET & BASE
-       ============================================================ */
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text-body);
-      background-color: var(--bg);
-      line-height: 1.7;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* ============================================================
-       UTILITY
-       ============================================================ */
-    .hidden {
-      display: none !important;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ============================================================
-       REVEAL ANIMATIONS (Intersection Observer)
-       ============================================================ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.25s; }
-    .reveal-delay-3 { transition-delay: 0.4s; }
-
-    /* ============================================================
-       KEYFRAMES
-       ============================================================ */
-    @keyframes pageEnter {
-      from { opacity: 0; transform: scale(0.97); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      33% { transform: translateY(-8px) rotate(1deg); }
-      66% { transform: translateY(4px) rotate(-1deg); }
-    }
-
-    /* ============================================================
-       PAGE TRANSITIONS
-       ============================================================ */
-    #view-home,
-    #view-mediakit {
-      animation: pageEnter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) both;
-    }
-
-    /* ============================================================
-       HERO GLOBAL BACKGROUND
-       ============================================================ */
-    .hero-bg-global {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 700px;
-      z-index: 0;
-      background-image: url('https://files.lingkungansehatasri.my.id/landingPage/IMG_0638.jpg');
-      background-size: cover;
-      background-position: center top;
-      opacity: 0.08;
-      pointer-events: none;
-      -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-      mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-    }
-
-    /* ============================================================
-       HEADER — Glassmorphism
-       ============================================================ */
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(5, 150, 105, 0.12);
-      transition: box-shadow var(--transition);
-    }
-    .site-header.scrolled {
-      box-shadow: var(--shadow-sm);
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 64px;
-    }
-
-    .brand-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: opacity var(--transition);
-    }
-    .brand-box:hover {
-      opacity: 0.8;
-    }
-    .brand-box:active {
-      opacity: 0.6;
-    }
-
-    .brand-logo {
-      width: 38px;
-      height: 38px;
-      object-fit: contain;
-      border-radius: var(--radius-sm);
-      background: var(--white);
-      padding: 2px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      padding: 8px 14px;
-      border-radius: var(--radius-md);
-      transition: background var(--transition), transform var(--transition);
-      user-select: none;
-      color: var(--text-heading);
-    }
-    .header-right:hover {
-      background: var(--primary-light);
-    }
-    .header-right:active {
-      transform: scale(0.96);
-    }
-
-    .icon-nav {
-      width: 22px;
-      height: 22px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex-shrink: 0;
-      color: var(--primary);
-    }
-
-    .header-text {
-      line-height: 1.2;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .header-title {
-      font-weight: 700;
-      font-size: 0.88rem;
-      color: var(--text-heading);
-    }
-
-    .header-sub {
-      font-weight: 400;
-      font-size: 0.68rem;
-      color: var(--text-muted);
-    }
-
-    /* ============================================================
-       HERO SECTION
-       ============================================================ */
-    .hero {
-      position: relative;
-      z-index: 1;
-      padding: 100px 0 60px;
-      overflow: hidden;
-    }
-
-    .hero .container {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-    }
-
-    .hero-content {
-      flex: 1 1 55%;
-      max-width: 600px;
-    }
-
-    .hero-decorative {
-      flex: 1 1 45%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    .hero-blob {
-      width: 340px;
-      height: 340px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      opacity: 0.08;
-      position: absolute;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .hero-blob-2 {
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #d97706);
-      opacity: 0.06;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      animation: float 8s ease-in-out infinite reverse;
-    }
-
-    .hero-leaf-icon {
-      position: relative;
-      z-index: 1;
-      color: var(--primary);
-      opacity: 0.15;
-    }
-
-    .hero-subtitle-top {
-      color: var(--primary);
-      font-size: 0.85rem;
-      font-weight: 400;
-      margin-bottom: 0.25rem;
-      font-style: italic;
-      letter-spacing: 0.02em;
-    }
-
-    .hero-title-main {
-      font-size: 3.5rem;
-      font-weight: 900;
-      color: var(--text-heading);
-      margin: 0;
-      letter-spacing: 0.18em;
-      line-height: 1.15;
-    }
-
-    .hero-tagline {
-      font-size: 1.15rem;
-      color: var(--primary);
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-desc {
-      font-size: 0.95rem;
-      line-height: 1.8;
-      margin-bottom: 1rem;
-      color: var(--text-body);
-      font-weight: 400;
-      max-width: 540px;
-    }
-
-    .hero-highlight {
-      display: block;
-      margin-top: 1.5rem;
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 1rem;
-    }
-
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 2rem;
-    }
-
-    .btn {
-      border-radius: var(--radius-pill);
-      font-weight: 600;
-      font-size: 15px;
-      line-height: 1.2;
-      letter-spacing: -0.01em;
-      text-decoration: none;
-      text-align: center;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      padding: 14px 32px;
-      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
-    }
-    .btn:active {
-      transform: scale(0.96);
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: var(--white);
-    }
-    .btn-primary:hover {
-      filter: brightness(1.08);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      background: var(--primary-light);
-      color: var(--text-heading);
-    }
-    .btn-secondary:hover {
-      filter: brightness(0.95);
-      box-shadow: var(--shadow-sm);
-      transform: translateY(-2px);
-    }
-
-    /* ============================================================
-       SECTION RHYTHM
-       ============================================================ */
-    .section-bg-alt {
-      background: var(--bg-alt);
-    }
-    .section-bg-white {
-      background: var(--white);
-    }
-
-    .section-padding {
-      padding: 64px 0;
-    }
-
-    .section-title {
-      text-align: center;
-      color: var(--text-heading);
-      font-size: 1.7rem;
-      font-weight: 800;
-      margin: 0 0 40px;
-      line-height: 1.3;
-    }
-
-    .section-tagline {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin: -28px 0 40px;
-      line-height: 1.6;
-    }
-
-    /* ============================================================
-       WAVE DIVIDER
-       ============================================================ */
-    .wave-divider {
-      display: block;
-      width: 100%;
-      height: 40px;
-      line-height: 0;
-      overflow: hidden;
-      position: relative;
-      z-index: 1;
-    }
-    .wave-divider svg {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* ============================================================
-       CSR CARDS
-       ============================================================ */
-    .csr-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    .csr-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 28px 24px;
-      box-shadow: var(--shadow-sm);
-      transition: transform var(--transition), box-shadow var(--transition);
-      border-top: 4px solid transparent;
-      position: relative;
-      overflow: hidden;
-    }
-    .csr-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .csr-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 0 0 10px;
-      line-height: 1.4;
-      color: var(--text-heading);
-    }
-
-    .csr-card p {
-      font-size: 0.88rem;
-      line-height: 1.7;
-      margin: 0;
-      color: var(--text-body);
-    }
-
-    .csr-card.csr-orange {
-      border-top-color: var(--accent);
-    }
-    .csr-card.csr-orange h3 {
-      color: #b45309;
-    }
-
-    .csr-card.csr-green {
-      border-top-color: var(--primary);
-    }
-    .csr-card.csr-green h3 {
-      color: var(--text-heading);
-    }
-
-    .csr-card.csr-gray {
-      border-top-color: var(--text-muted);
-    }
-
-    .csr-card .card-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 14px;
-    }
-    .csr-orange .card-icon { background: var(--accent-light); color: #b45309; }
-    .csr-green .card-icon { background: var(--primary-light); color: var(--primary); }
-    .csr-gray .card-icon { background: #f3f4f6; color: var(--text-muted); }
-
-    /* ============================================================
-       BEHIND LISA
-       ============================================================ */
-    .behind-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .behind-image-box {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      border-radius: var(--radius-lg);
-      background: url('https://files.lingkungansehatasri.my.id/landingPage/Screenshot%202025-11-26%20142206.jpg') center / cover no-repeat;
-      box-shadow: var(--shadow-lg);
-      transition: transform var(--transition), box-shadow var(--transition);
-    }
-    .behind-image-box:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .behind-text {
-      font-size: 1rem;
-      line-height: 1.9;
-      color: var(--text-body);
-    }
-    .behind-text strong {
-      color: var(--primary);
-      font-weight: 700;
-    }
-
-    /* ============================================================
-       SOCIAL MEDIA (Dark Green Band)
-       ============================================================ */
-    .social-section {
-      background: var(--primary-dark);
-      color: var(--white);
-      text-align: center;
-      padding: 60px 24px;
-    }
-
-    .social-section h2 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin: 0 0 8px;
-      color: var(--white);
-    }
-
-    .social-section p {
-      margin: 0 0 28px;
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.72);
-      line-height: 1.6;
-    }
-
-    .btn-social {
-      background: var(--primary);
-      color: var(--white);
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 32px;
-      border-radius: var(--radius-pill);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 15px;
-      transition: transform var(--transition), filter var(--transition), box-shadow var(--transition);
-    }
-    .btn-social:hover {
-      filter: brightness(1.1);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-    }
-    .btn-social:active {
-      transform: scale(0.96);
-    }
-
-    .icon-ig {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-    }
-
-    /* ============================================================
-       PARTNERS
-       ============================================================ */
-    .partners-section {
-      text-align: center;
-      padding: 64px 24px;
-    }
-    .partners-section h2 {
-      color: var(--text-heading);
-      font-size: 1.7rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-    .partners-section > .partners-sub {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 40px;
-    }
-
-    .partner-category {
-      margin-bottom: 36px;
-    }
-    .partner-category:last-child {
-      margin-bottom: 0;
-    }
-
-    .partner-category h3 {
-      color: var(--primary);
-      font-size: 0.8rem;
-      margin-bottom: 16px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .logo-row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .logo-box {
-      width: 130px;
-      height: 90px;
-      border-radius: var(--radius-md);
-      background: var(--white);
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px;
-      transition: transform var(--transition), box-shadow var(--transition);
-      border: 1px solid rgba(0, 0, 0, 0.04);
-    }
-    .logo-box:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .logo-box img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-
-    /* ============================================================
-       MEDIA KIT VIEW
-       ============================================================ */
-    .media-mk-header {
-      padding-top: 80px;
-    }
-
-    .media-section {
-      padding: 48px 0 80px;
-    }
-
-    .section-label {
-      font-weight: 700;
-      font-size: 1.15rem;
-      color: var(--text-heading);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .section-label svg {
-      color: var(--primary);
-    }
-
-    .doc-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-
-    .doc-card {
-      background: var(--white);
-      border-radius: var(--radius-md);
-      padding: 16px 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      box-shadow: var(--shadow-sm);
-      transition: transform var(--transition), box-shadow var(--transition);
-      cursor: pointer;
-      border: 1px solid rgba(0, 0, 0, 0.04);
-    }
-    .doc-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-    .doc-card:active {
-      transform: scale(0.98);
-    }
-
-    .doc-icon-box {
-      width: 44px;
-      height: 44px;
-      background: var(--primary-light);
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--primary);
-    }
-
-    .doc-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .doc-title {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--text-heading);
-      margin-bottom: 4px;
-      line-height: 1.3;
-    }
-
-    .doc-meta {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .badge {
-      background: var(--bg-alt);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.62rem;
-      color: var(--primary);
-    }
-
-    .doc-action {
-      width: 34px;
-      height: 34px;
-      background: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      flex-shrink: 0;
-      transition: transform var(--transition);
-    }
-    .doc-card:hover .doc-action {
-      transform: scale(1.1);
-    }
-
-    .doc-card-anim {
-      animation: pageEnter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) backwards;
-    }
-    .doc-card-anim:nth-child(1) { animation-delay: 0.08s; }
-    .doc-card-anim:nth-child(2) { animation-delay: 0.16s; }
-    .doc-card-anim:nth-child(3) { animation-delay: 0.24s; }
-    .doc-card-anim:nth-child(4) { animation-delay: 0.32s; }
-    .doc-card-anim:nth-child(5) { animation-delay: 0.40s; }
-
-    .contact-card {
-      text-align: center;
-      margin-top: 40px;
-      padding: 24px;
-      border-radius: var(--radius-md);
-      background: var(--bg-alt);
-      border: 1px solid rgba(5, 150, 105, 0.12);
-    }
-    .contact-card p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin: 0 0 12px;
-    }
-    .contact-card a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.9rem;
-      padding: 10px 20px;
-      border: 1.5px solid var(--primary);
-      border-radius: var(--radius-pill);
-      transition: background var(--transition), color var(--transition);
-    }
-    .contact-card a:hover {
-      background: var(--primary);
-      color: var(--white);
-    }
-
-    /* ============================================================
-       FOOTER
-       ============================================================ */
-    .site-footer {
-      background: var(--primary-dark);
-      padding: 32px 24px;
-      text-align: center;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.72);
-      line-height: 1.8;
-    }
-    .site-footer .footer-text {
-      margin-bottom: 8px;
-    }
-
-    .footer-mk-btn {
-      display: inline-block;
-      padding: 8px 20px;
-      border: 1.5px solid rgba(255, 255, 255, 0.3);
-      border-radius: var(--radius-pill);
-      font-size: 0.78rem;
-      color: rgba(255, 255, 255, 0.72);
-      background: transparent;
-      transition: all var(--transition);
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-    }
-    .footer-mk-btn:hover {
-      background: var(--white);
-      color: var(--primary-dark);
-      border-color: var(--white);
-    }
-    .footer-mk-btn:active {
-      transform: scale(0.96);
-    }
-
-    /* ============================================================
-       SCROLL TO TOP
-       ============================================================ */
-    .scroll-to-top {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      width: 46px;
-      height: 46px;
-      background: var(--primary);
-      border-radius: 50%;
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 100;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(12px);
-      transition: all var(--transition);
-      border: none;
-      outline: none;
-      color: var(--white);
-    }
-    .scroll-to-top.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-    .scroll-to-top:hover {
-      filter: brightness(1.12);
-      box-shadow: var(--shadow-xl);
-      transform: translateY(-3px);
-    }
-    .scroll-to-top:active {
-      transform: scale(0.92);
-    }
-
-    .chevron-icon {
-      width: 22px;
-      height: 22px;
-      stroke: currentColor;
-      stroke-width: 2.5;
-      fill: none;
-    }
-
-    /* ============================================================
-       MODAL — Feedback
-       ============================================================ */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-      padding: 20px;
-    }
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-box {
-      background: var(--white);
-      width: 100%;
-      max-width: 420px;
-      border-radius: var(--radius-lg);
-      padding: 28px 24px 24px;
-      position: relative;
-      transform: translateY(20px) scale(0.96);
-      transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: var(--shadow-xl);
-    }
-    .modal-overlay.active .modal-box {
-      transform: translateY(0) scale(1);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 6px;
-      color: var(--text-muted);
-      transition: color var(--transition), transform var(--transition);
-      border-radius: var(--radius-sm);
-      display: flex;
-    }
-    .modal-close:hover {
-      color: var(--text-heading);
-      transform: rotate(90deg);
-    }
-
-    .modal-title {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--text-heading);
-      margin: 0 0 6px;
-      text-align: center;
-    }
-
-    .modal-desc {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    .sub-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .form-input {
-      padding: 13px 16px;
-      border-radius: var(--radius-md);
-      border: 1.5px solid #e5e7eb;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition);
-      color: var(--text-body);
-    }
-    .form-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
-    }
-    .form-input::placeholder {
-      color: var(--text-muted);
-    }
-
-    textarea.form-input {
-      resize: vertical;
-      min-height: 90px;
-    }
-
-    .btn-submit {
-      background: var(--primary);
-      color: var(--white);
-      padding: 14px;
-      border: none;
-      border-radius: var(--radius-pill);
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      transition: transform var(--transition), filter var(--transition);
-    }
-    .btn-submit:hover {
-      filter: brightness(1.08);
-    }
-    .btn-submit:active {
-      transform: scale(0.97);
-    }
-    .btn-submit:disabled {
-      background: #d1d5db;
-      color: var(--text-muted);
-      cursor: not-allowed;
-      transform: none !important;
-      filter: none !important;
-    }
-
-    /* ============================================================
-       DOCUMENT PREVIEW MODAL
-       ============================================================ */
-    #docPreviewModal .modal-box {
-      max-width: 900px;
-      height: 85vh;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      border-radius: var(--radius-lg);
-      transform: translateY(10px) scale(0.97);
-    }
-    #docPreviewModal.active .modal-box {
-      transform: translateY(0) scale(1);
-    }
-
-    .doc-preview-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid #e5e7eb;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--white);
-      flex-shrink: 0;
-    }
-    .doc-preview-header h3 {
-      margin: 0;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text-heading);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding-right: 12px;
-    }
-    .doc-preview-content {
-      flex: 1;
-      background: #f3f4f6;
-      position: relative;
-    }
-    .doc-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
-    /* ============================================================
-       RESPONSIVE — Tablet & Desktop (≥ 768px)
-       ============================================================ */
-    @media (min-width: 768px) {
-      .csr-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .behind-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .behind-image-box {
-        aspect-ratio: auto;
-        height: 340px;
-      }
-      .behind-text {
-        font-size: 1.05rem;
-      }
-
-      .doc-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .hero-title-main {
-        font-size: 4rem;
-      }
-    }
-
-    /* ============================================================
-       RESPONSIVE — Small Mobile (< 768px)
-       ============================================================ */
-    @media (max-width: 767px) {
-      .hero-title-main {
-        font-size: 2.6rem;
-        letter-spacing: 0.12em;
-      }
-      .hero .container {
-        flex-direction: column;
-        gap: 24px;
-      }
-      .hero-decorative {
-        display: none;
-      }
-      .hero-content {
-        text-align: center;
-        max-width: 100%;
-      }
-      .hero-desc {
-        max-width: 100%;
-      }
-      .btn-group {
-        justify-content: center;
-      }
-
-      .section-padding {
-        padding: 48px 0;
-      }
-      .section-title {
-        font-size: 1.35rem;
-        margin-bottom: 28px;
-      }
-
-      .header-inner {
-        height: 58px;
-        padding: 0 16px;
-      }
-      .hero {
-        padding: 80px 0 40px;
-      }
-      .container {
-        padding: 0 16px;
-      }
-      .header-sub {
-        display: none;
-      }
-
-      .social-section {
-        padding: 40px 20px;
-      }
-      .social-section h2 {
-        font-size: 1.4rem;
-      }
-
-      .partners-section {
-        padding: 40px 16px;
-      }
-      .logo-box {
-        width: 110px;
-        height: 76px;
-      }
-
-      .site-footer {
-        padding: 24px 16px;
-      }
-
-      .scroll-to-top {
-        bottom: 20px;
-        right: 20px;
-        width: 42px;
-        height: 42px;
-      }
-
-      .media-section {
-        padding: 24px 0 48px;
-      }
-    }
-
-    /* ============================================================
-       RESPONSIVE — Medium (768px - 1024px)
-       ============================================================ */
-    @media (min-width: 768px) and (max-width: 1024px) {
-      .hero-title-main {
-        font-size: 3.2rem;
-      }
-      .hero-decorative {
-        transform: scale(0.75);
-      }
-      .logo-box {
-        width: 120px;
-        height: 82px;
-      }
-    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; padding: 1rem; }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-box { background: white; width: 100%; max-width: 400px; border-radius: 1.5rem; padding: 2rem; position: relative; transform: translateY(20px); transition: transform 0.3s ease; }
+    .modal-overlay.active .modal-box { transform: translateY(0); }
+    .scroll-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 44px; height: 44px; background: white; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; border: none; }
+    .scroll-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #docPreviewModal .modal-box { max-width: 900px; height: 85vh; padding: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .doc-iframe { width: 100%; height: 100%; border: none; display: block; }
+    .hidden { display: none !important; }
   </style>
 </head>
-<body>
+<body class="font-sans text-gray-800 bg-brand-50 antialiased">
 
-  <!-- ==========================================================
-       BACKGROUND GLOBAL (Hero subtle image overlay)
-       ========================================================== -->
-  <div class="hero-bg-global"></div>
+  <!-- APP WRAPPER -->
+  <div class="max-w-5xl mx-auto bg-white min-h-screen shadow-sm relative overflow-hidden">
 
-  <!-- ==========================================================
-       VIEW: HOME
-       ========================================================== -->
-  <div id="view-home">
+    <!-- ============ VIEW: HOME ============ -->
+    <div id="view-home">
 
-    <!-- ===== HEADER ===== -->
-    <header class="site-header" id="header">
-      <div class="header-inner">
-        <div class="brand-box" onclick="navigateTo('home')">
-          <img
-            src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png"
-            alt="Logo GBL"
-            class="brand-logo"
-          />
-        </div>
-
-        <div class="header-right" id="subscribeTrigger">
-          <svg class="icon-nav" viewBox="0 0 24 24">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-          </svg>
-          <div class="header-text">
-            <div class="header-title">Beri Masukan</div>
-            <div class="header-sub">Bantu kami lebih baik</div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-subtitle-top">Gerakan Bicara Lingkungan Proudly Present :</div>
-          <h1 class="hero-title-main">L I S A</h1>
-          <div class="hero-tagline">Lingkungan Sehat dan Asri</div>
-
-          <div class="hero-desc">
-            LISA membantu siswa memahami sampah dengan cara yang cepat dan jelas. Dibuat oleh mahasiswa Ilmu Komunikasi UBSI Ciledug x Ciputat, LISA merangkum data klasifikasi sampah, cara olah sederhana, dan lokasi bank sampah dalam satu percakapan praktis.
-          </div>
-
-          <div class="hero-desc">
-            Melalui edukasi singkat yang mudah diikuti, LISA mengajak siswa memulai kebiasaan bersih yang sederhana dan konsisten.
-          </div>
-
-          <span class="hero-highlight">Satu chat cukup untuk memulai perubahan.</span>
-
-          <div class="btn-group">
-            <a href="/chat/" class="btn btn-primary">Mulai Chat</a>
-            <a href="#csr" class="btn btn-secondary">Lihat Program CSR</a>
-          </div>
-        </div>
-
-        <!-- Decorative right side -->
-        <div class="hero-decorative">
-          <div class="hero-blob"></div>
-          <div class="hero-blob-2"></div>
-          <svg class="hero-leaf-icon" width="160" height="160" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
-            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-            <path d="M2 17l10 5 10-5"></path>
-            <path d="M2 12l10 5 10-5"></path>
-          </svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== WAVE DIVIDER ===== -->
-    <div class="wave-divider">
-      <svg viewBox="0 0 480 40" preserveAspectRatio="none">
-        <path d="M0,20 C120,40 240,10 480,25 L480,0 L0,0 Z" fill="var(--bg-alt)" opacity="1"/>
-      </svg>
-    </div>
-
-    <!-- ===== CSR CARDS SECTION ===== -->
-    <div class="section-bg-alt section-padding" id="csr">
-      <div class="container">
-        <h2 class="section-title reveal">Program CSR Kami</h2>
-
-        <div class="csr-grid">
-          <!-- Card 1: Orange -->
-          <div class="csr-card csr-orange reveal reveal-delay-1">
-            <div class="card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
+      <!-- STICKY HEADER -->
+      <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+              <img src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png" alt="Logo GBL" class="w-9 h-9 sm:w-10 sm:h-10 object-contain" />
+              <span class="text-lg font-bold text-brand-700 hidden sm:block">LISA</span>
             </div>
-            <h3>Edukasi Sampah Era Digital</h3>
-           </h3> <p>Memberikan pengetahuan dasar mengenai pengurangan sampah dan</p> penerapan 3R melalui media digital seperti Instagram dan Tiktok.</p>
-          </div>
-
-          <!-- Card 2: Green -->
-          <div class="csr-card csr-green reveal reveal-delay-2">
-            <div class="card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                <line x1="12" y1="19" x2="12" y2="23"></line>
-                <line x1="8" y1="23" x2="16" y2="23"></line>
-              </svg>
-            </div>
-            <h3>Seminar Edukasi Lingkungan</h3>
-            <p>Kegiatan seminar langsung untuk memper</h3>dalam pemahaman masyarakat mengenai pengelolaan</p> sampah dan 3R.</p>
-          </div>
-
-          <!-- Card 3: Gray -->
-          <div class="csr-card csr-gray reveal reveal-delay-3">
-            <div class="card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div id="subscribeTrigger" class="flex items-center gap-2 cursor-pointer hover:opacity-70 transition active:scale-95">
+              <svg class="w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
+              <div class="text-left hidden sm:block">
+                <div class="text-sm font-semibold text-brand-700">Beri Masukan</div>
+                <div class="text-xs text-gray-400">Bantu kami lebih baik</div>
+              </div>
             </div>
-            <h3>Chatbot AI Lisa</h3>
-            <p>Fasilitas digital</h3> yang dapat membantu masyarakat mendapatkan informasi praktis mengenai</p> sampah, 3R dan Bank Sampah.</p>
           </div>
         </div>
-      </div>
-    </div>
+      </header>
 
-    <!-- ===== BEHIND LISA SECTION ===== -->
-    <div class="section-bg-white section-padding">
-      <div class="container">
-        <h2 class="section-title reveal">Di Balik Chatbot Lisa</h2>
-
-        <div class="behind-grid">
-          <div class="behind-image-box reveal reveal-delay-1"></div>
-
-          <div class="behind-text reveal reveal-delay-2">
-            <p></p>Bukan sekadar bot, LISA adalah hasil <strong>kurasi ratusan data lapangan yang solid</strong>.</strong> Dengan kecerdasan Google Gemini Flash dan automasi n8n, ia aktif 24 jam untuk menjawab pertanyaan lingkungan dengan bahasa yang luwes dan akrab bagi siswa.</p>
+      <!-- HERO -->
+      <section class="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-600 to-brand-500 text-white">
+        <!-- Decorative blobs -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+          <div class="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/5 blur-3xl"></div>
+          <div class="absolute top-40 -left-20 w-60 h-60 rounded-full bg-emerald-300/10 blur-3xl"></div>
+          <div class="absolute bottom-20 right-20 w-40 h-40 rounded-full bg-white/5 blur-2xl"></div>
+        </div>
+        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
+          <div class="lg:flex lg:items-center lg:gap-16">
+            <!-- Left: Text -->
+            <div class="lg:w-3/5 text-center lg:text-left">
+              <p class="text-brand-200 text-sm sm:text-base font-medium tracking-wide mb-2">Gerakan Bicara Lingkungan Proudly Present :</p>
+              <h1 class="text-5xl sm:text-6xl lg:text-8xl xl:text-9xl font-black tracking-widest text-white leading-none mb-3">L I S A</h1>
+              <p class="text-xl sm:text-2xl font-bold text-brand-100 mb-6">Lingkungan Sehat dan Asri</p>
+              <div class="space-y-4 text-brand-50/90 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+                <p></p>LISA membantu siswa memahami sampah dengan cara yang cepat dan jelas. Dibuat oleh mahasiswa Ilmu Komunikasi UBSI Ciledug x Ciputat, LISA merangkum data klasifikasi sampah, cara olah sederhana, dan lokasi bank sampah dalam satu percakapan praktis.</p>
+                <p>Mel</p>alui edukasi singkat yang mudah diikuti, LISA mengajak siswa memulai kebiasaan bersih yang sederhana dan konsisten.</p>
+              </div>
+              <p class="text-brand-200 font-semibold text-base sm:text-lg mt-6">Satu chat cukup untuk memulai perubahan.</p>
+              <div class="flex flex-col sm:flex-row items-center gap-4 mt-8 justify-center lg:justify-start">
+                <a href="/chat/" class="inline-flex items-center justify-center px-8 py-3.5 bg-white text-brand-700 font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-200 text-base">Mulai Chat</a>
+                <a href="#csr" class="inline-flex items-center justify-center px-8 py-3.5 border-2 border-white/70 text-white font-bold rounded-full hover:bg-white/10 active:scale-95 transition-all duration-200 text-base">Lihat Program CSR</a>
+              </div>
+            </div>
+            <!-- Right: Decorative (desktop) -->
+            <div class="hidden lg:block lg:w-2/5">
+              <div class="relative flex items-center justify-center">
+                <div class="w-72 h-72 rounded-full bg-gradient-to-br from-emerald-300/20 to-white/10 border border-white/10 backdrop-blur-sm"></div>
+                <div class="absolute w-48 h-48 rounded-full bg-gradient-to-br from-emerald-200/20 to-white/5 -top-8 -right-4"></div>
+                <div class="absolute w-32 h-32 rounded-full bg-gradient-to-br from-brand-300/20 to-white/5 -bottom-4 -left-4"></div>
+                <div class="absolute w-20 h-20 rounded-full bg-white/10 top-12 -right-8"></div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- ===== WAVE DIVIDER (Green to dark) ===== -->
-    <div class="wave-divider" style="margin-bottom: -1px;">
-      <svg viewBox="0 0 480 50" preserveAspectRatio="none">
-        <path d="M0,40 C160,10 320,50 480,20 L480,0 L0,50 Z" fill="var(--primary-dark)"/>
-      </svg>
-    </div>
-
-    <!-- ===== SOCIAL MEDIA ===== -->
-    <section class="social-section reveal">
-      <h2>Social Media</h2>
-     </h2> <p>Intip keser</p>uan di balik layar kami di sini.</p>
-
-      <a href="https://instagram.com/gerakanbicaralingkungan_" target="_blank" rel="noopener" class="btn-social">
-        <svg class="icon-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-        </svg>
-        gerakanbicaralingkungan_
-      </a>
-    </section>
-
-    <!-- ===== WAVE DIVIDER (Dark to white) ===== -->
-    <div class="wave-divider">
-      <svg viewBox="0 0 480 40" preserveAspectRatio="none">
-        <path d="M0,0 C120,35 360,10 480,25 L480,0 L0,0 Z" fill="var(--primary-dark)"/>
-      </svg>
-    </div>
-
-    <!-- ===== PARTNERS & SPONSORS ===== -->
-    <section class="partners-section reveal">
-      <h2>Mitra &amp; Sponsor</h2>
-      <p class="</h2>partners-sub">Terima kasih telah menjadi bagian dari perubahan dan tumbuh bersama Gerakan Bicara Lingkungan.</p>
-
-      <!-- Media Partner -->
-      <div class="partner-category reveal reveal-delay-1">
-        <h3>Media Partner</h</h3>3>
-        <div class="logo-row">
-          <div class="logo-box">
-            <img src="https://files.lingkungansehatasri.my.id/landingPage/1_20251125_183529_0000.png" alt="Hima Manajemen">
-          </div>
-          <div class="logo-box">
-            <img src="https://files.lingkungansehatasri.my.id/landingPage/2_20251125_183529_0001.png" alt="Himakom">
-          </div>
-          <div class="logo-box">
-            <img src="https://files.lingkungansehatasri.my.id/landingPage/3_20251125_183529_0002.png" alt="Event Mahasiswa">
+      <!-- CSR CARDS -->
+      <section id="csr" class="py-16 sm:py-20 bg-gradient-to-b from-brand-50 to-white reveal">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-700 text-center mb-2">Program CSR Kami</h2>
+          <div class="w-16 h-1 bg-brand-500 rounded-full mx-auto mb-10"></div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Card 1: Orange -->
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group reveal">
+              <div class="h-2 bg-gradient-to-r from-orange-400 to-orange-500"></div>
+              <div class="p-6 sm:p-8">
+                <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-4">
+                  <svg class="w-6 h-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Edukasi Sampah Era Digital</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Memberikan pengetahuan dasar mengenai pengurangan sampah dan penerapan 3R melalui media digital seperti Instagram dan Tiktok.</p>
+              </div>
+            </div>
+            <!-- Card 2: Green -->
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group reveal">
+              <div class="h-2 bg-gradient-to-r from-brand-500 to-brand-600"></div>
+              <div class="p-6 sm:p-8">
+                <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center mb-4">
+                  <svg class="w-6 h-6 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Seminar Edukasi Lingkungan</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Kegiatan seminar langsung untuk memperdalam pemahaman masyarakat mengenai pengelolaan sampah dan 3R.</p>
+              </div>
+            </div>
+            <!-- Card 3: Gray -->
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group reveal">
+              <div class="h-2 bg-gradient-to-r from-gray-300 to-gray-400"></div>
+              <div class="p-6 sm:p-8">
+                <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mb-4">
+                  <svg class="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Chatbot AI Lisa</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Fasilitas digital yang dapat membantu masyarakat mendapatkan informasi praktis mengenai sampah, 3R dan Bank Sampah.</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Partnership -->
-      <div class="partner-category reveal reveal-delay-2">
-        <h3>Partnership</h3></h3>
-        <div class="logo-row">
-          <div class="logo-box">
-            <img style="width: 84px;" src="https://files.lingkungansehatasri.my.id/landingPage/4_20251125_183529_0003.png" alt="GUA">
+      <!-- BEHIND LISA -->
+      <section class="py-16 sm:py-20 bg-white reveal">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-700 text-center mb-2">Di Balik Chatbot Lisa</h2>
+          <div class="w-16 h-1 bg-brand-500 rounded-full mx-auto mb-10"></div>
+          <div class="lg:flex lg:items-center lg:gap-12">
+            <div class="lg:w-5/12 mb-8 lg:mb-0 reveal">
+              <img src="https://files.lingkungansehatasri.my.id/landingPage/Screenshot%202025-11-26%20142206.jpg" alt="Behind LISA" class="w-full rounded-2xl shadow-lg" />
+            </div>
+            <div class="lg:w-7/12 reveal">
+              <p class="text-gray-600 text-base sm:text-lg leading-relaxed">
+                Bukan sekadar bot, LISA adalah hasil <span class="text-brand-600 font-bold">kurasi ratusan data lapangan yang solid.</span> Dengan kecerdasan Google Gemini Flash dan automasi n8n, ia aktif 24 jam untuk menjawab pertanyaan lingkungan dengan bahasa yang luwes dan akrab bagi siswa.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Sponsorship -->
-      <div class="partner-category reveal reveal-delay-3">
-        <h3>Sponsorship</h3></h3>
-        <div class="logo-row">
-          <div class="logo-box">
-            <img style="width: 95px;" src="https://files.lingkungansehatasri.my.id/landingPage/izifill.png" alt="Izifill">
-          </div>
-          <div class="logo-box">
-            <img style="width: 102px;" src="https://files.lingkungansehatasri.my.id/landingPage/logo%20siul.png" alt="Siul">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== FOOTER HOME ===== -->
-    <footer class="site-footer">
-      <div class="footer-text">&copy; 2025 LISA &bull; Dibuat dengan &hearts; untuk Bumi.</div>
-      <button class="footer-mk-btn" onclick="navigateTo('mediakit')">Akses Media Kit</button>
-    </footer>
-
-  </div> <!-- End view-home -->
-
-
-  <!-- ==========================================================
-       VIEW: MEDIA KIT
-       ========================================================== -->
-  <div id="view-mediakit" class="hidden">
-
-    <!-- ===== HEADER MK ===== -->
-    <header class="site-header">
-      <div class="header-inner">
-        <div class="brand-box" onclick="navigateTo('home')">
-          <img
-            src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png"
-            alt="Logo GBL"
-            class="brand-logo"
-          />
-        </div>
-
-        <div class="header-right" onclick="navigateTo('home')">
-          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-          <div class="header-text">
-            <div class="header-title">Beranda</div>
-            <div class="header-sub">Kembali ke utama</div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- ===== HERO MK ===== -->
-    <section class="hero media-mk-header">
-      <div class="container">
-        <div class="hero-content" style="text-align: center; max-width: 100%;">
-          <div class="hero-subtitle-top">Gerakan Bicara Lingkungan</div>
-          <h1 class="hero-title-main">Media Kit</h1>
-          <div class="hero-desc" style="margin-left: auto; margin-right: auto;">
-            Akses resmi materi publikasi, siaran pers, profil perusahaan, dan materi pendukung kampanye LISA.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== DOCUMENTS LIST ===== -->
-    <section class="media-section section-bg-alt">
-      <div class="container">
-        <div class="section-label">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          Dokumen Publik
-        </div>
-
-        <div class="doc-grid">
-
-          <!-- 1. Company Profile -->
-          <div class="doc-card doc-card-anim" onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Company%20Profile.pdf', 'Company Profile')">
-            <div class="doc-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-            </div>
-            <div class="doc-info">
-              <div class="doc-title">Company Profile</div>
-              <div class="doc-meta"><span class="badge">PDF</span> Profil Lengkap GBL</div>
-            </div>
-            <div class="doc-action">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            </div>
-          </div>
-
-          <!-- 2. Press Release -->
-          <div class="doc-card doc-card-anim" onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/PRESS%20RELEASE%20GBL.pdf', 'Press Release')">
-            <div class="doc-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8V6Z"></path></svg>
-            </div>
-            <div class="doc-info">
-              <div class="doc-title">Press Release</div>
-              <div class="doc-meta"><span class="badge">PDF</span> Rilis Resmi Media</div>
-            </div>
-            <div class="doc-action">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            </div>
-          </div>
-
-          <!-- 3. Press Conference -->
-          <div class="doc-card doc-card-anim" onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/PRESS%20CONFERENCE%20GBL.pdf', 'Press Conference')">
-            <div class="doc-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-            </div>
-            <div class="doc-info">
-              <div class="doc-title">Press Conference</div>
-              <div class="doc-meta"><span class="badge">PDF</span> Materi Konferensi</div>
-            </div>
-            <div class="doc-action">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            </div>
-          </div>
-
-          <!-- 4. Advertorial -->
-          <div class="doc-card doc-card-anim" onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Advertorial.pdf', 'Advertorial')">
-            <div class="doc-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-            </div>
-            <div class="doc-info">
-              <div class="doc-title">Advertorial</div>
-              <div class="doc-meta"><span class="badge">PDF</span> Artikel &amp; Berita</div>
-            </div>
-            <div class="doc-action">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            </div>
-          </div>
-
-          <!-- 5. Backgrounders -->
-          <div class="doc-card doc-card-anim" onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Backgrounders.pdf', 'Backgrounders')">
-            <div class="doc-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            </div>
-            <div class="doc-info">
-              <div class="doc-title">Backgrounders</div>
-              <div class="doc-meta"><span class="badge">PDF</span> Latar Belakang Isu</div>
-            </div>
-            <div class="doc-action">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Contact -->
-        <div class="contact-card">
-          <p>Butuh informasi lebih</p> lanjut?</p>
-          <a href="mailto:publicrelation2344@gmail.com">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            Hubungi Tim PR
+      <!-- SOCIAL MEDIA -->
+      <section class="py-16 sm:py-20 bg-gradient-to-br from-brand-800 to-brand-700 text-white text-center reveal">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-2">Social Media</h2>
+          <p class="text-brand-200 text-base sm:text-lg mb-8">Intip keseruan di balik layar kami di sini.</p>
+          <a href="https://instagram.com/gerakanbicaralingkungan_" target="_blank" class="inline-flex items-center gap-3 px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-full shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            gerakanbicaralingkungan_
           </a>
         </div>
+      </section>
 
-      </div>
-    </section>
+      <!-- PARTNERS -->
+      <section class="py-16 sm:py-20 bg-white reveal">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-700 mb-2">Mitra & Sponsor</h2>
+          <div class="w-16 h-1 bg-brand-500 rounded-full mx-auto mb-4"></div>
+          <p class="text-gray-500 text-sm sm:text-base max-w-lg mx-auto mb-10">Terima kasih telah menjadi bagian dari perubahan dan tumbuh bersama Gerakan Bicara Lingkungan.</p>
 
-    <!-- ===== FOOTER MK ===== -->
-    <footer class="site-footer">
-      &copy; 2025 LISA &bull; Media Kit Official
-    </footer>
+          <!-- Media Partner -->
+          <div class="mb-10">
+            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Media Partner</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/1_20251125_183529_0000.png" alt="Hima Manajemen" class="max-w-full max-h-full object-contain" /></div>
+              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/2_20251125_183529_0001.png" alt="Himakom" class="max-w-full max-h-full object-contain" /></div>
+              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/3_20251125_183529_0002.png" alt="Event Mahasiswa" class="max-w-full max-h-full object-contain" /></div>
+            </div>
+          </div>
 
-  </div> <!-- End view-mediakit -->
+          <!-- Partnership -->
+          <div class="mb-10">
+            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Partnership</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/4_20251125_183529_0003.png" alt="GUA" style="width:84px" class="object-contain" /></div>
+            </div>
+          </div>
+
+          <!-- Sponsorship -->
+          <div>
+            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Sponsorship</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/izifill.png" alt="Izifill" style="width:95px" class="object-contain" /></div>
+              <div class="w-36 h-24 bg-white border border-gray-100 rounded-xl shadow-sm flex items-center justify-center p-3 hover:shadow-md transition"><img src="https://files.lingkungansehatasri.my.id/landingPage/logo%20siul.png" alt="Siul" style="width:102px" class="object-contain" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="bg-brand-900 text-white text-center py-10 px-4">
+        <p class="text-sm text-brand-200/80 mb-4">© 2025 LISA • Dibuat dengan ❤ untuk Bumi.</p>
+        <button onclick="navigateTo('mediakit')" class="inline-flex items-center gap-2 px-6 py-2.5 border border-white/30 text-white text-sm font-semibold rounded-full hover:bg-white/10 active:scale-95 transition-all duration-200">Akses Media Kit</button>
+      </footer>
+
+    </div> <!-- End view-home -->
 
 
-  <!-- ==========================================================
-       SCROLL TO TOP BUTTON
-       ========================================================== -->
-  <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Kembali ke atas">
-    <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="17 11 12 6 7 11"></polyline>
-      <polyline points="17 18 12 13 7 18"></polyline>
-    </svg>
-  </button>
+    <!-- ============ VIEW: MEDIA KIT ============ -->
+    <div id="view-mediakit" class="hidden">
 
-  <!-- ==========================================================
-       FEEDBACK MODAL
-       ========================================================== -->
-  <div class="modal-overlay" id="subModal">
-    <div class="modal-box">
-      <button class="modal-close" aria-label="Tutup Modal">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-      <h3 class="modal-title">Kirim Masukan</h3>
-      <p class="modal-desc">Program LISA terus berkembang. Beritahu kami apa yang perlu diperbaiki atau ditambahkan agar tetap relevan.</p>
+      <!-- HEADER MK -->
+      <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+              <img src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png" alt="Logo GBL" class="w-9 h-9 sm:w-10 sm:h-10 object-contain" />
+              <span class="text-lg font-bold text-brand-700 hidden sm:block">LISA</span>
+            </div>
+            <div onclick="navigateTo('home')" class="flex items-center gap-2 cursor-pointer hover:opacity-70 transition active:scale-95">
+              <svg class="w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              <div class="text-left hidden sm:block">
+                <div class="text-sm font-semibold text-brand-700">Beranda</div>
+                <div class="text-xs text-gray-400">Kembali ke utama</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-      <form id="subscribeForm" class="sub-form">
-        <input type="email" name="email" class="form-input" placeholder="Alamat email kamu" required />
-        <textarea name="feedback" class="form-input" rows="4" placeholder="Tulis masukan atau saranmu di sini..." required></textarea>
-        <button type="submit" class="btn-submit">Kirim Masukan</button>
-      </form>
-    </div>
-  </div>
+      <!-- HERO MK -->
+      <section class="bg-gradient-to-br from-brand-800 via-brand-600 to-brand-500 text-white py-16 sm:py-20 text-center">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p class="text-brand-200 text-sm font-medium mb-2">Gerakan Bicara Lingkungan</p>
+          <h1 class="text-4xl sm:text-6xl font-black tracking-wide">Media Kit</h1>
+          <p class="text-brand-50/80 text-base sm:text-lg max-w-lg mx-auto mt-4">Akses resmi materi publikasi, siaran pers, profil perusahaan, dan materi pendukung kampanye LISA.</p>
+        </div>
+      </section>
 
-  <!-- ==========================================================
-       DOCUMENT PREVIEW MODAL
-       ========================================================== -->
-  <div class="modal-overlay" id="docPreviewModal">
-    <div class="modal-box">
-      <div class="doc-preview-header">
-        <h3 id="docPreviewTitle">Document Preview</h3>
-        <button class="modal-close" style="position: static; color: var(--text-heading);" onclick="closeDocPreview()" aria-label="Tutup Preview">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
+      <!-- DOCUMENTS -->
+      <section class="py-12 sm:py-16 bg-brand-50/50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center gap-3 mb-8">
+            <svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <span class="text-lg font-bold text-brand-700">Dokumen Publik</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Doc 1 -->
+            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Company%20Profile.pdf','Company Profile')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100">
+              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg></div>
+              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Company Profile</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Profil Lengkap GBL</div></div>
+              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+            </div>
+            <!-- Doc 2 -->
+            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/PRESS%20RELEASE%20GBL.pdf','Press Release')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100">
+              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8V6Z"></path></svg></div>
+              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Press Release</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Rilis Resmi Media</div></div>
+              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+            </div>
+            <!-- Doc 3 -->
+            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/PRESS%20CONFERENCE%20GBL.pdf','Press Conference')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100">
+              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></div>
+              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Press Conference</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Materi Konferensi</div></div>
+              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+            </div>
+            <!-- Doc 4 -->
+            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Advertorial.pdf','Advertorial')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100">
+              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
+              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Advertorial</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Artikel & Berita</div></div>
+              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+            </div>
+            <!-- Doc 5 -->
+            <div onclick="openDocPreview('https://files.lingkungansehatasri.my.id/media-kit-pr-awards/Backgrounders.pdf','Backgrounders')" class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-[0.98] transition-all border border-gray-100 sm:col-span-2 max-w-md mx-auto sm:mx-0">
+              <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center shrink-0"><svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+              <div class="flex-1 min-w-0"><div class="font-semibold text-gray-800 truncate">Backgrounders</div><div class="text-xs text-gray-400"><span class="inline-block bg-gray-100 rounded px-1.5 py-0.5 font-semibold text-gray-500 mr-1">PDF</span> Latar Belakang Isu</div></div>
+              <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+            </div>
+          </div>
+          <div class="text-center mt-12">
+            <p class="text-sm text-gray-400 mb-4">Butuh informasi lebih lanjut?</p>
+            <a href="mailto:publicrelation2344@gmail.com" class="inline-flex items-center gap-2 px-6 py-2.5 border border-brand-600 text-brand-600 font-semibold rounded-full hover:bg-brand-50 active:scale-95 transition-all duration-200">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              Hubungi Tim PR
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER MK -->
+      <footer class="bg-brand-900 text-white text-center py-8 px-4">
+        <p class="text-sm text-brand-200/80">© 2025 LISA • Media Kit Official</p>
+      </footer>
+
+    </div> <!-- End view-mediakit -->
+
+
+    <!-- SCROLL TO TOP -->
+    <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Kembali ke atas">
+      <svg class="w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+      </svg>
+    </button>
+
+    <!-- FEEDBACK MODAL -->
+    <div class="modal-overlay" id="subModal">
+      <div class="modal-box">
+        <button class="modal-close absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition cursor-pointer bg-transparent border-none p-1">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
-      </div>
-      <div class="doc-preview-content">
-        <iframe id="docPreviewFrame" class="doc-iframe" src="" allowfullscreen></iframe>
+        <h3 class="text-xl font-bold text-brand-700 text-center mb-2">Kirim Masukan</h3>
+        <p class="text-sm text-gray-400 text-center mb-6">Program LISA terus berkembang. Beritahu kami apa yang perlu diperbaiki atau ditambahkan agar tetap relevan.</p>
+        <form id="subscribeForm" class="space-y-4">
+          <input type="email" name="email" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition font-sans" placeholder="Alamat email kamu" required />
+          <textarea name="feedback" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition resize-none font-sans" placeholder="Tulis masukan atau saranmu di sini..." required></textarea>
+          <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl active:scale-[0.98] transition-all duration-200 text-sm">Kirim Masukan</button>
+        </form>
       </div>
     </div>
-  </div>
 
-  <!-- ==========================================================
-       JAVASCRIPT
-       ========================================================== -->
+    <!-- DOCUMENT PREVIEW MODAL -->
+    <div class="modal-overlay" id="docPreviewModal">
+      <div class="modal-box" style="max-width:900px;height:85vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+        <div class="flex items-center justify-between p-4 border-b border-gray-100 shrink-0">
+          <h3 id="docPreviewTitle" class="font-bold text-gray-800 truncate pr-4">Document Preview</h3>
+          <button onclick="closeDocPreview()" class="text-gray-400 hover:text-gray-600 transition cursor-pointer bg-transparent border-none p-1" aria-label="Tutup Preview">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="flex-1 bg-gray-100">
+          <iframe id="docPreviewFrame" class="doc-iframe" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End app-wrapper -->
+
   <script>
-    // --- NAVIGATION LOGIC ---
+    // --- NAVIGATION ---
     function navigateTo(viewId) {
-      const homeView = document.getElementById('view-home');
-      const mediaKitView = document.getElementById('view-mediakit');
-
-      if (viewId === 'mediakit') {
-        homeView.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        homeView.style.opacity = '0';
-        homeView.style.transform = 'scale(0.97)';
-        setTimeout(() => {
-          homeView.classList.add('hidden');
-          homeView.style.opacity = '';
-          homeView.style.transform = '';
-          mediaKitView.classList.remove('hidden');
-          mediaKitView.style.animation = 'none';
-          mediaKitView.offsetHeight; // reflow
-          mediaKitView.style.animation = 'pageEnter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) both';
-        }, 300);
-      } else {
-        mediaKitView.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        mediaKitView.style.opacity = '0';
-        mediaKitView.style.transform = 'scale(0.97)';
-        setTimeout(() => {
-          mediaKitView.classList.add('hidden');
-          mediaKitView.style.opacity = '';
-          mediaKitView.style.transform = '';
-          homeView.classList.remove('hidden');
-          homeView.style.animation = 'none';
-          homeView.offsetHeight; // reflow
-          homeView.style.animation = 'pageEnter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) both';
-        }, 300);
-      }
-
+      const home = document.getElementById('view-home');
+      const mk = document.getElementById('view-mediakit');
       window.scrollTo({ top: 0, behavior: 'auto' });
+      if (viewId === 'mediakit') { home.classList.add('hidden'); mk.classList.remove('hidden'); }
+      else { mk.classList.add('hidden'); home.classList.remove('hidden'); }
     }
 
-    // --- DOCUMENT PREVIEW LOGIC ---
+    // --- DOCUMENT PREVIEW ---
     const docModal = document.getElementById('docPreviewModal');
     const docFrame = document.getElementById('docPreviewFrame');
     const docTitle = document.getElementById('docPreviewTitle');
-
     function openDocPreview(url, title) {
       docTitle.innerText = title;
-      const viewerUrl = 'https://docs.google.com/viewer?url=' + encodeURIComponent(url) + '&embedded=true';
-      docFrame.src = viewerUrl;
+      docFrame.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(url) + '&embedded=true';
       docModal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
-
     function closeDocPreview() {
       docModal.classList.remove('active');
       document.body.style.overflow = '';
-      setTimeout(() => {
-        docFrame.src = '';
-      }, 300);
+      setTimeout(() => { docFrame.src = ''; }, 300);
     }
+    docModal.addEventListener('click', (e) => { if (e.target === docModal) closeDocPreview(); });
 
-    docModal.addEventListener('click', (e) => {
-      if (e.target === docModal) {
-        closeDocPreview();
-      }
-    });
-
-    // --- HEADER SHADOW ON SCROLL ---
-    const siteHeader = document.getElementById('header') || document.querySelector('.site-header');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 20) {
-        siteHeader.classList.add('scrolled');
-      } else {
-        siteHeader.classList.remove('scrolled');
-      }
-    });
-
-    // --- SCROLL TO TOP LOGIC ---
+    // --- SCROLL TO TOP ---
     const scrollBtn = document.getElementById('scrollToTopBtn');
+    window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 300); });
+    scrollBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        scrollBtn.classList.add('show');
-      } else {
-        scrollBtn.classList.remove('show');
-      }
-    });
-
-    scrollBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-
-    // --- FEEDBACK MODAL & WEBHOOK LOGIC ---
-    const subscribeTrigger = document.getElementById('subscribeTrigger');
+    // --- FEEDBACK MODAL ---
+    const subTrigger = document.getElementById('subscribeTrigger');
     const subModal = document.getElementById('subModal');
     const subClose = document.querySelector('#subModal .modal-close');
     const subForm = document.getElementById('subscribeForm');
-
-    // Open Modal
-    subscribeTrigger.addEventListener('click', () => {
-      subModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-
-    // Close Modal
-    subClose.addEventListener('click', () => {
-      subModal.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-
-    // Close when clicking outside the box
-    subModal.addEventListener('click', (e) => {
-      if (e.target === subModal) {
-        subModal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    });
-
-    // Form Submission (POST to n8n)
+    subTrigger.addEventListener('click', () => { subModal.classList.add('active'); document.body.style.overflow = 'hidden'; });
+    subClose.addEventListener('click', () => { subModal.classList.remove('active'); document.body.style.overflow = ''; });
+    subModal.addEventListener('click', (e) => { if (e.target === subModal) { subModal.classList.remove('active'); document.body.style.overflow = ''; } });
     subForm.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      const emailInput = subForm.querySelector('input[name="email"]');
-      const feedbackInput = subForm.querySelector('textarea[name="feedback"]');
-      const submitBtn = subForm.querySelector('button[type="submit"]');
-      const originalBtnText = submitBtn.innerText;
-
-      const email = emailInput.value;
-      const feedback = feedbackInput.value;
-
-      // Disable button & show loading state
-      submitBtn.disabled = true;
-      submitBtn.innerText = 'Mengirim...';
-
-      // Webhook URL
-      const webhookUrl = 'https://n8n.terato.my.id/webhook/56e0a50d-c505-4ad4-b1a2-f9af17761ce2';
-
-      fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          feedback: feedback,
-          source: 'LISA_Landing_Page_Feedback',
-          timestamp: new Date().toISOString()
-        })
-      })
-      .then(response => {
-        if (response.ok) {
-          alert('Terima kasih! Masukan kamu sudah kami terima.');
-          subModal.classList.remove('active');
-          document.body.style.overflow = '';
-          subForm.reset();
-        } else {
-          alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Gagal menghubungi server. Periksa koneksi internetmu.');
-      })
-      .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerText = originalBtnText;
-      });
+      const email = subForm.querySelector('input[name="email"]').value;
+      const feedback = subForm.querySelector('textarea[name="feedback"]').value;
+      const btn = subForm.querySelector('button[type="submit"]');
+      const orig = btn.innerText;
+      btn.disabled = true; btn.innerText = 'Mengirim...';
+      fetch('https://n8n.terato.my.id/webhook/56e0a50d-c505-4ad4-b1a2-f9af17761ce2', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, feedback, source: 'LISA_Landing_Page_Feedback', timestamp: new Date().toISOString() })
+      }).then(r => { if(r.ok) { alert('Terima kasih! Masukan kamu sudah kami terima.'); subModal.classList.remove('active'); document.body.style.overflow = ''; subForm.reset(); } else alert('Terjadi kesalahan. Coba lagi.'); })
+      .catch(() => alert('Gagal menghubungi server. Periksa koneksi internetmu.'))
+      .finally(() => { btn.disabled = false; btn.innerText = orig; });
     });
 
-    // --- INTERSECTION OBSERVER FOR SCROLL REVEAL ---
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px 0px -60px 0px',
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
+    // --- INTERSECTION OBSERVER (Scroll Reveal) ---
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { root: null, rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
     document.addEventListener('DOMContentLoaded', () => {
-      const revealElements = document.querySelectorAll('.reveal');
-      revealElements.forEach(el => observer.observe(el));
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     });
   </script>
-
 </body>
 </html>

@@ -1,1263 +1,595 @@
 <!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8" />
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <title>Chatbot</title> LISA</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
-        rel="stylesheet"
-    />
-
-    <style>
-        :root {
-            --primary: #059669;
-            --primary-dark: #065f46;
-            --primary-light: #d1fae5;
-            --accent: #f59e0b;
-            --bg: #fafcfb;
-            --text-dark: #1f2937;
-            --text-muted: #9ca3af;
-            --white: #ffffff;
-            --radius: 12px;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --transition: 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            height: 100%;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            min-height: 100dvh;
-            overflow: hidden;
-            position: relative;
-            letter-spacing: -0.01em;
-            background: linear-gradient(145deg, #f0fdf4 0%, #fafcfb 40%, #ecfdf5 100%);
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(ellipse at 15% 30%, rgba(5, 150, 105, 0.07) 0%, transparent 55%),
-                radial-gradient(ellipse at 85% 70%, rgba(5, 150, 105, 0.05) 0%, transparent 55%),
-                radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.03) 0%, transparent 40%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ── APP CONTAINER ── */
-        .app-container {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 768px;
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            background: var(--white);
-            box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.06), var(--shadow-lg);
-        }
-
-        @media (min-width: 769px) {
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chatbot LISA</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: { sans: ["Inter", "sans-serif"] },
+                        colors: {
+                            brand: {
+                                50: "#f0fdf4",
+                                100: "#d1fae5",
+                                200: "#a7f3d0",
+                                300: "#6ee7b7",
+                                400: "#34d399",
+                                500: "#10b981",
+                                600: "#059669",
+                                700: "#047857",
+                                800: "#065f46",
+                                900: "#064e3b",
+                            },
+                        },
+                        animation: {
+                            "slide-in-right": "slideInRight 0.3s ease-out",
+                            "slide-in-left": "slideInLeft 0.3s ease-out",
+                            "bounce-dot": "bounceDot 1.4s infinite ease-in-out",
+                        },
+                        keyframes: {
+                            slideInRight: {
+                                "0%": {
+                                    opacity: "0",
+                                    transform: "translateX(20px)",
+                                },
+                                "100%": {
+                                    opacity: "1",
+                                    transform: "translateX(0)",
+                                },
+                            },
+                            slideInLeft: {
+                                "0%": {
+                                    opacity: "0",
+                                    transform: "translateX(-20px)",
+                                },
+                                "100%": {
+                                    opacity: "1",
+                                    transform: "translateX(0)",
+                                },
+                            },
+                            bounceDot: {
+                                "0%,80%,100%": { transform: "scale(0)" },
+                                "40%": { transform: "scale(1)" },
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            html,
             body {
-                padding: 20px;
-            }
-            .app-container {
-                border-radius: 24px;
-                height: calc(100vh - 40px);
-                height: calc(100dvh - 40px);
-                max-height: 860px;
-                overflow: hidden;
-            }
-        }
-
-        /* ── HEADER ── */
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            position: relative;
-            z-index: 10;
-            flex-shrink: 0;
-            box-shadow: 0 2px 20px rgba(5, 150, 105, 0.25);
-        }
-
-        @supports (backdrop-filter: blur(12px)) {
-            header {
-                background: linear-gradient(135deg, rgba(5, 150, 105, 0.92) 0%, rgba(6, 95, 70, 0.95) 100%);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-            }
-        }
-
-        #headerProfilePic {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            margin-right: 14px;
-            object-fit: cover;
-            border: 2.5px solid rgba(255, 255, 255, 0.35);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            flex-shrink: 0;
-            transition: transform var(--transition);
-        }
-
-        #headerProfilePic:hover {
-            transform: scale(1.08);
-        }
-
-        #headerInfo {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-width: 0;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.1em;
-            font-weight: 700;
-            color: var(--white);
-            line-height: 1.3;
-            letter-spacing: -0.01em;
-        }
-
-        header p {
-            margin: 0;
-            font-size: 0.75em;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.3;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        header p::before {
-            content: "";
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #34d399;
-            box-shadow: 0 0 6px rgba(52, 211, 153, 0.6);
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .back-btn {
-            margin-left: auto;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            width: 38px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            flex-shrink: 0;
-        }
-
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.28);
-            transform: scale(1.05);
-        }
-
-        .back-btn:active {
-            transform: scale(0.95);
-        }
-
-        .back-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-            display: block;
-        }
-
-        /* ── CHATBOX ── */
-        #chatbox {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px 16px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            scroll-behavior: smooth;
-            position: relative;
-            z-index: 1;
-            background: var(--bg);
-        }
-
-        #chatbox::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        #chatbox::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        #chatbox::-webkit-scrollbar-thumb {
-            background: rgba(5, 150, 105, 0.15);
-            border-radius: 10px;
-        }
-
-        #chatbox::-webkit-scrollbar-thumb:hover {
-            background: rgba(5, 150, 105, 0.3);
-        }
-
-        /* ── DATE SEPARATOR ── */
-        .date-separator {
-            align-self: center;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            margin: 8px 0;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-            text-transform: uppercase;
-        }
-
-        .date-separator::before,
-        .date-separator::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(5, 150, 105, 0.12), transparent);
-        }
-
-        /* ── CHAT BUBBLES ── */
-        .bubble {
-            max-width: 80%;
-            border-radius: 18px;
-            line-height: 1.55;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            position: relative;
-            padding: 12px 16px 28px;
-            animation-duration: 0.35s;
-            animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            animation-fill-mode: both;
-            font-size: 0.9375em;
-        }
-
-        .user {
-            align-self: flex-end;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            border-radius: 18px 18px 4px 18px;
-            animation-name: slideInRight;
-            box-shadow: 0 2px 10px rgba(5, 150, 105, 0.2);
-        }
-
-        .bot {
-            align-self: flex-start;
-            background: var(--white);
-            color: var(--text-dark);
-            border-radius: 18px 18px 18px 4px;
-            animation-name: slideInLeft;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-        }
-
-        @keyframes slideInRight {
-            0% {
-                opacity: 0;
-                transform: translateX(24px) scale(0.97);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
-        }
-
-        @keyframes slideInLeft {
-            0% {
-                opacity: 0;
-                transform: translateX(-24px) scale(0.97);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
-        }
-
-        .bubble img {
-            width: 100%;
-            max-width: 220px;
-            border-radius: 12px;
-            display: block;
-            margin-top: 6px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-        }
-
-        .bubble video {
-            width: 100%;
-            max-width: 260px;
-            border-radius: 12px;
-            display: block;
-            margin-top: 6px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-        }
-
-        .timestamp {
-            position: absolute;
-            bottom: 7px;
-            right: 14px;
-            font-size: 10px;
-            font-weight: 400;
-            letter-spacing: 0.01em;
-        }
-
-        .bubble.user .timestamp {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .bubble.bot .timestamp {
-            color: rgba(0, 0, 0, 0.35);
-        }
-
-        .bubble a {
-            text-decoration: underline;
-            word-break: break-all;
-            font-weight: 500;
-        }
-
-        .bubble.user a {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .bubble.bot a {
-            color: var(--primary);
-        }
-
-        /* ── TYPING INDICATOR ── */
-        .typing {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            padding: 4px 10px;
-            min-height: 28px;
-        }
-
-        .dot {
-            width: 7px;
-            height: 7px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: dotBounce 1.4s infinite ease-in-out both;
-        }
-
-        .dot:nth-child(1) {
-            animation-delay: -0.32s;
-        }
-
-        .dot:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: 0s;
-        }
-
-        @keyframes dotBounce {
-            0%, 80%, 100% {
-                transform: scale(0.4);
-                opacity: 0.3;
-            }
-            40% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-        }
-
-        /* ── INPUT AREA ── */
-        #inputArea {
-            display: flex;
-            gap: 10px;
-            padding: 12px 16px;
-            padding-bottom: max(12px, env(safe-area-inset-bottom));
-            background: var(--white);
-            border-top: 1px solid rgba(5, 150, 105, 0.08);
-            flex-shrink: 0;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            z-index: 2;
-            position: relative;
-            box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.04);
-        }
-
-        #filePreview {
-            display: none;
-            width: 100%;
-            padding: 10px 14px;
-            background: var(--primary-light);
-            border-radius: var(--radius);
-            font-size: 13px;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            animation: fadeSlideUp 0.25s ease;
-        }
-
-        @keyframes fadeSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(6px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        #fileName {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 90%;
-            color: var(--primary-dark);
-            font-weight: 500;
-        }
-
-        #removeFileBtn {
-            background: none;
-            border: none;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            color: var(--primary);
-            padding: 0 4px;
-            transition: color 0.2s;
-            line-height: 1;
-            min-width: 44px;
-            min-height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-        }
-
-        #removeFileBtn:hover {
-            color: var(--primary-dark);
-            background: rgba(5, 150, 105, 0.1);
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            flex: 1;
-            background: #f1f5f4;
-            border-radius: 28px;
-            border: 1.5px solid transparent;
-            transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
-            min-height: 50px;
-        }
-
-        .input-wrapper:focus-within {
-            border-color: var(--primary);
-            background: var(--white);
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.08);
-        }
-
-        textarea#userInput {
-            flex: 1;
-            resize: none;
-            border: none;
-            border-radius: 28px;
-            padding: 14px 48px 14px 18px;
-            font-size: 0.9375em;
-            line-height: 1.4;
-            max-height: 120px;
-            overflow-y: auto;
-            font-family: "Inter", sans-serif;
-            background: transparent;
-            outline: none;
-            color: var(--text-dark);
-            letter-spacing: -0.01em;
-        }
-
-        textarea#userInput::placeholder {
-            font-weight: 400;
-            color: var(--text-muted);
-        }
-
-        button#sendBtn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0;
-            border-radius: 50%;
-            cursor: pointer;
-            font-weight: 600;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.2s ease;
-            box-shadow: 0 3px 12px rgba(5, 150, 105, 0.3);
-        }
-
-        button#sendBtn img {
-            width: 22px;
-            height: 22px;
-            display: block;
-        }
-
-        button#sendBtn:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 6px 18px rgba(5, 150, 105, 0.4);
-        }
-
-        button#sendBtn:active {
-            transform: scale(0.93);
-        }
-
-        .fileLabel-inner {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            padding: 6px;
-            transition: opacity 0.2s ease;
-            line-height: 0;
-            min-width: 44px;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .fileLabel-inner:hover {
-            opacity: 0.7;
-            background: rgba(5, 150, 105, 0.06);
-        }
-
-        .fileLabel-inner img {
-            width: 22px;
-            height: 22px;
-            display: block;
-            opacity: 0.5;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-
-        .fileLabel-inner:hover img {
-            opacity: 0.75;
-            transform: scale(1.1);
-        }
-
-        /* ── SCROLL TO BOTTOM ── */
-        #scrollToBottomBtn {
-            display: none;
-            position: sticky;
-            bottom: 85px;
-            left: calc(100% - 60px);
-            background: var(--white);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s ease;
-            opacity: 0;
-            margin-left: auto;
-            margin-top: -40px;
-        }
-
-        #scrollToBottomBtn.visible {
-            display: flex;
-            opacity: 1;
-            animation: fadeIn 0.25s ease;
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(8px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        #scrollToBottomBtn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
-            background: var(--bg);
-        }
-
-        #scrollToBottomBtn:active {
-            transform: scale(0.93);
-        }
-
-        #scrollToBottomBtn svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--primary);
-        }
-
-        /* ── FORM OVERLAY (BOTTOM SHEET) ── */
-        .form-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 100;
-            transition: opacity 0.3s ease;
-        }
-
-        @supports (backdrop-filter: blur(4px)) {
-            .form-overlay {
-                background: rgba(0, 0, 0, 0.3);
-                backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);
-            }
-        }
-
-        .form-container {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%) translateY(100%);
-            width: 100%;
-            max-width: 768px;
-            background: var(--white);
-            border-radius: 24px 24px 0 0;
-            padding: 28px 24px max(28px, env(safe-area-inset-bottom));
-            z-index: 101;
-            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-            box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        @media (min-width: 769px) {
-            .form-container {
-                border-radius: 24px;
-                max-width: 480px;
-                bottom: auto;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) scale(0.95);
-                transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
-                opacity: 0;
-            }
-            .form-container.form-visible {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-        }
-
-        .form-container.form-visible {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .form-container h3 {
-            font-family: "Inter", sans-serif;
-            font-weight: 700;
-            color: var(--primary);
-            margin-top: 0;
-            margin-bottom: 24px;
-            text-align: center;
-            font-size: 1.15em;
-            letter-spacing: -0.01em;
-        }
-
-        .form-container .form-field {
-            margin-bottom: 16px;
-        }
-
-        .form-container label {
-            font-family: "Inter", sans-serif;
-            font-size: 0.8125em;
-            font-weight: 600;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 6px;
-            letter-spacing: -0.01em;
-        }
-
-        .form-container input[type="text"],
-        .form-container textarea {
-            width: 100%;
-            padding: 13px 14px;
-            border-radius: var(--radius);
-            border: 1.5px solid rgba(0, 0, 0, 0.08);
-            background: #f1f5f4;
-            font-family: "Inter", sans-serif;
-            font-size: 0.9375em;
-            color: var(--text-dark);
-            transition: border-color 0.2s, background 0.2s;
-            outline: none;
-            letter-spacing: -0.01em;
-        }
-
-        .form-container input[type="text"]:focus,
-        .form-container textarea:focus {
-            border-color: var(--primary);
-            background: var(--white);
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.08);
-        }
-
-        .form-container input[type="text"]:read-only {
-            background: var(--primary-light);
-            opacity: 0.7;
-            color: var(--text-muted);
-        }
-
-        .form-container textarea#formSaran {
-            resize: none;
-            min-height: 110px;
-        }
-
-        #submitFormBtn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: "Inter", sans-serif;
-            font-size: 1em;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
-            margin-top: 6px;
-            letter-spacing: -0.01em;
-        }
-
-        #submitFormBtn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
-        }
-
-        #submitFormBtn:active {
-            transform: scale(0.98);
-        }
-
-        #closeFormBtn {
-            position: absolute;
-            top: 14px;
-            right: 16px;
-            background: rgba(0, 0, 0, 0.04);
-            border: none;
-            border-radius: 50%;
-            width: 34px;
-            height: 34px;
-            font-size: 20px;
-            color: var(--text-muted);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            line-height: 1;
-        }
-
-        #closeFormBtn:hover {
-            background: rgba(0, 0, 0, 0.08);
-            color: var(--text-dark);
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 600px) {
-            header {
-                padding: 12px 16px;
-            }
-            header h1 {
-                font-size: 1.05em;
-            }
-            header p {
-                font-size: 0.72em;
-            }
-            textarea#userInput {
-                font-size: 0.9375em;
-            }
-            .bubble {
-                max-width: 85%;
-                font-size: 0.9em;
-            }
-            #inputArea {
-                padding: 10px 12px;
-                gap: 8px;
+                height: 100%;
+                margin: 0;
             }
             #chatbox {
-                padding: 16px 12px 8px;
+                scrollbar-width: thin;
+                scrollbar-color: #d1d5db transparent;
+            }
+            #chatbox::-webkit-scrollbar {
+                width: 4px;
+            }
+            #chatbox::-webkit-scrollbar-thumb {
+                background: #d1d5db;
+                border-radius: 4px;
+            }
+            .bubble.user {
+                background: #059669;
+                color: white;
+                border-radius: 18px 18px 4px 18px;
+            }
+            .bubble.bot {
+                background: white;
+                color: #1f2937;
+                border-radius: 18px 18px 18px 4px;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+            }
+            .bubble.user .timestamp {
+                color: rgba(255, 255, 255, 0.7);
+            }
+            .bubble.bot .timestamp {
+                color: #9ca3af;
+            }
+            .date-separator {
+                text-align: center;
+                font-size: 0.75rem;
+                color: #9ca3af;
+                position: relative;
+                margin: 16px 0;
+            }
+            .date-separator::before,
+            .date-separator::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                width: 30%;
+                height: 1px;
+                background: linear-gradient(to right, transparent, #e5e7eb);
+            }
+            .date-separator::before {
+                left: 0;
+                background: linear-gradient(to right, transparent, #e5e7eb);
+            }
+            .date-separator::after {
+                right: 0;
+                background: linear-gradient(to left, transparent, #e5e7eb);
+            }
+            .typing {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                padding: 4px 8px;
+            }
+            .dot {
+                width: 7px;
+                height: 7px;
+                background: #059669;
+                border-radius: 50%;
+                animation: bounceDot 1.4s infinite ease-in-out;
+            }
+            .dot:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            .dot:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+            @keyframes bounceDot {
+                0%,
+                80%,
+                100% {
+                    transform: scale(0);
+                }
+                40% {
+                    transform: scale(1);
+                }
+            }
+            .form-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.35);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                z-index: 100;
             }
             .form-container {
-                padding: 24px 20px max(24px, env(safe-area-inset-bottom));
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: white;
+                border-radius: 24px 24px 0 0;
+                padding: 24px 24px max(24px, env(safe-area-inset-bottom));
+                z-index: 101;
+                transform: translateY(100%);
+                transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.08);
             }
-            button#sendBtn {
-                width: 46px;
-                height: 46px;
+            .form-container.form-visible {
+                transform: translateY(0);
             }
-            button#sendBtn img {
-                width: 20px;
-                height: 20px;
+            @media (min-width: 640px) {
+                .form-container {
+                    border-radius: 24px;
+                    max-width: 440px;
+                    left: 50%;
+                    transform: translate(-50%, 100%);
+                    bottom: auto;
+                    top: 50%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                }
+                .form-container.form-visible {
+                    transform: translate(-50%, -50%);
+                }
             }
-            #headerProfilePic {
-                width: 38px;
-                height: 38px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div class="app-container">
-        <header>
-            <img
-                src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg"
-                alt="Profile"
-                id="headerProfilePic"
-            />
-            <div id="headerInfo">
-                <h1>LISA Ai</h</h1>1>
-                <p></p>online</p>
-            </div>
-            <a href="/" class="back-btn" aria-label="Kembali ke Beranda">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 12h18M9 5l-7 7 7 7"/>
-                </svg>
-            </a>
-        </header>
-
-        <div id="chatbox"></div>
-
-        <div id="inputArea">
-            <div id="filePreview">
-                <span id="fileName">namafilepanjang.jpg</span>
-                <button id="removeFileBtn">&times;</button>
-            </div>
-            <div class="input-wrapper">
-                <textarea
-                    id="userInput"
-                    placeholder="Tulis pesanmu..."
-                    rows="1"
-                ></textarea>
-                <label for="fileInput" class="fileLabel-inner">
+        </style>
+    </head>
+    <body
+        class="font-sans bg-gradient-to-br from-brand-50 via-white to-brand-50"
+    >
+        <!-- Desktop wrapper -->
+        <div
+            class="sm:min-h-screen sm:flex sm:items-center sm:justify-center sm:p-4"
+        >
+            <div
+                class="sm:w-full sm:max-w-2xl sm:h-[860px] sm:max-h-[95vh] sm:bg-white sm:rounded-3xl sm:shadow-xl sm:flex sm:flex-col sm:overflow-hidden sm:border sm:border-gray-100"
+            >
+                <!-- HEADER -->
+                <header
+                    class="flex items-center px-4 py-3 bg-brand-600 text-white shrink-0 gap-3"
+                >
                     <img
-                        src="https://files.lingkungansehatasri.my.id/attach-file-hijau.png"
-                        alt="Attach"
+                        src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg"
+                        alt="Profile"
+                        id="headerProfilePic"
+                        class="w-10 h-10 rounded-full object-cover border-2 border-white/40 shadow-sm"
                     />
-                </label>
-                <input type="file" id="fileInput" accept="image/*" hidden />
-            </div>
-            <button id="sendBtn">
-                <img
-                    src="https://files.lingkungansehatasri.my.id/send-putih.png"
-                    alt="Send"
-                />
-            </button>
-        </div>
+                    <div id="headerInfo" class="flex-1">
+                        <h1 class="text-base font-bold leading-tight">
+                            LISA Ai
+                        </h1>
+                        <p
+                            class="text-xs text-brand-100 flex items-center gap-1.5"
+                        >
+                            <span
+                                class="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse inline-block"
+                            ></span
+                            >online
+                        </p>
+                    </div>
+                    <a
+                        href="/"
+                        class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center shrink-0 transition active:scale-90"
+                        aria-label="Kembali ke Beranda"
+                    >
+                        <svg
+                            class="w-5 h-5 text-white"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                            ></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </a>
+                </header>
 
-        <button id="scrollToBottomBtn">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-            </svg>
-        </button>
-    </div>
+                <!-- CHAT MESSAGES -->
+                <div
+                    id="chatbox"
+                    class="flex-1 overflow-y-auto px-4 py-4 space-y-1 bg-gray-50/50"
+                ></div>
 
-    <div class="form-overlay" id="formOverlay">
-        <div class="form-container" id="formContainer">
-            <button id="closeFormBtn">&times;</button>
-            <h3>Kasih</h3> Saran & Masukan</h3>
-            <form>
-                <div class="form-field">
-                    <label for="formId">ID Sesi (Otomatis)</label>
-                    <input type="text" id="formId" readonly />
-                </div>
-                <div class="form-field">
-                    <label for="formDate">Tanggal (Otomatis)</label>
-                    <input type="text" id="formDate" readonly />
-                </div>
-                <div class="form-field">
-                    <label for="formSaran">Saran & Masukan Kamu</label>
-                    <textarea
-                        id="formSaran"
-                        placeholder="Tulis saran/masukanmu soal lingkungan sekolah di sini..."
-                        rows="4"
-                    ></textarea>
-                </div>
-                <button type="submit" id="submitFormBtn">
-                    Kirim Saran
+                <!-- SCROLL TO BOTTOM -->
+                <button
+                    id="scrollToBottomBtn"
+                    class="hidden absolute bottom-[90px] right-5 w-10 h-10 bg-white rounded-full shadow-lg items-center justify-center z-10 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                    style="display: none"
+                >
+                    <svg class="w-5 h-5 fill-brand-600" viewBox="0 0 24 24">
+                        <path
+                            d="M17 13.41L12 18.41L7 13.41L8.41 12L12 15.59L15.59 12L17 13.41ZM17 7.41L12 12.41L7 7.41L8.41 6L12 9.59L15.59 6L17 7.41Z"
+                        />
+                    </svg>
                 </button>
-            </form>
+
+                <!-- INPUT AREA -->
+                <div
+                    id="inputArea"
+                    class="bg-white border-t border-gray-100 px-4 py-3 shrink-0 relative"
+                >
+                    <div
+                        id="filePreview"
+                        style="display: none"
+                        class="flex items-center gap-2 mb-2 px-3 py-1.5 bg-brand-50 rounded-lg text-sm animate-fade-in"
+                    >
+                        <span
+                            id="fileName"
+                            class="text-brand-700 truncate flex-1 text-xs"
+                            >namafilepanjang.jpg</span
+                        >
+                        <button
+                            id="removeFileBtn"
+                            class="text-gray-400 hover:text-gray-600 text-lg leading-none cursor-pointer bg-transparent border-none"
+                        >
+                            &times;
+                        </button>
+                    </div>
+                    <div class="flex items-end gap-2">
+                        <div
+                            class="flex-1 flex items-end gap-2 bg-gray-100 rounded-2xl px-4 py-2 focus-within:ring-2 focus-within:ring-brand-500/30 focus-within:bg-white transition-all"
+                        >
+                            <textarea
+                                id="userInput"
+                                placeholder="Tulis pesanmu..."
+                                rows="1"
+                                class="flex-1 resize-none bg-transparent outline-none text-sm text-gray-800 leading-relaxed max-h-32 py-1 font-sans"
+                            ></textarea>
+                            <label
+                                for="fileInput"
+                                class="cursor-pointer p-1.5 rounded-full hover:bg-gray-200 transition shrink-0"
+                            >
+                                <img
+                                    src="https://files.lingkungansehatasri.my.id/attach-file-hijau.png"
+                                    alt="Attach"
+                                    class="w-5 h-5 opacity-50 hover:opacity-80 transition"
+                                />
+                            </label>
+                            <input
+                                type="file"
+                                id="fileInput"
+                                accept="image/*"
+                                hidden
+                            />
+                        </div>
+                        <button
+                            id="sendBtn"
+                            class="w-11 h-11 rounded-full bg-brand-600 hover:bg-brand-700 flex items-center justify-center shrink-0 active:scale-90 transition-all shadow-md hover:shadow-lg"
+                        >
+                            <img
+                                src="https://files.lingkungansehatasri.my.id/send-putih.png"
+                                alt="Send"
+                                class="w-5 h-5"
+                            />
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <script>
-        const chatbox = document.getElementById("chatbox");
-        const input = document.getElementById("userInput");
-        const sendBtn = document.getElementById("sendBtn");
-        const fileInput = document.getElementById("fileInput");
-        const filePreview = document.getElementById("filePreview");
-        const fileName = document.getElementById("fileName");
-        const removeFileBtn = document.getElementById("removeFileBtn");
-        const scrollToBottomBtn =
-            document.getElementById("scrollToBottomBtn");
-        let lastMessageDate = null;
+        <!-- FORM OVERLAY -->
+        <div class="form-overlay" id="formOverlay">
+            <div class="form-container" id="formContainer">
+                <button
+                    id="closeFormBtn"
+                    class="absolute top-3 right-4 bg-transparent border-none text-gray-400 hover:text-gray-600 text-2xl cursor-pointer leading-none"
+                >
+                    &times;
+                </button>
+                <h3 class="text-lg font-bold text-brand-700 text-center mb-5">
+                    Kasih Saran & Masukan
+                </h3>
+                <form class="space-y-4">
+                    <div>
+                        <label
+                            for="formId"
+                            class="block text-xs font-semibold text-gray-500 mb-1"
+                            >ID Sesi (Otomatis)</label
+                        >
+                        <input
+                            type="text"
+                            id="formId"
+                            readonly
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-600 outline-none font-sans"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            for="formDate"
+                            class="block text-xs font-semibold text-gray-500 mb-1"
+                            >Tanggal (Otomatis)</label
+                        >
+                        <input
+                            type="text"
+                            id="formDate"
+                            readonly
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-600 outline-none font-sans"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            for="formSaran"
+                            class="block text-xs font-semibold text-gray-500 mb-1"
+                            >Saran & Masukan Kamu</label
+                        >
+                        <textarea
+                            id="formSaran"
+                            placeholder="Tulis saran/masukanmu soal lingkungan sekolah di sini..."
+                            rows="4"
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 outline-none text-sm resize-none font-sans"
+                        ></textarea>
+                    </div>
+                    <button
+                        type="submit"
+                        id="submitFormBtn"
+                        class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-full active:scale-[0.98] transition-all text-sm shadow-md"
+                    >
+                        Kirim Saran
+                    </button>
+                </form>
+            </div>
+        </div>
 
-        const webhookUrl =
-            "https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf";
+        <script>
+            const chatbox = document.getElementById("chatbox");
+            const input = document.getElementById("userInput");
+            const sendBtn = document.getElementById("sendBtn");
+            const fileInput = document.getElementById("fileInput");
+            const filePreview = document.getElementById("filePreview");
+            const fileName = document.getElementById("fileName");
+            const removeFileBtn = document.getElementById("removeFileBtn");
+            const scrollToBottomBtn =
+                document.getElementById("scrollToBottomBtn");
+            let lastMessageDate = null;
 
-        const HISTORY_KEY = "lisaChatHistory";
-        const EXPIRATION_DAYS = 7;
+            const webhookUrl =
+                "https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf";
+            const HISTORY_KEY = "lisaChatHistory";
+            const EXPIRATION_DAYS = 7;
 
-        const sessionId =
-            localStorage.getItem("lisaSession") || crypto.randomUUID();
-        localStorage.setItem("lisaSession", sessionId);
+            const sessionId =
+                localStorage.getItem("lisaSession") || crypto.randomUUID();
+            localStorage.setItem("lisaSession", sessionId);
 
-        fileInput.addEventListener("change", () => {
-            if (fileInput.files.length > 0) {
-                const name = fileInput.files[0].name;
-                fileName.textContent = name;
-                filePreview.style.display = "flex";
-            } else {
+            fileInput.addEventListener("change", () => {
+                if (fileInput.files.length > 0) {
+                    fileName.textContent = fileInput.files[0].name;
+                    filePreview.style.display = "flex";
+                } else {
+                    filePreview.style.display = "none";
+                }
+            });
+
+            removeFileBtn.addEventListener("click", () => {
+                fileInput.value = null;
                 filePreview.style.display = "none";
-            }
-        });
-
-        removeFileBtn.addEventListener("click", () => {
-            fileInput.value = null;
-            filePreview.style.display = "none";
-            fileName.textContent = "";
-        });
-
-        function readFileAsDataURL(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = () => reject(reader.error);
-                reader.readAsDataURL(file);
+                fileName.textContent = "";
             });
-        }
 
-        function getFormattedDate(dateString) {
-            const today = new Date().toLocaleDateString("id-ID");
-            const yesterday = new Date(
-                Date.now() - 86400000,
-            ).toLocaleDateString("id-ID");
-
-            if (dateString === today) return "Hari Ini";
-            if (dateString === yesterday) return "Kemarin";
-            return dateString;
-        }
-
-        function linkify(text) {
-            let processedText = text.replace(/\n/g, "<br>");
-            processedText = processedText.replace(
-                /\*(.*?)\*/g,
-                "<strong>$1</strong>",
-            );
-            const urlRegex =
-                /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])|(\bwww\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-
-            return processedText.replace(urlRegex, function (url) {
-                if (url.includes('href="') || url.includes('src="')) {
-                    return url;
-                }
-
-                let href = url;
-                if (url.startsWith("www.")) {
-                    href = "http://" + url;
-                }
-
-                if (
-                    url.startsWith(
-                        "https://files.lingkungansehatasri.my.id",
-                    ) &&
-                    (url.includes(".mp4") || url.includes(".webm"))
-                ) {
-                    return `
-            <video controls playsinline preload="metadata" style="width: 100%; max-width: 280px; border-radius: 10px; display: block; margin-top: 8px;">
-              <source src="${url}" type="video/mp4">
-            </video>
-          `;
-                }
-
-                if (
-                    url.startsWith(
-                        "https://files.lingkungansehatasri.my.id",
-                    ) &&
-                    (url.includes(".jpg") || url.includes(".png"))
-                ) {
-                    return `<img src="${url}" alt="Lampiran" style="width: 100%; max-width: 250px; border-radius: 10px; display: block; margin-top: 8px;">`;
-                }
-
-                return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-            });
-        }
-
-        function addMessage(message, sender, save = true) {
-            const text = message.text.trim();
-
-            if (sender === "bot" && text.includes("[BUKA_FORM_LAPORAN]")) {
-                openForm();
-                return;
-            }
-
-            if (message.date !== lastMessageDate) {
-                const dateSep = document.createElement("div");
-                dateSep.classList.add("date-separator");
-                dateSep.textContent = getFormattedDate(message.date);
-                chatbox.appendChild(dateSep);
-                lastMessageDate = message.date;
-            }
-
-            const msg = document.createElement("div");
-            msg.classList.add("bubble", sender);
-            const content = document.createElement("div");
-
-            if (
-                typeof text === "string" &&
-                text.startsWith("data:image/")
-            ) {
-                content.innerHTML = `<img src="${text}" alt="Lampiran gambar">`;
-                msg.style.padding = "10px";
-            } else {
-                content.innerHTML = linkify(text);
-            }
-
-            msg.appendChild(content);
-
-            const timeContent = document.createElement("span");
-            timeContent.classList.add("timestamp");
-            timeContent.textContent = message.time;
-            msg.appendChild(timeContent);
-
-            const isScrolledToBottom =
-                chatbox.scrollHeight - chatbox.clientHeight <=
-                chatbox.scrollTop + 100;
-
-            chatbox.appendChild(msg);
-
-            if (isScrolledToBottom) {
-                chatbox.scrollTo({
-                    top: chatbox.scrollHeight,
-                    behavior: "smooth",
+            function readFileAsDataURL(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = () => reject(reader.error);
+                    reader.readAsDataURL(file);
                 });
             }
 
-            if (text.startsWith("Saran & Masukan (ID:")) {
-                save = false;
+            function getFormattedDate(dateString) {
+                const today = new Date().toLocaleDateString("id-ID");
+                const yesterday = new Date(
+                    Date.now() - 86400000,
+                ).toLocaleDateString("id-ID");
+                if (dateString === today) return "Hari Ini";
+                if (dateString === yesterday) return "Kemarin";
+                return dateString;
             }
 
-            if (save) {
-                saveChatHistory(message, sender);
-            }
-        }
-
-        function addTyping() {
-            const wrap = document.createElement("div");
-            wrap.classList.add("bubble", "bot");
-            wrap.id = "typing";
-            wrap.innerHTML =
-                '<div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
-            chatbox.appendChild(wrap);
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
-
-        function removeTyping() {
-            const typing = document.getElementById("typing");
-            if (typing) typing.remove();
-        }
-
-        async function sendMessage() {
-            const text = input.value.trim();
-            const file = fileInput.files[0];
-
-            if (!text && !file) return;
-
-            const now = new Date();
-            const time = now
-                .toLocaleTimeString("id-ID", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                })
-                .replace(".", ":");
-            const date = now.toLocaleDateString("id-ID");
-
-            input.value = "";
-            input.style.height = "auto";
-            fileInput.value = null;
-            filePreview.style.display = "none";
-            fileName.textContent = "";
-
-            if (text) {
-                addMessage({ text: text, time: time, date: date }, "user");
-            }
-
-            const formData = new FormData();
-            formData.append("text", text);
-            formData.append("sessionId", sessionId);
-
-            if (file) {
-                try {
-                    const base64src = await readFileAsDataURL(file);
-                    addMessage(
-                        { text: base64src, time: time, date: date },
-                        "user",
-                    );
-                } catch (e) {
-                    addMessage(
-                        {
-                            text: "[Gagal memuat preview gambar]",
-                            time: time,
-                            date: date,
-                        },
-                        "user",
-                    );
-                }
-                formData.append("file", file);
-            }
-
-            addTyping();
-
-            try {
-                const res = await fetch(webhookUrl, {
-                    method: "POST",
-                    body: formData,
-                });
-
-                const data = await res.json();
-                removeTyping();
-
-                const botNow = new Date();
-                const botTime = botNow
-                    .toLocaleTimeString("id-ID", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                    })
-                    .replace(".", ":");
-                const botDate = botNow.toLocaleDateString("id-ID");
-
-                const botReply =
-                    data.output || JSON.stringify(data, null, 2);
-                addMessage(
-                    { text: botReply, time: botTime, date: botDate },
-                    "bot",
+            function linkify(text) {
+                let processedText = text.replace(/\n/g, "<br>");
+                processedText = processedText.replace(
+                    /\*(.*?)\*/g,
+                    "<strong>$1</strong>",
                 );
-
-                if (data.userInput && data.userInput.includes("https://")) {
-                    updateHistoryWithURL(data.userInput);
-                }
-            } catch (e) {
-                removeTyping();
-                const errTime = new Date()
-                    .toLocaleTimeString("id-ID", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                    })
-                    .replace(".", ":");
-                const errDate = new Date().toLocaleDateString("id-ID");
-                addMessage(
-                    {
-                        text: "⚠️ Gagal terhubung ke server. Coba lagi nanti.",
-                        time: errTime,
-                        date: errDate,
-                    },
-                    "bot",
-                );
-                console.error(e);
-            }
-        }
-
-        function updateHistoryWithURL(messageWithUrl) {
-            const urlMatch = messageWithUrl.match(/https?:\/\/[^\s\]]+/);
-            if (!urlMatch) return;
-            const s3Url = urlMatch[0];
-
-            const stored = localStorage.getItem(HISTORY_KEY);
-            if (!stored) return;
-
-            try {
-                let data = JSON.parse(stored);
-                for (let i = data.chats.length - 1; i >= 0; i--) {
+                const urlRegex =
+                    /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])|(\bwww\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+                return processedText.replace(urlRegex, function (url) {
+                    if (url.includes('href="') || url.includes('src="'))
+                        return url;
+                    let href = url;
+                    if (url.startsWith("www.")) href = "http://" + url;
                     if (
-                        data.chats[i].sender === "user" &&
-                        data.chats[i].message.text ===
-                            "[Gambar dilampirkan]"
+                        url.startsWith(
+                            "https://files.lingkungansehatasri.my.id",
+                        ) &&
+                        (url.includes(".mp4") || url.includes(".webm"))
                     ) {
-                        data.chats[i].message.text = s3Url;
-                        break;
+                        return (
+                            '<video controls playsinline preload="metadata" style="width:100%;max-width:280px;border-radius:10px;display:block;margin-top:8px;"><source src="' +
+                            url +
+                            '" type="video/mp4"></video>'
+                        );
                     }
-                }
-                localStorage.setItem(HISTORY_KEY, JSON.stringify(data));
-            } catch (e) {
-                console.error("Gagal update history dengan URL S3:", e);
+                    if (
+                        url.startsWith(
+                            "https://files.lingkungansehatasri.my.id",
+                        ) &&
+                        (url.includes(".jpg") || url.includes(".png"))
+                    ) {
+                        return (
+                            '<img src="' +
+                            url +
+                            '" alt="Lampiran" style="width:100%;max-width:250px;border-radius:10px;display:block;margin-top:8px;">'
+                        );
+                    }
+                    return (
+                        '<a href="' +
+                        href +
+                        '" target="_blank" rel="noopener noreferrer" style="color:#059669;text-decoration:underline;">' +
+                        url +
+                        "</a>"
+                    );
+                });
             }
-        }
 
-        function saveChatHistory(message, sender) {
-            const stored = localStorage.getItem(HISTORY_KEY);
-            let chats = [];
-            if (stored) {
-                try {
-                    chats = JSON.parse(stored).chats || [];
-                } catch (e) {
-                    chats = [];
+            function addMessage(message, sender, save = true) {
+                const text = message.text.trim();
+                if (sender === "bot" && text.includes("[BUKA_FORM_LAPORAN]")) {
+                    openForm();
+                    return;
                 }
+                if (message.date !== lastMessageDate) {
+                    const dateSep = document.createElement("div");
+                    dateSep.classList.add("date-separator");
+                    dateSep.textContent = getFormattedDate(message.date);
+                    chatbox.appendChild(dateSep);
+                    lastMessageDate = message.date;
+                }
+                const msg = document.createElement("div");
+                msg.classList.add(
+                    "bubble",
+                    sender,
+                    "p-3",
+                    "mb-2",
+                    "max-w-[85%]",
+                    "sm:max-w-[70%]",
+                    "text-sm",
+                    "leading-relaxed",
+                    "relative",
+                );
+                if (sender === "user")
+                    msg.classList.add("ml-auto", "animate-slide-in-right");
+                else msg.classList.add("mr-auto", "animate-slide-in-left");
+                const content = document.createElement("div");
+                if (
+                    typeof text === "string" &&
+                    text.startsWith("data:image/")
+                ) {
+                    content.innerHTML =
+                        '<img src="' +
+                        text +
+                        '" alt="Lampiran gambar" style="max-width:200px;border-radius:8px;display:block">';
+                    msg.style.padding = "8px";
+                } else {
+                    content.innerHTML = linkify(text);
+                }
+                msg.appendChild(content);
+                const timeContent = document.createElement("span");
+                timeContent.classList.add(
+                    "timestamp",
+                    "block",
+                    "text-[10px]",
+                    "mt-1.5",
+                );
+                timeContent.textContent = message.time;
+                msg.appendChild(timeContent);
+                const isScrolledToBottom =
+                    chatbox.scrollHeight - chatbox.clientHeight <=
+                    chatbox.scrollTop + 100;
+                chatbox.appendChild(msg);
+                if (isScrolledToBottom)
+                    chatbox.scrollTo({
+                        top: chatbox.scrollHeight,
+                        behavior: "smooth",
+                    });
+                if (text.startsWith("Saran & Masukan (ID:")) save = false;
+                if (save) saveChatHistory(message, sender);
             }
-            chats.push({ message: message, sender: sender });
-            const newData = {
-                timestamp: new Date().getTime(),
-                chats: chats,
-            };
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(newData));
-        }
 
-        function loadChatHistory() {
-            const stored = localStorage.getItem(HISTORY_KEY);
+            function addTyping() {
+                const wrap = document.createElement("div");
+                wrap.classList.add(
+                    "bubble",
+                    "bot",
+                    "mr-auto",
+                    "px-4",
+                    "py-3",
+                    "mb-2",
+                );
+                wrap.id = "typing";
+                wrap.innerHTML =
+                    '<div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+                chatbox.appendChild(wrap);
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }
 
-            if (!stored) {
+            function removeTyping() {
+                const typing = document.getElementById("typing");
+                if (typing) typing.remove();
+            }
+
+            async function sendMessage() {
+                const text = input.value.trim();
+                const file = fileInput.files[0];
+                if (!text && !file) return;
                 const now = new Date();
                 const time = now
                     .toLocaleTimeString("id-ID", {
@@ -1266,153 +598,272 @@
                     })
                     .replace(".", ":");
                 const date = now.toLocaleDateString("id-ID");
-
-                const welcomeMsg =
-                    "haii! 👋 aku LISA.\naku siap bantu kamuu urusan sampah & lingkungan sekolah.\n\nketik 'menu' ajaa kalau mau liat apa yang bisa aku bantu yaa! 😉";
-
-                addMessage(
-                    { text: welcomeMsg, time: time, date: date },
-                    "bot",
-                    false,
-                );
-                return;
+                input.value = "";
+                input.style.height = "auto";
+                fileInput.value = null;
+                filePreview.style.display = "none";
+                fileName.textContent = "";
+                if (text)
+                    addMessage({ text: text, time: time, date: date }, "user");
+                const formData = new FormData();
+                formData.append("text", text);
+                formData.append("sessionId", sessionId);
+                if (file) {
+                    try {
+                        const base64src = await readFileAsDataURL(file);
+                        addMessage(
+                            { text: base64src, time: time, date: date },
+                            "user",
+                        );
+                    } catch (e) {
+                        addMessage(
+                            {
+                                text: "[Gagal memuat preview gambar]",
+                                time: time,
+                                date: date,
+                            },
+                            "user",
+                        );
+                    }
+                    formData.append("file", file);
+                }
+                addTyping();
+                try {
+                    const res = await fetch(webhookUrl, {
+                        method: "POST",
+                        body: formData,
+                    });
+                    const data = await res.json();
+                    removeTyping();
+                    const botNow = new Date();
+                    const botTime = botNow
+                        .toLocaleTimeString("id-ID", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })
+                        .replace(".", ":");
+                    const botDate = botNow.toLocaleDateString("id-ID");
+                    const botReply =
+                        data.output || JSON.stringify(data, null, 2);
+                    addMessage(
+                        { text: botReply, time: botTime, date: botDate },
+                        "bot",
+                    );
+                    if (data.userInput && data.userInput.includes("https://"))
+                        updateHistoryWithURL(data.userInput);
+                } catch (e) {
+                    removeTyping();
+                    const errTime = new Date()
+                        .toLocaleTimeString("id-ID", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })
+                        .replace(".", ":");
+                    const errDate = new Date().toLocaleDateString("id-ID");
+                    addMessage(
+                        {
+                            text: "⚠️ Gagal terhubung ke server. Coba lagi nanti.",
+                            time: errTime,
+                            date: errDate,
+                        },
+                        "bot",
+                    );
+                    console.error(e);
+                }
             }
 
-            try {
-                const data = JSON.parse(stored);
-                const now = new Date().getTime();
-                const expirationTime =
-                    EXPIRATION_DAYS * 24 * 60 * 60 * 1000;
+            function updateHistoryWithURL(messageWithUrl) {
+                const urlMatch = messageWithUrl.match(/https?:\/\/[^\s\]]+/);
+                if (!urlMatch) return;
+                const s3Url = urlMatch[0];
+                const stored = localStorage.getItem(HISTORY_KEY);
+                if (!stored) return;
+                try {
+                    let data = JSON.parse(stored);
+                    for (let i = data.chats.length - 1; i >= 0; i--) {
+                        if (
+                            data.chats[i].sender === "user" &&
+                            data.chats[i].message.text ===
+                                "[Gambar dilampirkan]"
+                        ) {
+                            data.chats[i].message.text = s3Url;
+                            break;
+                        }
+                    }
+                    localStorage.setItem(HISTORY_KEY, JSON.stringify(data));
+                } catch (e) {
+                    console.error("Gagal update history dengan URL S3:", e);
+                }
+            }
 
-                if (now - data.timestamp > expirationTime) {
-                    localStorage.removeItem(HISTORY_KEY);
-                    loadChatHistory();
+            function saveChatHistory(message, sender) {
+                const stored = localStorage.getItem(HISTORY_KEY);
+                let chats = [];
+                if (stored) {
+                    try {
+                        chats = JSON.parse(stored).chats || [];
+                    } catch (e) {
+                        chats = [];
+                    }
+                }
+                chats.push({ message: message, sender: sender });
+                localStorage.setItem(
+                    HISTORY_KEY,
+                    JSON.stringify({
+                        timestamp: new Date().getTime(),
+                        chats: chats,
+                    }),
+                );
+            }
+
+            function loadChatHistory() {
+                const stored = localStorage.getItem(HISTORY_KEY);
+                if (!stored) {
+                    const now = new Date();
+                    const time = now
+                        .toLocaleTimeString("id-ID", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })
+                        .replace(".", ":");
+                    const date = now.toLocaleDateString("id-ID");
+                    addMessage(
+                        {
+                            text: "haii! 👋 aku LISA.\naku siap bantu kamuu urusan sampah & lingkungan sekolah.\n\nketik 'menu' ajaa kalau mau liat apa yang bisa aku bantu yaa! 😉",
+                            time: time,
+                            date: date,
+                        },
+                        "bot",
+                        false,
+                    );
                     return;
                 }
-
-                data.chats.forEach((item) => {
-                    if (item.message.text === "[Gambar dilampirkan]") {
+                try {
+                    const data = JSON.parse(stored);
+                    const now = new Date().getTime();
+                    if (
+                        now - data.timestamp >
+                        EXPIRATION_DAYS * 24 * 60 * 60 * 1000
+                    ) {
+                        localStorage.removeItem(HISTORY_KEY);
+                        loadChatHistory();
                         return;
                     }
-                    addMessage(item.message, item.sender, false);
-                });
-            } catch (e) {
-                console.error("Gagal memuat history chat:", e);
-                localStorage.removeItem(HISTORY_KEY);
+                    data.chats.forEach((item) => {
+                        if (item.message.text === "[Gambar dilampirkan]")
+                            return;
+                        addMessage(item.message, item.sender, false);
+                    });
+                } catch (e) {
+                    console.error("Gagal memuat history chat:", e);
+                    localStorage.removeItem(HISTORY_KEY);
+                }
             }
-        }
 
-        sendBtn.addEventListener("click", sendMessage);
+            sendBtn.addEventListener("click", sendMessage);
 
-        const isMobile = /Mobi/i.test(navigator.userAgent);
-        input.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                if (e.shiftKey || isMobile) {
+            const isMobile = /Mobi/i.test(navigator.userAgent);
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    if (e.shiftKey || isMobile) return;
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            input.addEventListener("input", () => {
+                input.style.height = "auto";
+                input.style.height = input.scrollHeight + "px";
+            });
+
+            window.addEventListener("resize", () => {
+                if (document.activeElement === input)
+                    setTimeout(
+                        () =>
+                            input.scrollIntoView({
+                                behavior: "smooth",
+                                block: "end",
+                            }),
+                        200,
+                    );
+            });
+
+            fileInput.value = null;
+            filePreview.style.display = "none";
+            fileName.textContent = "";
+
+            loadChatHistory();
+
+            // --- FORM JS ---
+            const formOverlay = document.getElementById("formOverlay");
+            const formContainer = document.getElementById("formContainer");
+            const closeFormBtn = document.getElementById("closeFormBtn");
+            const submitFormBtn = document.getElementById("submitFormBtn");
+            const formId = document.getElementById("formId");
+            const formDate = document.getElementById("formDate");
+            const formSaran = document.getElementById("formSaran");
+
+            function openForm() {
+                formId.value = sessionId.substring(0, 8);
+                formDate.value = new Date().toLocaleDateString("id-ID", {
+                    dateStyle: "long",
+                });
+                formSaran.value = "";
+                formOverlay.style.display = "block";
+                setTimeout(() => {
+                    formContainer.classList.add("form-visible");
+                }, 10);
+            }
+
+            function closeForm() {
+                formContainer.classList.remove("form-visible");
+                setTimeout(() => {
+                    formOverlay.style.display = "none";
+                }, 300);
+            }
+
+            closeFormBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                closeForm();
+            });
+            formOverlay.addEventListener("click", (e) => {
+                if (e.target === formOverlay) closeForm();
+            });
+
+            submitFormBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const saran = formSaran.value.trim();
+                if (!saran) {
+                    alert("Harap isi saran atau masukan kamu ya!");
                     return;
                 }
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-
-        input.addEventListener("input", () => {
-            input.style.height = "auto";
-            input.style.height = input.scrollHeight + "px";
-        });
-
-        window.addEventListener("resize", () => {
-            if (document.activeElement === input) {
-                setTimeout(
-                    () =>
-                        input.scrollIntoView({
-                            behavior: "smooth",
-                            block: "end",
-                        }),
-                    200,
-                );
-            }
-        });
-
-        fileInput.value = null;
-        filePreview.style.display = "none";
-        fileName.textContent = "";
-
-        loadChatHistory();
-
-        // --- FORM JS ---
-        const formOverlay = document.getElementById("formOverlay");
-        const formContainer = document.getElementById("formContainer");
-        const closeFormBtn = document.getElementById("closeFormBtn");
-        const submitFormBtn = document.getElementById("submitFormBtn");
-        const formId = document.getElementById("formId");
-        const formDate = document.getElementById("formDate");
-        const formSaran = document.getElementById("formSaran");
-
-        function openForm() {
-            formId.value = sessionId.substring(0, 8);
-            formDate.value = new Date().toLocaleDateString("id-ID", {
-                dateStyle: "long",
-            });
-            formSaran.value = "";
-            formOverlay.style.display = "block";
-            setTimeout(() => {
-                formContainer.classList.add("form-visible");
-            }, 10);
-        }
-
-        function closeForm() {
-            formContainer.classList.remove("form-visible");
-            setTimeout(() => {
-                formOverlay.style.display = "none";
-            }, 300);
-        }
-
-        closeFormBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            closeForm();
-        });
-
-        formOverlay.addEventListener("click", (e) => {
-            if (e.target === formOverlay) {
+                input.value =
+                    "Saran & Masukan (ID: " + formId.value + "):\n" + saran;
                 closeForm();
-            }
-        });
-
-        submitFormBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const saran = formSaran.value.trim();
-
-            if (!saran) {
-                alert("Harap isi saran atau masukan kamu ya!");
-                return;
-            }
-
-            input.value = `Saran & Masukan (ID: ${formId.value}):\n${saran}`;
-            closeForm();
-            sendMessage();
-        });
-
-        chatbox.addEventListener("scroll", () => {
-            if (
-                chatbox.scrollHeight -
-                    chatbox.scrollTop -
-                    chatbox.clientHeight >
-                100
-            ) {
-                scrollToBottomBtn.style.display = "flex";
-                scrollToBottomBtn.classList.add("visible");
-            } else {
-                scrollToBottomBtn.style.display = "none";
-                scrollToBottomBtn.classList.remove("visible");
-            }
-        });
-
-        scrollToBottomBtn.addEventListener("click", () => {
-            chatbox.scrollTo({
-                top: chatbox.scrollHeight,
-                behavior: "smooth",
+                sendMessage();
             });
-        });
-    </script>
-</body>
+
+            chatbox.addEventListener("scroll", () => {
+                if (
+                    chatbox.scrollHeight -
+                        chatbox.scrollTop -
+                        chatbox.clientHeight >
+                    100
+                ) {
+                    scrollToBottomBtn.style.display = "flex";
+                    scrollToBottomBtn.classList.add("visible");
+                } else {
+                    scrollToBottomBtn.style.display = "none";
+                    scrollToBottomBtn.classList.remove("visible");
+                }
+            });
+
+            scrollToBottomBtn.addEventListener("click", () => {
+                chatbox.scrollTo({
+                    top: chatbox.scrollHeight,
+                    behavior: "smooth",
+                });
+            });
+        </script>
+    </body>
 </html>
