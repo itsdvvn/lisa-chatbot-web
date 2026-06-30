@@ -12,38 +12,59 @@
   * { box-sizing: border-box; }
 
   html {
-    height: 100%; 
+    height: 100%;
   }
 
   body {
     margin: 0;
-    font-family: "Inter", sans-serif; 
-    background: #f9f9f9; 
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(135deg, #f0faf5 0%, #d4f0e5 50%, #b8e6d5 100%);
     display: flex;
     flex-direction: column;
     height: 100vh;
-    height: 100dvh; 
+    height: 100dvh;
     overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle background pattern overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at 20% 50%, rgba(145, 235, 214, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(0, 150, 107, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(237, 139, 52, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
   }
 
   header {
-    background: #19946C; 
+    background: linear-gradient(135deg, #00966b 0%, #007f5f 100%);
     color: white;
-    padding: 10px 15px; 
-    display: flex; 
-    align-items: center; 
-    position: relative; 
-    z-index: 10; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
-    flex-shrink: 0; 
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 150, 107, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   #headerProfilePic {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     margin-right: 12px;
     object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   #headerInfo {
@@ -51,40 +72,49 @@
     flex-direction: column;
   }
 
-  header h1 { 
-    margin: 0; 
-    font-size: 1.1em; 
-    font-weight: 600; 
+  header h1 {
+    margin: 0;
+    font-size: 1.15em;
+    font-weight: 700;
     color: #FFFFFF;
-    line-height: 1.2;
-  }
-  
-  header p { 
-    margin: 0; 
-    font-size: 0.8em; 
-    opacity: .9; 
-    font-weight: 400; 
-    color: #FFFFFF;
-    line-height: 1.2;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
   }
 
-  /* --- STYLE BARU: TOMBOL BACK/HOME --- */
+  header p {
+    margin: 0;
+    font-size: 0.78em;
+    opacity: .85;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.3;
+  }
+
+  /* --- TOMBOL BACK/HOME --- */
   .back-btn {
-    margin-left: auto; /* Ini kuncinya: dorong ke paling kanan */
-    background: rgba(255, 255, 255, 0.15); /* Transparan putih */
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    transition: background 0.2s;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.25s ease;
+    border: 1px solid rgba(255, 255, 255, 0.25);
   }
 
   .back-btn:hover {
     background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .back-btn:active {
+    transform: scale(0.95);
   }
 
   .back-btn svg {
@@ -92,8 +122,8 @@
     height: 20px;
     fill: white;
   }
-  /* --- AKHIR STYLE TOMBOL BACK --- */
-  
+  /* --- AKHIR TOMBOL BACK --- */
+
   #welcomeMessage,
   header p .span-light,
   header p .span-medium {
@@ -101,44 +131,103 @@
   }
 
   #chatbox {
-    flex: 1; 
+    flex: 1;
     overflow-y: auto;
-    padding: 15px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     scroll-behavior: smooth;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Custom scrollbar */
+  #chatbox::-webkit-scrollbar {
+    width: 5px;
+  }
+  #chatbox::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  #chatbox::-webkit-scrollbar-thumb {
+    background: rgba(0, 150, 107, 0.2);
+    border-radius: 10px;
+  }
+  #chatbox::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 150, 107, 0.35);
   }
 
   .bubble {
     max-width: 85%;
     border-radius: 18px;
-    line-height: 1.5;
+    line-height: 1.55;
     white-space: pre-wrap;
     word-wrap: break-word;
     position: relative;
-    padding: 10px 14px 28px 14px; 
+    padding: 12px 16px 30px 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    animation-duration: 0.35s;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-fill-mode: both;
   }
 
-  .user { align-self: flex-end; background: #d2f5e8; }
-  .bot { align-self: flex-start; background: white; border: 1px solid #e0e0e0; }
-  
+  .user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #d4f5eb 0%, #bdeee0 100%);
+    border-bottom-right-radius: 6px;
+    animation-name: slideInRight;
+    box-shadow: 0 2px 8px rgba(0, 150, 107, 0.1);
+  }
+
+  .bot {
+    align-self: flex-start;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-bottom-left-radius: 6px;
+    animation-name: slideInLeft;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  @keyframes slideInRight {
+    0% {
+      opacity: 0;
+      transform: translateX(30px) scale(0.96);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  @keyframes slideInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-30px) scale(0.96);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
   .bubble img {
     width: 100%;
     max-width: 250px;
-    border-radius: 10px;
+    border-radius: 12px;
     display: block;
-    margin-top: 8px; 
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .bubble video {
     width: 100%;
-    max-width: 280px; 
-    border-radius: 10px;
+    max-width: 280px;
+    border-radius: 12px;
     display: block;
-    margin-top: 8px; 
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
-  
+
   .timestamp {
     position: absolute;
     bottom: 8px;
@@ -149,61 +238,74 @@
   }
 
   .bubble.user .timestamp {
-    color: #075e54; 
+    color: #00966b;
   }
 
   .date-separator {
     align-self: center;
-    background-color: #e1f3fb;
-    color: #555;
+    background: rgba(145, 235, 214, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: #007f5f;
     font-size: 12px;
-    font-weight: 500;
-    padding: 5px 10px;
-    border-radius: 10px;
-    margin: 10px 0;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin: 4px 0;
+    border: 1px solid rgba(145, 235, 214, 0.5);
+    letter-spacing: 0.02em;
   }
 
   .bubble a {
-    color: #007bff; 
+    color: #00966b;
     text-decoration: underline;
     word-break: break-all;
+    font-weight: 500;
   }
   .bubble.user a {
-    color: #0056b3; 
+    color: #007f5f;
   }
   .bubble.bot a {
-    color: #0069d9; 
+    color: #00966b;
   }
 
   #inputArea {
     display: flex;
-    gap: 10px; 
-    padding: 12px; 
-    background: #f9f9f9; 
-    border-top: 1px solid #eee; 
-    flex-shrink: 0; 
-    align-items: flex-end; 
-    flex-wrap: wrap; 
+    gap: 10px;
+    padding: 12px 16px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    flex-shrink: 0;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    z-index: 2;
+    position: relative;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
   }
 
   #filePreview {
-    display: none; 
-    width: 100%; 
-    padding: 5px 12px;
-    background: #e0e0e0;
+    display: none;
+    width: 100%;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, #e8f8f2, #d4f0e5);
     border-radius: 12px;
     font-size: 13px;
-    margin-bottom: 8px; 
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border: 1px solid rgba(0, 150, 107, 0.15);
   }
   #fileName {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 90%;
-    color: #333;
+    color: #00966b;
+    font-weight: 500;
   }
   #removeFileBtn {
     background: none;
@@ -211,120 +313,186 @@
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
-    color: #666;
+    color: #00966b;
     padding: 0 5px;
+    transition: color 0.2s;
+  }
+  #removeFileBtn:hover {
+    color: #ed8b34;
   }
 
   .input-wrapper {
     position: relative;
     display: flex;
     flex: 1;
+    background: white;
+    border-radius: 28px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .input-wrapper:focus-within {
+    box-shadow: 0 2px 12px rgba(0, 150, 107, 0.12);
+    border-color: rgba(0, 150, 107, 0.25);
   }
 
   textarea#userInput {
     flex: 1;
     resize: none;
-    border: none; 
-    border-radius: 25px; 
-    padding: 12px 50px 12px 20px; 
+    border: none;
+    border-radius: 28px;
+    padding: 12px 50px 12px 20px;
     font-size: 15px;
     line-height: 1.4;
-    max-height: 120px; 
+    max-height: 120px;
     overflow-y: auto;
-    font-family: "Inter", sans-serif; 
-    background: #eeeeee; 
+    font-family: "Inter", sans-serif;
+    background: transparent;
+    outline: none;
+    color: #1a1a1a;
   }
 
-  textarea::placeholder {
-    font-weight: 300;
-    color: #8a8585;
+  textarea#userInput::placeholder {
+    font-weight: 400;
+    color: #b0b0b0;
   }
 
   button#sendBtn {
-    background: #19946C;
+    background: linear-gradient(135deg, #00966b 0%, #007f5f 100%);
     color: white;
     border: none;
     padding: 0;
-    border-radius: 50%; 
+    border-radius: 50%;
     cursor: pointer;
     font-weight: 600;
-    width: 50px; 
-    height: 50px; 
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 150, 107, 0.25);
   }
-  
+
   button#sendBtn img {
     width: 24px;
     height: 24px;
   }
 
-  button#sendBtn:hover { 
-    background: #059e6c; 
+  button#sendBtn:hover {
+    background: linear-gradient(135deg, #007f5f 0%, #00664d 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 150, 107, 0.35);
+  }
+
+  button#sendBtn:active {
+    transform: scale(0.95);
   }
 
   .fileLabel-inner {
     position: absolute;
-    right: 15px;
+    right: 14px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    padding: 5px; 
+    padding: 5px;
+    transition: transform 0.2s ease;
+  }
+  .fileLabel-inner:hover {
+    transform: translateY(-50%) scale(1.1);
   }
   .fileLabel-inner img {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     display: block;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .fileLabel-inner:hover img {
+    opacity: 0.9;
   }
 
+  /* Enhanced typing indicator */
   .typing {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-    width: 45px;
-    height: 20px;
+    gap: 4px;
+    width: 50px;
+    height: 24px;
+    background: rgba(0, 150, 107, 0.05);
+    border-radius: 12px;
+    padding: 4px 8px;
   }
-  .dot { width: 7px; height: 7px; background-color: #aaa; border-radius: 50%; animation: bounce 1.3s infinite ease-in-out; }
+  .dot {
+    width: 7px;
+    height: 7px;
+    background: linear-gradient(135deg, #00966b, #91ebd6);
+    border-radius: 50%;
+    animation: bounce 1.3s infinite ease-in-out;
+  }
   .dot:nth-child(1) { animation-delay: 0s; }
   .dot:nth-child(2) { animation-delay: 0.2s; }
   .dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes bounce { 0%, 80%, 100% { transform: scale(0); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+    40% { transform: scale(1); opacity: 1; }
+  }
 
   #scrollToBottomBtn {
-    display: none; 
+    display: none;
     position: absolute;
-    bottom: 90px; 
+    bottom: 90px;
     right: 20px;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
+    background: white;
+    border: none;
     border-radius: 50%;
     width: 40px;
     height: 40px;
     cursor: pointer;
     z-index: 10;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     align-items: center;
     justify-content: center;
+    transition: all 0.25s ease;
+    opacity: 0;
   }
+
+  #scrollToBottomBtn.visible {
+    opacity: 1;
+  }
+
+  #scrollToBottomBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+    background: #f8fffc;
+  }
+
+  #scrollToBottomBtn:active {
+    transform: scale(0.95);
+  }
+
   #scrollToBottomBtn svg {
     width: 20px;
     height: 20px;
-    fill: #333;
+    fill: #00966b;
   }
 
-  /* --- STYLE FORM SLIDE-UP --- */
+  /* --- FORM SLIDE-UP --- */
   .form-overlay {
-    display: none; /* Sembunyi by default */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     z-index: 100;
+    transition: opacity 0.3s ease;
   }
 
   .form-container {
@@ -332,92 +500,129 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #f9f9f9;
-    border-radius: 20px 20px 0 0;
-    padding: 20px;
+    background: #f0faf5;
+    border-radius: 24px 24px 0 0;
+    padding: 24px 24px max(24px, env(safe-area-inset-bottom));
     z-index: 101;
-    /* Sembunyi di bawah */
-    transform: translateY(100%); 
-    transition: transform 0.3s ease-out;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.08);
   }
-  
+
   .form-container.form-visible {
-    transform: translateY(0); /* Muncul */
+    transform: translateY(0);
   }
 
   .form-container h3 {
     font-family: "Inter", sans-serif;
     font-weight: 700;
-    color: #333;
+    color: #00966b;
     margin-top: 0;
     margin-bottom: 20px;
     text-align: center;
+    font-size: 1.15em;
   }
-  
+
   .form-container .form-field {
     margin-bottom: 15px;
   }
-  
+
   .form-container label {
     font-family: "Inter", sans-serif;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 600;
     color: #555;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
   }
 
   .form-container input[type="text"],
   .form-container textarea {
     width: 100%;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    background: #eeeeee;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: white;
     font-family: "Inter", sans-serif;
     font-size: 15px;
+    color: #1a1a1a;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
   }
-  
+
+  .form-container input[type="text"]:focus,
+  .form-container textarea:focus {
+    border-color: #00966b;
+    box-shadow: 0 0 0 3px rgba(0, 150, 107, 0.08);
+  }
+
   .form-container input[type="text"]:read-only {
-    background: #ddd;
-    opacity: 0.7;
+    background: #e8f8f2;
+    opacity: 0.8;
+    color: #555;
   }
 
   .form-container textarea#formSaran {
     resize: none;
     height: 120px;
   }
-  
+
   #submitFormBtn {
     width: 100%;
-    background: #19946C;
+    background: linear-gradient(135deg, #00966b 0%, #007f5f 100%);
     color: white;
     border: none;
-    padding: 12px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 12px;
     cursor: pointer;
     font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 600;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 150, 107, 0.2);
+    margin-top: 4px;
   }
-  
+
+  #submitFormBtn:hover {
+    background: linear-gradient(135deg, #007f5f 0%, #00664d 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 150, 107, 0.3);
+  }
+
+  #submitFormBtn:active {
+    transform: scale(0.98);
+  }
+
   #closeFormBtn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
+    top: 12px;
+    right: 14px;
+    background: rgba(0, 0, 0, 0.04);
     border: none;
-    font-size: 24px;
-    color: #999;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 20px;
+    color: #888;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
   }
-  /* --- AKHIR STYLE FORM --- */
 
+  #closeFormBtn:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: #333;
+  }
+  /* --- AKHIR FORM --- */
 
   @media (max-width: 600px) {
-    header h1 { font-size: 1.1em; } 
-    header p { font-size: 0.8em; }
-    textarea { font-size: 14px; }
+    header h1 { font-size: 1.05em; }
+    header p { font-size: 0.75em; }
+    textarea { font-size: 15px; }
+    .bubble { max-width: 88%; }
+    #inputArea { padding: 10px 12px; }
   }
 </style>
 </head>
@@ -427,9 +632,9 @@
     <img src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg" alt="Profile" id="headerProfilePic">
     <div id="headerInfo">
       <h1>LISA Ai</h1>
-      <p>online</p>
+      <p></p>online</p>
     </div>
-    
+
     <a href="/" class="back-btn" aria-label="Kembali ke Beranda">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
@@ -455,22 +660,22 @@
       <img src="https://files.lingkungansehatasri.my.id/send-putih.png" alt="Send">
     </button>
   </div>
-  
+
   <button id="scrollToBottomBtn">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 13.41L12 18.41L7 13.41L8.41 12L12 15.59L15.59 12L17 13.41ZM17 7.41L12 12.41L7 7.41L8.41 6L12 9.59L15.59 6L17 7.41Z"/></svg>
   </button>
-  
+
   <div class="form-overlay" id="formOverlay">
     <div class="form-container" id="formContainer">
       <button id="closeFormBtn">&times;</button>
       <h3>Kasih Saran & Masukan</h3>
-      
+
       <form>
         <div class="form-field">
           <label for="formId">ID Sesi (Otomatis)</label>
           <input type="text" id="formId" readonly>
         </div>
-        
+
         <div class="form-field">
           <label for="formDate">Tanggal (Otomatis)</label>
           <input type="text" id="formDate" readonly>
@@ -480,7 +685,7 @@
           <label for="formSaran">Saran & Masukan Kamu</label>
           <textarea id="formSaran" placeholder="Tulis saran/masukanmu soal lingkungan sekolah di sini..." rows="4"></textarea>
         </div>
-        
+
         <button type="submit" id="submitFormBtn">Kirim Saran</button>
       </form>
     </div>
@@ -489,14 +694,14 @@
     const chatbox = document.getElementById('chatbox');
     const input = document.getElementById('userInput');
     const sendBtn = document.getElementById('sendBtn');
-    const fileInput = document.getElementById('fileInput'); 
+    const fileInput = document.getElementById('fileInput');
     const filePreview = document.getElementById('filePreview');
     const fileName = document.getElementById('fileName');
     const removeFileBtn = document.getElementById('removeFileBtn');
     const scrollToBottomBtn = document.getElementById('scrollToBottomBtn');
-    let lastMessageDate = null; 
-    
-    const webhookUrl = "https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf"; 
+    let lastMessageDate = null;
+
+    const webhookUrl = "https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf";
 
     const HISTORY_KEY = 'lisaChatHistory';
     const EXPIRATION_DAYS = 7;
@@ -507,16 +712,16 @@
     fileInput.addEventListener('change', () => {
       if (fileInput.files.length > 0) {
         const name = fileInput.files[0].name;
-        fileName.textContent = name; 
-        filePreview.style.display = 'flex'; 
+        fileName.textContent = name;
+        filePreview.style.display = 'flex';
       } else {
-        filePreview.style.display = 'none'; 
+        filePreview.style.display = 'none';
       }
     });
 
     removeFileBtn.addEventListener('click', () => {
-      fileInput.value = null; 
-      filePreview.style.display = 'none'; 
+      fileInput.value = null;
+      filePreview.style.display = 'none';
       fileName.textContent = '';
     });
 
@@ -530,19 +735,19 @@
     }
 
     function getFormattedDate(dateString) {
-      const today = new Date().toLocaleDateString('id-ID'); 
+      const today = new Date().toLocaleDateString('id-ID');
       const yesterday = new Date(Date.now() - 86400000).toLocaleDateString('id-ID');
-      
+
       if (dateString === today) return "Hari Ini";
       if (dateString === yesterday) return "Kemarin";
-      return dateString; 
+      return dateString;
     }
-    
+
     function linkify(text) {
       let processedText = text.replace(/\n/g, '<br>');
       processedText = processedText.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
       const urlRegex = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])|(\bwww\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-      
+
       return processedText.replace(urlRegex, function(url) {
         if (url.includes('href="') || url.includes('src="')) {
           return url;
@@ -560,64 +765,64 @@
             </video>
           `;
         }
-        
+
         if (url.startsWith('https://files.lingkungansehatasri.my.id') && (url.includes('.jpg') || url.includes('.png'))) {
           return `<img src="${url}" alt="Lampiran" style="width: 100%; max-width: 250px; border-radius: 10px; display: block; margin-top: 8px;">`;
         }
-        
+
         return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
       });
     }
 
     function addMessage(message, sender, save = true) {
-      const text = message.text.trim(); 
+      const text = message.text.trim();
 
       if (sender === "bot" && text.includes("[BUKA_FORM_LAPORAN]")) {
         openForm();
-        return; 
+        return;
       }
-      
+
       if (message.date !== lastMessageDate) {
         const dateSep = document.createElement("div");
         dateSep.classList.add("date-separator");
-        dateSep.textContent = getFormattedDate(message.date); 
+        dateSep.textContent = getFormattedDate(message.date);
         chatbox.appendChild(dateSep);
         lastMessageDate = message.date;
       }
-      
+
       const msg = document.createElement("div");
       msg.classList.add("bubble", sender);
       const content = document.createElement("div");
 
       if (typeof text === 'string' && text.startsWith('data:image/')) {
         content.innerHTML = `<img src="${text}" alt="Lampiran gambar">`;
-        msg.style.padding = '10px'; 
-      } 
-      else {
-        content.innerHTML = linkify(text); 
+        msg.style.padding = '10px';
       }
-      
-      msg.appendChild(content); 
+      else {
+        content.innerHTML = linkify(text);
+      }
+
+      msg.appendChild(content);
 
       const timeContent = document.createElement("span");
       timeContent.classList.add("timestamp");
-      timeContent.textContent = message.time; 
+      timeContent.textContent = message.time;
       msg.appendChild(timeContent);
 
       const isScrolledToBottom = chatbox.scrollHeight - chatbox.clientHeight <= chatbox.scrollTop + 100;
-      
+
       chatbox.appendChild(msg);
-      
+
       if (isScrolledToBottom) {
         chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
       }
 
       if (text.startsWith("Saran & Masukan (ID:")) {
-        save = false; 
+        save = false;
       }
 
       if (save) {
-        saveChatHistory(message, sender); 
+        saveChatHistory(message, sender);
       }
     }
 
@@ -637,9 +842,9 @@
 
     async function sendMessage() {
       const text = input.value.trim();
-      const file = fileInput.files[0]; 
+      const file = fileInput.files[0];
 
-      if (!text && !file) return; 
+      if (!text && !file) return;
 
       const now = new Date();
       const time = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace('.', ':');
@@ -647,14 +852,14 @@
 
       input.value = "";
       input.style.height = 'auto';
-      fileInput.value = null; 
+      fileInput.value = null;
       filePreview.style.display = 'none';
       fileName.textContent = '';
 
       if (text) {
-        addMessage({ text: text, time: time, date: date }, "user"); 
+        addMessage({ text: text, time: time, date: date }, "user");
       }
-      
+
       const formData = new FormData();
       formData.append('text', text);
       formData.append('sessionId', sessionId);
@@ -662,7 +867,7 @@
       if (file) {
         try {
           const base64src = await readFileAsDataURL(file);
-          addMessage({ text: base64src, time: time, date: date }, "user"); 
+          addMessage({ text: base64src, time: time, date: date }, "user");
         } catch (e) {
           addMessage({ text: "[Gagal memuat preview gambar]", time: time, date: date }, "user");
         }
@@ -674,23 +879,23 @@
       try {
         const res = await fetch(webhookUrl, {
           method: "POST",
-          body: formData 
+          body: formData
         });
 
         const data = await res.json();
         removeTyping();
-        
+
         const botNow = new Date();
         const botTime = botNow.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace('.', ':');
         const botDate = botNow.toLocaleDateString('id-ID');
 
         const botReply = data.output || JSON.stringify(data, null, 2);
-        addMessage({ text: botReply, time: botTime, date: botDate }, "bot"); 
+        addMessage({ text: botReply, time: botTime, date: botDate }, "bot");
 
         if (data.userInput && data.userInput.includes('https://')) {
           updateHistoryWithURL(data.userInput);
         }
-        
+
       } catch (e) {
         removeTyping();
         const errTime = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace('.', ':');
@@ -702,18 +907,18 @@
 
     function updateHistoryWithURL(messageWithUrl) {
       const urlMatch = messageWithUrl.match(/https?:\/\/[^\s\]]+/);
-      if (!urlMatch) return; 
+      if (!urlMatch) return;
       const s3Url = urlMatch[0];
-      
+
       const stored = localStorage.getItem(HISTORY_KEY);
       if (!stored) return;
-      
+
       try {
         let data = JSON.parse(stored);
         for (let i = data.chats.length - 1; i >= 0; i--) {
           if (data.chats[i].sender === 'user' && data.chats[i].message.text === '[Gambar dilampirkan]') {
-            data.chats[i].message.text = s3Url; 
-            break; 
+            data.chats[i].message.text = s3Url;
+            break;
           }
         }
         localStorage.setItem(HISTORY_KEY, JSON.stringify(data));
@@ -730,7 +935,7 @@
           chats = JSON.parse(stored).chats || [];
         } catch (e) { chats = []; }
       }
-      chats.push({ message: message, sender: sender }); 
+      chats.push({ message: message, sender: sender });
       const newData = {
         timestamp: new Date().getTime(),
         chats: chats
@@ -756,33 +961,33 @@
         const data = JSON.parse(stored);
         const now = new Date().getTime();
         const expirationTime = EXPIRATION_DAYS * 24 * 60 * 60 * 1000;
-        
+
         if (now - data.timestamp > expirationTime) {
-          localStorage.removeItem(HISTORY_KEY); 
-          loadChatHistory(); 
-          return; 
+          localStorage.removeItem(HISTORY_KEY);
+          loadChatHistory();
+          return;
         }
 
         data.chats.forEach(item => {
           if (item.message.text === "[Gambar dilampirkan]") {
             return;
           }
-          addMessage(item.message, item.sender, false); 
+          addMessage(item.message, item.sender, false);
         });
 
       } catch (e) {
         console.error("Gagal memuat history chat:", e);
-        localStorage.removeItem(HISTORY_KEY); 
+        localStorage.removeItem(HISTORY_KEY);
       }
     }
-    
+
     sendBtn.addEventListener("click", sendMessage);
 
     const isMobile = /Mobi/i.test(navigator.userAgent);
     input.addEventListener("keydown", e => {
       if (e.key === "Enter") {
         if (e.shiftKey || isMobile) {
-          return; 
+          return;
         }
         e.preventDefault();
         sendMessage();
@@ -791,7 +996,7 @@
 
     input.addEventListener('input', () => {
       input.style.height = 'auto';
-      input.style.height = (input.scrollHeight) + 'px'; 
+      input.style.height = (input.scrollHeight) + 'px';
     });
 
     window.addEventListener("resize", () => {
@@ -816,42 +1021,42 @@
     const formSaran = document.getElementById('formSaran');
 
     function openForm() {
-      formId.value = sessionId.substring(0, 8); 
+      formId.value = sessionId.substring(0, 8);
       formDate.value = new Date().toLocaleDateString('id-ID', { dateStyle: 'long' });
-      formSaran.value = ''; 
+      formSaran.value = '';
       formOverlay.style.display = 'block';
       setTimeout(() => {
         formContainer.classList.add('form-visible');
-      }, 10); 
+      }, 10);
     }
-    
+
     function closeForm() {
       formContainer.classList.remove('form-visible');
       setTimeout(() => {
         formOverlay.style.display = 'none';
       }, 300);
     }
-    
+
     closeFormBtn.addEventListener('click', (e) => {
       e.preventDefault();
       closeForm();
     });
-    
+
     formOverlay.addEventListener('click', (e) => {
       if (e.target === formOverlay) {
         closeForm();
       }
     });
-    
+
     submitFormBtn.addEventListener('click', (e) => {
       e.preventDefault();
       const saran = formSaran.value.trim();
-      
+
       if (!saran) {
         alert("Harap isi saran atau masukan kamu ya!");
         return;
       }
-      
+
       input.value = `Saran & Masukan (ID: ${formId.value}):\n${saran}`;
       closeForm();
       sendMessage();
@@ -860,8 +1065,10 @@
     chatbox.addEventListener('scroll', () => {
       if (chatbox.scrollHeight - chatbox.scrollTop - chatbox.clientHeight > 100) {
         scrollToBottomBtn.style.display = 'flex';
+        scrollToBottomBtn.classList.add('visible');
       } else {
         scrollToBottomBtn.style.display = 'none';
+        scrollToBottomBtn.classList.remove('visible');
       }
     });
 
