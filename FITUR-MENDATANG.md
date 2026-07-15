@@ -171,57 +171,85 @@ Siapkan struktur untuk terjemahan (Indonesia sebagai default, Inggris sebagai al
 
 ## 3. ⚙️ Fondasi Teknis
 
-### 3.1 Migrasi ke Build Tool / Framework — 🟡 P2
+### 3.1 Eksternal CSS & JS Modular — 🟡 P2
 
-**Masalah:** Tailwind via CDN (tidak optimal), semua JS inline, CSS di dalam `<style>`.
+**Masalah:** Semua CSS di dalam `<style>` inline dan semua JS dalam satu `<script>` — susah dirawat saat scale.
 
-**Solusi:**
+**Solusi:** Pisahkan ke file eksternal tanpa build tool:
 
-| Opsi | Keuntungan |
-|------|-----------|
-| [Vite](https://vitejs.dev/) + vanilla JS | Ringan, HMR cepat, bundle optimized |
-| [Next.js](https://nextjs.org) + React (App Router) | SSR, routing otomatis, optimal buat scale |
-| [Astro](https://astro.build) | Sangatringan, islands architecture |
+```
+lisa-chatbot/
+├── index.html          # Landing page
+├── css/
+│   ├── style.css       # Global styles + Tailwind custom
+│   ├── animations.css  # Animasi terpisah
+│   └── chat.css        # Khusus halaman chat
+├── js/
+│   ├── main.js         # Navigation, modal, scroll reveal
+│   ├── chat.js         # Logic chat (terpisah dari landing)
+│   └── utils.js        # Fungsi bersama (format tanggal, linkify, dsb.)
+└── chat/
+    └── index.html
+```
 
-**Rekomendasi:** **Vite** cocok untuk ukuran sekarang. **Next.js** jika sudah butuh routing kompleks, statistik dashboard (via React), dan optimasi SEO lebih baik.
-
-> 📖 Lihat dokumentasi Next.js di Context7: `ctx7 docs "/vercel/next.js" "App Router setup"`
+**Manfaat:**
+- Kode lebih terorganisir tanpa framework
+- Browser cache per file (update 1 file tidak perlu download semua)
+- Transparan — apa yang kamu tulis, itu yang jalan
 
 ---
 
-### 3.2 API Gateway & Autentikasi — 🟡 P2
+### 3.2 API Proxy via Cloudflare Worker — 🟡 P2
 
 **Masalah:** Webhook n8n terekspos langsung di frontend (`webhookUrl` di JS).
 
-**Solusi:**
+**Solusi:** Buat proxy endpoint sederhana (Cloudflare Workers atau service serupa):
 
-- Proxy endpoint via API Gateway (Cloudflare Workers / Vercel Edge Functions)
-- Rate limiting untuk mencegah spam
-- Session management yang lebih mature (JWT / cookie-based)
-- Logging interaksi di server-side
+```js
+// Cloudflare Worker — vanilla JS, zero framework
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    if (url.pathname === "/api/chat") {
+      return fetch("https://n8n.terato.my.id/webhook/...", {
+        method: "POST",
+        headers: request.headers,
+        body: request.body,
+      });
+    }
+    return new Response("Not found", { status: 404 });
+  }
+};
+```
+
+**Manfaat:**
+- Webhook URL tersembunyi dari client
+- Bisa tambah rate limiting, CORS, logging
+- Zero dependency — vanilla JavaScript
 
 ---
 
-### 3.3 TailwindCSS dengan Build Pipeline — 🟡 P2
+### 3.3 Optimasi Tailwind CDN — 🟢 P3
 
-**Masalah:** Tailwind CDN (play CDN) tidak mendukung tree-shaking, ukuran file besar.
+**Masalah:** Tailwind via CDN mendownload semua utility (6 MB+) meski banyak tidak terpakai.
 
-**Solusi:** Setup Tailwind CLI atau Vite + Tailwind PostCSS:
+**Solusi Tanpa Build Tool:**
 
-```bash
-npm install -D tailwindcss @tailwindcss/cli
-npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
-```
+| Opsi | Cara |
+|------|------|
+| **Batasi plugin** | `cdn.tailwindcss.com?plugins=forms` — sudah dilakukan |
+| **Purge dengan service worker** | Service worker bisa intercept dan filter CSS yang tidak dipakai |
+| **Prefetch & cache** | Service worker bisa cache Tailwind CDN agar tidak unduh ulang |
 
-Manfaat: Purge unused CSS, custom config lebih maksimal, autocomplete di IDE.
+> ⚠️ Untuk ukuran proyek saat ini, Tailwind CDN masih sangat layak. Optimasi ini bisa ditunda sampai benar-benar terasa lambat.
 
 ---
 
 ### 3.4 CI/CD & Automated Testing — 🟢 P3
 
-- GitHub Actions untuk lint + build otomatis setiap push
+- GitHub Actions untuk deploy otomatis ke GitHub Pages / hosting static
 - Lighthouse CI untuk pantau performa, aksesibilitas, SEO
-- Playwright / Cypress untuk end-to-end testing (terutama chat flow)
+- [PageSpeed Insights](https://pagespeed.web.dev/) untuk validasi berkala — tanpa setup kompleks
 
 ---
 
@@ -260,9 +288,9 @@ Manfaat: Purge unused CSS, custom config lebih maksimal, autocomplete di IDE.
 **Solusi:**
 
 - Lazy load semua gambar (`loading="lazy"`) — sudah diterapkan sebagian
-- Gunakan [Cloudflare Images](https://www.cloudflare.com/products/cloudflare-images/) atau [next/image](https://nextjs.org/docs/app/api-reference/components/image) (jika migrasi ke Next.js)
-- Konversi gambar ke format WebP/AVIF
-- Berikan ukuran eksplisit (`width`/`height`) untuk mencegah Cumulative Layout Shift
+- Gunakan [Cloudflare Images](https://www.cloudflare.com/products/cloudflare-images/) atau [Cloudinary](https://cloudinary.com/) untuk optimasi otomatis (format WebP/AVIF, resize) — tinggal ubah URL src, tanpa perlu build tool
+- Atau konversi manual ke WebP pakai tools online / `ffmpeg`
+- Berikan ukuran eksplisit (`width`/`height`) di HTML untuk mencegah Cumulative Layout Shift
 
 ---
 
@@ -298,12 +326,14 @@ Implementasi pull-to-refresh di chatbox untuk me-reload chat history atau reconn
 
 | Fase | Fokus | Fitur Utama |
 |------|-------|-------------|
-| **Fase 1** (Sekarang–1 bulan) | Fondasi & PWA | PWA (manifest + service worker), Dark mode, Image lazy load, a11y |
-| **Fase 2** (1–3 bulan) | Chat & Interaksi | Markdown rendering, Quick reply, Multi-file upload, Statistik dashboard |
-| **Fase 3** (3–6 bulan) | Skalabilitas | Migrasi ke Vite/Next.js, API Gateway, CI/CD, i18n |
+| **Fase 1** (Sekarang–1 bulan) | Fondasi & PWA | PWA (manifest + service worker), Dark mode, Image lazy load, a11y, Eksternal CSS/JS |
+| **Fase 2** (1–3 bulan) | Chat & Interaksi | Markdown rendering, Quick reply, Multi-file upload, Voice input, Statistik dashboard (Chart.js) |
+| **Fase 3** (3–6 bulan) | Skalabilitas | API proxy, i18n, Bottom nav mobile, CI/CD + Lighthouse, Fitur aksesibilitas lanjutan |
 
 ---
 
 > 📌 Dokumen ini dibuat dengan bantuan **Context7** — riset library dan best practice secara real-time.
+> 
+> **Tech Stack:** HTML + CSS + JavaScript (vanilla) + Tailwind CDN + Material Symbols.
 > 
 > Selanjutnya bisa diedit di: [FITUR-MENDATANG.md](./FITUR-MENDATANG.md)
