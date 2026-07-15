@@ -1,13 +1,13 @@
 const CACHE_NAME = "lisa-v1";
 const STATIC_URLS = [
-  "/lisa-chatbot/",
-  "/lisa-chatbot/index.html",
-  "/lisa-chatbot/chat/index.html",
-  "/lisa-chatbot/css/style.css",
-  "/lisa-chatbot/css/chat.css",
-  "/lisa-chatbot/js/main.js",
-  "/lisa-chatbot/js/chat.js",
-  "/lisa-chatbot/js/utils.js",
+  "./",
+  "./index.html",
+  "./chat/index.html",
+  "./css/style.css",
+  "./css/chat.css",
+  "./js/main.js",
+  "./js/chat.js",
+  "./js/utils.js",
 ];
 
 self.addEventListener("install", (event) => {

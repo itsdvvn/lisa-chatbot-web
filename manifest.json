@@ -2,7 +2,7 @@
   "name": "LISA - Lingkungan Sehat dan Asri",
   "short_name": "LISA",
   "description": "Chatbot edukasi sampah dan lingkungan untuk siswa",
-  "start_url": "/lisa-chatbot/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f9f9f7",
   "theme_color": "#006c4b",
