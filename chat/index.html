@@ -61,6 +61,8 @@
             #chatbox {
                 scrollbar-width: thin;
                 scrollbar-color: #c0c9c1 transparent;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
             }
             #chatbox::-webkit-scrollbar {
                 width: 4px;
@@ -69,22 +71,104 @@
                 background: #c0c9c1;
                 border-radius: 4px;
             }
+            .welcome-card {
+                text-align: center;
+                padding: 32px 20px 20px;
+            }
+            .welcome-card .avatar {
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 3px solid rgba(0, 108, 75, 0.15);
+                margin: 0 auto 12px;
+                display: block;
+            }
+            .welcome-card h2 {
+                font-size: 1.125rem;
+                font-weight: 700;
+                color: #1a1c1b;
+                margin-bottom: 4px;
+            }
+            .welcome-card p {
+                font-size: 0.8125rem;
+                color: #707973;
+                line-height: 1.5;
+                max-width: 280px;
+                margin: 0 auto;
+            }
+            .suggestion-chips {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
+                margin-top: 16px;
+            }
+            .suggestion-chip {
+                background: #eeeeec;
+                border: 1px solid #c0c9c1;
+                border-radius: 100px;
+                padding: 6px 14px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: #404943;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                -webkit-tap-highlight-color: transparent;
+            }
+            .suggestion-chip:hover {
+                background: #006c4b;
+                color: white;
+                border-color: #006c4b;
+            }
+            .suggestion-chip:active {
+                transform: scale(0.95);
+            }
             .bubble.user {
                 background: #006c4b;
                 color: white;
                 border-radius: 20px 20px 4px 20px;
+                word-break: break-word;
+                overflow-wrap: break-word;
             }
             .bubble.bot {
                 background: white;
                 color: #1a1c1b;
                 border-radius: 20px 20px 20px 4px;
                 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+                word-break: break-word;
+                overflow-wrap: break-word;
             }
             .bubble.user .timestamp {
                 color: rgba(255, 255, 255, 0.7);
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+            .bubble.user:hover .timestamp,
+            .bubble.user:focus-within .timestamp {
+                opacity: 1;
             }
             .bubble.bot .timestamp {
                 color: #707973;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+            .bubble.bot:hover .timestamp,
+            .bubble.bot:focus-within .timestamp {
+                opacity: 1;
+            }
+            @keyframes msgIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(8px) scale(0.97);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+            .bubble {
+                animation: msgIn 0.25s ease-out;
             }
             .date-separator {
                 text-align: center;
@@ -145,6 +229,7 @@
                 background: rgba(0, 0, 0, 0.35);
                 backdrop-filter: blur(4px);
                 -webkit-backdrop-filter: blur(4px);
+                -webkit-tap-highlight-color: transparent;
                 z-index: 100;
             }
             .form-container {
@@ -158,7 +243,8 @@
                 z-index: 101;
                 transform: translateY(100%);
                 transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.08);
+                box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.12);
+                -webkit-overflow-scrolling: touch;
             }
             .form-container.form-visible {
                 transform: translateY(0);
@@ -168,14 +254,14 @@
                     border-radius: 2rem;
                     max-width: 440px;
                     left: 50%;
-                    transform: translate(-50%, 100%);
                     bottom: auto;
                     top: 50%;
-                    max-height: 90vh;
+                    max-height: min(90vh, 600px);
                     overflow-y: auto;
+                    transform: translateY(calc(-50% + 20px));
                 }
                 .form-container.form-visible {
-                    transform: translate(-50%, -50%);
+                    transform: translateY(-50%);
                 }
             }
         </style>
@@ -211,29 +297,67 @@
                             >online
                         </p>
                     </div>
-                    >
-                    <a
-                        href="../"
-                        class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center shrink-0 transition active:scale-90"
-                        aria-label="Kembali ke Beranda"
-                    >
-                        <span class="material-symbols-outlined text-[20px]"
-                            >home</span
+                    <div class="flex items-center gap-1.5">
+                        <button
+                            id="clearChatBtn"
+                            class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center shrink-0 transition active:scale-90"
+                            aria-label="Hapus Riwayat Chat"
+                            title="Hapus percakapan"
                         >
-                    </a>
+                            <span class="material-symbols-outlined text-[20px]"
+                                >delete</span
+                            >
+                        </button>
+                        <a
+                            href="../"
+                            class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center shrink-0 transition active:scale-90"
+                            aria-label="Kembali ke Beranda"
+                        >
+                            <span class="material-symbols-outlined text-[20px]"
+                                >home</span
+                            >
+                        </a>
+                    </div>
                 </header>
 
                 <!-- CHAT MESSAGES -->
                 <div
                     id="chatbox"
-                    class="flex-1 overflow-y-auto px-4 py-4 bg-surface/50"
-                ></div>
+                    class="flex-1 overflow-y-auto px-4 pt-4 pb-2 bg-surface/50"
+                >
+                    <!-- Welcome card -->
+                    <div id="welcomeCard" class="welcome-card">
+                        <img
+                            src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg"
+                            alt="LISA"
+                            class="avatar"
+                            loading="lazy"
+                        />
+                        <h2>Hai, aku LISA! 👋</h2>
+                        <p>
+                            Tanya apa aja soal sampah, 3R, bank sampah, dan
+                            lingkungan sekolah. Aku siap bantu 24 jam!
+                        </p>
+                        <div class="suggestion-chips">
+                            <button class="suggestion-chip" data-suggestion="Apa itu 3R?">
+                                Apa itu 3R?
+                            </button>
+                            <button class="suggestion-chip" data-suggestion="Cara daur ulang sampah plastik">
+                                Daur ulang plastik
+                            </button>
+                            <button class="suggestion-chip" data-suggestion="Bank sampah terdekat">
+                                Bank sampah
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- SCROLL TO BOTTOM -->
                 <button
                     id="scrollToBottomBtn"
-                    class="hidden absolute bottom-[90px] right-5 w-10 h-10 bg-white rounded-full shadow-lg items-center justify-center z-10 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                    class="hidden absolute bottom-[90px] right-5 w-10 h-10 bg-white rounded-full shadow-lg items-center justify-center z-10 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 active:scale-90 border border-outline-variant/20"
                     style="display: none"
+                    aria-label="Gulir ke bawah"
                 >
                     <span class="material-symbols-outlined text-primary"
                         >keyboard_double_arrow_down</span
@@ -243,7 +367,7 @@
                 <!-- INPUT AREA -->
                 <div
                     id="inputArea"
-                    class="bg-white border-t border-outline-variant/30 px-4 py-3 shrink-0 relative"
+                    class="bg-white border-t border-outline-variant/30 px-4 pt-3 pb-[max(12px,env(safe-area-inset-bottom))] shrink-0 relative"
                 >
                     <div
                         id="filePreview"
@@ -270,7 +394,7 @@
                                 id="userInput"
                                 placeholder="Tulis pesanmu..."
                                 rows="1"
-                                class="flex-1 resize-none bg-transparent outline-none text-sm text-on-surface leading-relaxed max-h-32 py-1 font-sans"
+                                class="flex-1 resize-none bg-transparent outline-none text-sm text-on-surface leading-relaxed max-h-28 py-1.5 font-sans placeholder:text-outline/60"
                             ></textarea>
                             <label
                                 for="fileInput"
@@ -290,7 +414,8 @@
                         </div>
                         <button
                             id="sendBtn"
-                            class="w-11 h-11 rounded-full bg-primary hover:bg-primary-variant flex items-center justify-center shrink-0 active:scale-90 transition-all shadow-md hover:shadow-lg"
+                            class="w-11 h-11 rounded-full bg-primary hover:bg-primary-variant flex items-center justify-center shrink-0 active:scale-90 transition-all shadow-md hover:shadow-lg disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
+                            aria-label="Kirim pesan"
                         >
                             <span class="material-symbols-outlined text-white"
                                 >send</span
@@ -379,7 +504,20 @@
             const removeFileBtn = document.getElementById("removeFileBtn");
             const scrollToBottomBtn =
                 document.getElementById("scrollToBottomBtn");
+            const welcomeCard = document.getElementById("welcomeCard");
+            const clearChatBtn = document.getElementById("clearChatBtn");
             let lastMessageDate = null;
+
+            function hideWelcome() {
+                if (welcomeCard) welcomeCard.style.display = "none";
+            }
+
+            function updateSendBtn() {
+                const hasText = input.value.trim().length > 0;
+                const hasFile = fileInput.files.length > 0;
+                sendBtn.disabled = !hasText && !hasFile;
+            }
+            updateSendBtn();
 
             const webhookUrl =
                 "https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf";
@@ -390,6 +528,30 @@
                 localStorage.getItem("lisaSession") || crypto.randomUUID();
             localStorage.setItem("lisaSession", sessionId);
 
+            // --- SUGGESTION CHIPS ---
+            document.querySelectorAll(".suggestion-chip").forEach((chip) => {
+                chip.addEventListener("click", () => {
+                    input.value = chip.getAttribute("data-suggestion");
+                    input.style.height = "auto";
+                    input.style.height = input.scrollHeight + "px";
+                    updateSendBtn();
+                    sendMessage();
+                });
+            });
+
+            // --- CLEAR CHAT ---
+            clearChatBtn.addEventListener("click", () => {
+                if (chatbox.children.length <= 1) return;
+                if (
+                    !confirm(
+                        "Hapus seluruh riwayat percakapan?\n\nTindakan ini tidak bisa dibatalkan.",
+                    )
+                )
+                    return;
+                localStorage.removeItem(HISTORY_KEY);
+                location.reload();
+            });
+
             fileInput.addEventListener("change", () => {
                 if (fileInput.files.length > 0) {
                     fileName.textContent = fileInput.files[0].name;
@@ -397,11 +559,13 @@
                 } else {
                     filePreview.style.display = "none";
                 }
+                updateSendBtn();
             });
             removeFileBtn.addEventListener("click", () => {
                 fileInput.value = null;
                 filePreview.style.display = "none";
                 fileName.textContent = "";
+                updateSendBtn();
             });
 
             function readFileAsDataURL(file) {
@@ -559,6 +723,7 @@
                 const text = input.value.trim();
                 const file = fileInput.files[0];
                 if (!text && !file) return;
+                hideWelcome();
                 const now = new Date();
                 const time = now
                     .toLocaleTimeString("id-ID", {
@@ -572,6 +737,7 @@
                 fileInput.value = null;
                 filePreview.style.display = "none";
                 fileName.textContent = "";
+                updateSendBtn();
                 if (text) addMessage({ text, time, date }, "user");
                 const formData = new FormData();
                 formData.append("text", text);
@@ -678,23 +844,7 @@
             function loadChatHistory() {
                 const st = localStorage.getItem(HISTORY_KEY);
                 if (!st) {
-                    const n = new Date();
-                    const t = n
-                        .toLocaleTimeString("id-ID", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        })
-                        .replace(".", ":");
-                    const d = n.toLocaleDateString("id-ID");
-                    addMessage(
-                        {
-                            text: "haii! 👋 aku LISA.\naku siap bantu kamuu urusan sampah & lingkungan sekolah.\n\nketik 'menu' ajaa kalau mau liat apa yang bisa aku bantu yaa! 😉",
-                            time: t,
-                            date: d,
-                        },
-                        "bot",
-                        false,
-                    );
+                    // Welcome card is shown by default
                     return;
                 }
                 try {
@@ -705,9 +855,9 @@
                         EXPIRATION_DAYS * 24 * 60 * 60 * 1000
                     ) {
                         localStorage.removeItem(HISTORY_KEY);
-                        loadChatHistory();
                         return;
                     }
+                    if (data.chats.length > 0) hideWelcome();
                     data.chats.forEach((item) => {
                         if (item.message.text === "[Gambar dilampirkan]")
                             return;
@@ -730,7 +880,13 @@
             });
             input.addEventListener("input", () => {
                 input.style.height = "auto";
-                input.style.height = input.scrollHeight + "px";
+                input.style.height = Math.min(input.scrollHeight, 112) + "px";
+                updateSendBtn();
+            });
+            input.addEventListener("focus", () => {
+                setTimeout(() => {
+                    input.scrollIntoView({ behavior: "smooth", block: "end" });
+                }, 300);
             });
             window.addEventListener("resize", () => {
                 if (document.activeElement === input)
