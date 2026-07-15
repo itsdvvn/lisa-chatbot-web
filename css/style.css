@@ -1,0 +1,414 @@
+/* ===== CSS Custom Properties (Theme Tokens) ===== */
+:root {
+  --primary: #006c4b;
+  --primary-variant: #005238;
+  --secondary: #4d6357;
+  --surface: #f9f9f7;
+  --surface-container: #eeeeec;
+  --on-surface: #1a1c1b;
+  --on-surface-variant: #404943;
+  --outline: #707973;
+  --outline-variant: #c0c9c1;
+  --csr-orange: #D99324;
+  --csr-green: #19946C;
+  --csr-gray: #EAECEF;
+}
+
+[data-theme="dark"] {
+  --primary: #4cd98e;
+  --primary-variant: #6ee8a5;
+  --secondary: #b8ccbe;
+  --surface: #1a1c1b;
+  --surface-container: #2a2c2b;
+  --on-surface: #e2e3e1;
+  --on-surface-variant: #bfc9c3;
+  --outline: #89938d;
+  --outline-variant: #3f4943;
+  --csr-orange: #f0b84c;
+  --csr-green: #4cd98e;
+  --csr-gray: #3f4943;
+}
+
+/* ===== Reset & Base ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--on-surface);
+  -webkit-font-smoothing: antialiased;
+  font-family: "Inter", sans-serif;
+}
+
+/* ===== Material Symbols ===== */
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+/* ===== SPA Hidden ===== */
+.hidden-spa {
+  display: none !important;
+}
+
+/* ===== Modal ===== */
+.modal-overlay {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-box {
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.active .modal-box {
+  transform: translateY(0) scale(1);
+}
+
+/* ===== Scroll to Top ===== */
+.scroll-to-top {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.scroll-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ===== Hero Background Mask ===== */
+.hero-bg-mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 40%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 40%,
+    transparent 100%
+  );
+}
+
+/* ===== CSR Cards Stack ===== */
+.csr-stack {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.csr-card-1 {
+  z-index: 10;
+}
+
+.csr-card-2 {
+  z-index: 20;
+  margin-top: -3rem;
+}
+
+.csr-card-3 {
+  z-index: 30;
+  margin-top: -3rem;
+}
+
+@media (min-width: 1024px) {
+  .csr-card-2,
+  .csr-card-3 {
+    margin-top: 0;
+  }
+}
+
+/* ===== Scroll Reveal ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+/* ===== Hero Entrance Animation ===== */
+@keyframes heroEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-anim {
+  animation: heroEntrance 0.8s ease-out forwards;
+}
+
+.hero-anim-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.hero-anim-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.hero-anim-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.hero-anim-delay-4 {
+  animation-delay: 0.4s;
+}
+
+.hero-anim-delay-5 {
+  animation-delay: 0.5s;
+}
+
+/* ===== Dark Mode Overrides ===== */
+[data-theme="dark"] body {
+  background-color: var(--surface);
+  color: var(--on-surface);
+}
+
+[data-theme="dark"] .bg-white {
+  background-color: var(--surface-container) !important;
+}
+
+[data-theme="dark"] .bg-surface-container\/50 {
+  background-color: rgba(42, 44, 43, 0.5) !important;
+}
+
+[data-theme="dark"] .text-on-surface {
+  color: var(--on-surface) !important;
+}
+
+[data-theme="dark"] .text-on-surface-variant {
+  color: var(--on-surface-variant) !important;
+}
+
+[data-theme="dark"] .text-outline {
+  color: var(--outline) !important;
+}
+
+[data-theme="dark"] .border-outline-variant {
+  border-color: var(--outline-variant) !important;
+}
+
+[data-theme="dark"] .shadow-md,
+[data-theme="dark"] .shadow-lg,
+[data-theme="dark"] .shadow-xl {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .bg-gradient-to-b {
+  background-image: linear-gradient(to bottom, var(--surface) 0%, var(--surface-container) 100%) !important;
+}
+
+[data-theme="dark"] .bg-primary {
+  background-color: var(--primary) !important;
+}
+
+[data-theme="dark"] .text-primary {
+  color: var(--primary) !important;
+}
+
+[data-theme="dark"] .hover\:bg-primary:hover {
+  background-color: var(--primary) !important;
+}
+
+[data-theme="dark"] .hover\:text-primary:hover {
+  color: var(--primary) !important;
+}
+
+[data-theme="dark"] .from-primary {
+  --tw-gradient-from: var(--primary) !important;
+}
+
+[data-theme="dark"] .to-primary-variant {
+  --tw-gradient-to: var(--primary-variant) !important;
+}
+
+/* ===== Skip Link (accessibility) ===== */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 1000;
+  padding: 8px 16px;
+  background-color: var(--primary);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ===== Bottom Navigation (mobile) ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--surface);
+  border-top: 1px solid var(--outline-variant);
+  padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  z-index: 50;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.bottom-nav .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 16px;
+  color: var(--on-surface-variant);
+  text-decoration: none;
+  font-size: 0.625rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav .nav-item .material-symbols-outlined {
+  font-size: 1.5rem;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.bottom-nav .nav-item.active {
+  color: var(--primary);
+}
+
+.bottom-nav .nav-item.active .material-symbols-outlined {
+  font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
+}
+
+.bottom-nav .nav-item:active {
+  transform: scale(0.92);
+}
+
+@media (min-width: 768px) {
+  .bottom-nav {
+    display: none;
+  }
+}
+
+/* ===== Pull-to-Refresh Indicator ===== */
+.ptr-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  color: var(--on-surface-variant);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ptr-indicator.visible {
+  opacity: 1;
+}
+
+.ptr-indicator .ptr-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--outline-variant);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: ptrSpin 0.6s linear infinite;
+}
+
+@keyframes ptrSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== Counter Value (animated counter) ===== */
+.counter-value {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  transition: all 0.3s ease;
+}
+
+/* ===== Language Toggle ===== */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: 1px solid var(--outline-variant);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--on-surface-variant);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lang-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.lang-toggle:active {
+  transform: scale(0.95);
+}
+
+.lang-toggle .material-symbols-outlined {
+  font-size: 1rem;
+}
+
+/* ===== Parallax Effect ===== */
+.parallax {
+  will-change: transform;
+  transform: translateY(0);
+  transition: transform 0.1s linear;
+}
+
+/* ===== Utility: Dark-mode safe grayscale images ===== */
+[data-theme="dark"] img.grayscale-on-dark {
+  filter: brightness(0.8) contrast(1.2);
+}
