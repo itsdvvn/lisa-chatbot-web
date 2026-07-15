@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // --- SERVICE WORKER REGISTRATION ---
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/lisa-chatbot/sw.js").catch(function () {});
+    navigator.serviceWorker.register("sw.js").catch(function () {});
   }
 
   // --- SKIP LINK ---
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
 async function loadTranslations() {
   const lang = getLang();
   try {
-    const res = await fetch("/lisa-chatbot/locales/" + lang + ".json");
+    const res = await fetch("locales/" + lang + ".json");
     if (res.ok) {
       window.translations = window.translations || {};
       window.translations[lang] = await res.json();
