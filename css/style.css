@@ -245,6 +245,130 @@ body {
   --tw-gradient-to: var(--primary-variant) !important;
 }
 
+[data-theme="dark"] .bg-surface {
+  background-color: var(--surface) !important;
+}
+
+[data-theme="dark"] .bg-surface/50 {
+  background-color: rgba(26, 28, 27, 0.5) !important;
+}
+
+[data-theme="dark"] .bg-white/90 {
+  background-color: rgba(42, 44, 43, 0.9) !important;
+}
+
+[data-theme="dark"] .bg-surface-container {
+  background-color: var(--surface-container) !important;
+}
+
+[data-theme="dark"] .bg-surface-container/30 {
+  background-color: rgba(42, 44, 43, 0.3) !important;
+}
+
+[data-theme="dark"] .bg-surface-container-low {
+  background-color: var(--surface-container) !important;
+}
+
+[data-theme="dark"] .bg-primary/10 {
+  background-color: rgba(76, 217, 142, 0.1) !important;
+}
+
+[data-theme="dark"] .bg-primary/5 {
+  background-color: rgba(76, 217, 142, 0.05) !important;
+}
+
+[data-theme="dark"] .bg-primary/20 {
+  background-color: rgba(76, 217, 142, 0.2) !important;
+}
+
+[data-theme="dark"] .bg-outline-variant {
+  background-color: var(--outline-variant) !important;
+}
+
+[data-theme="dark"] .bg-outline-variant/30 {
+  background-color: rgba(63, 73, 67, 0.3) !important;
+}
+
+[data-theme="dark"] .bg-outline-variant/50 {
+  background-color: rgba(63, 73, 67, 0.5) !important;
+}
+
+[data-theme="dark"] .bg-csr-orange {
+  background-color: var(--csr-orange) !important;
+}
+
+[data-theme="dark"] .bg-csr-green {
+  background-color: var(--csr-green) !important;
+}
+
+[data-theme="dark"] .text-white {
+  color: #fff !important;
+}
+
+[data-theme="dark"] .border-outline-variant/20 {
+  border-color: rgba(63, 73, 67, 0.2) !important;
+}
+
+[data-theme="dark"] .border-outline-variant/30 {
+  border-color: rgba(63, 73, 67, 0.3) !important;
+}
+
+[data-theme="dark"] .border-outline-variant/50 {
+  border-color: rgba(63, 73, 67, 0.5) !important;
+}
+
+[data-theme="dark"] .border-primary/10 {
+  border-color: rgba(76, 217, 142, 0.1) !important;
+}
+
+[data-theme="dark"] .border-primary/20 {
+  border-color: rgba(76, 217, 142, 0.2) !important;
+}
+
+[data-theme="dark"] .border-primary/50 {
+  border-color: rgba(76, 217, 142, 0.5) !important;
+}
+
+[data-theme="dark"] .hover\:bg-outline-variant/30:hover {
+  background-color: rgba(63, 73, 67, 0.3) !important;
+}
+
+[data-theme="dark"] .hover\:bg-outline-variant/50:hover {
+  background-color: rgba(63, 73, 67, 0.5) !important;
+}
+
+[data-theme="dark"] .hover\:bg-primary/5:hover {
+  background-color: rgba(76, 217, 142, 0.05) !important;
+}
+
+[data-theme="dark"] .hover\:bg-primary/10:hover {
+  background-color: rgba(76, 217, 142, 0.1) !important;
+}
+
+[data-theme="dark"] .hover\:bg-primary/20:hover {
+  background-color: rgba(76, 217, 142, 0.2) !important;
+}
+
+[data-theme="dark"] .hover\:bg-primary-variant:hover {
+  background-color: var(--primary-variant) !important;
+}
+
+[data-theme="dark"] .hover\:bg-surface-container:hover {
+  background-color: var(--surface-container) !important;
+}
+
+[data-theme="dark"] .hover\:text-white:hover {
+  color: #fff !important;
+}
+
+[data-theme="dark"] .hover\:text-primary-variant:hover {
+  color: var(--primary-variant) !important;
+}
+
+[data-theme="dark"] .hover\:border-primary/50:hover {
+  border-color: rgba(76, 217, 142, 0.5) !important;
+}
+
 /* ===== Skip Link (accessibility) ===== */
 .skip-link {
   position: absolute;
