@@ -1,4 +1,5 @@
-/*
-!/lisa-chatbot/
-!.gitignore
-!.github/
+# Internal project docs (not needed for deployment)
+/AGENTS.md
+/DESIGN.md
+/FITUR-MENDATANG.md
+/index.html
