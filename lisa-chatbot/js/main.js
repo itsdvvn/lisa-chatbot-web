@@ -214,14 +214,17 @@ document.addEventListener("DOMContentLoaded", function () {
 // --- TRANSLATIONS ---
 async function loadTranslations() {
   const lang = getLang();
-  try {
-    const res = await fetch("locales/" + lang + ".json");
-    if (res.ok) {
-      window.translations = window.translations || {};
-      window.translations[lang] = await res.json();
-      setLang(lang);
-    }
-  } catch (e) {}
+  const locales = ["id", "en"];
+  window.translations = window.translations || {};
+  for (const code of locales) {
+    try {
+      const res = await fetch("locales/" + code + ".json");
+      if (res.ok) {
+        window.translations[code] = await res.json();
+      }
+    } catch (e) {}
+  }
+  setLang(lang);
 }
 
 // --- I18N HELPER ---
