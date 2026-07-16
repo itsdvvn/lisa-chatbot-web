@@ -50,6 +50,12 @@ function setLang(lang) {
       el.textContent = window.translations[lang][key];
     }
   });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (window.translations && window.translations[lang] && window.translations[lang][key]) {
+      el.placeholder = window.translations[lang][key];
+    }
+  });
 }
 
 /**
