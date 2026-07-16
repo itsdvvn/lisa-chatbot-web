@@ -211,6 +211,7 @@ body {
   border-color: var(--outline-variant) !important;
 }
 
+[data-theme="dark"] .shadow-sm,
 [data-theme="dark"] .shadow-md,
 [data-theme="dark"] .shadow-lg,
 [data-theme="dark"] .shadow-xl {

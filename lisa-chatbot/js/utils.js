@@ -63,12 +63,14 @@ function setLang(lang) {
  */
 function initDarkMode() {
   const stored = localStorage.getItem("lisaDarkMode");
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const isDark = stored !== null ? stored === "true" : prefersDark;
-  if (isDark) {
-    document.documentElement.setAttribute("data-theme", "dark");
+  if (stored !== null) {
+    const isDark = stored === "true";
+    if (isDark) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+    return isDark;
   }
-  return isDark;
+  return false;
 }
 
 function toggleDarkMode() {
