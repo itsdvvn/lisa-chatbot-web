@@ -118,12 +118,12 @@ body {
 
 .csr-card-2 {
   z-index: 20;
-  margin-top: -3rem;
+  margin-top: -1.5rem;
 }
 
 .csr-card-3 {
   z-index: 30;
-  margin-top: -3rem;
+  margin-top: -1.5rem;
 }
 
 @media (min-width: 1024px) {
