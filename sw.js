@@ -1,4 +1,4 @@
-const CACHE_NAME = "lisa-v5";
+const CACHE_NAME = "lisa-v6";
 const STATIC_URLS = [
   "./",
   "./index.html",
