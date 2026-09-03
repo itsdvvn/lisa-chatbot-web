@@ -177,6 +177,7 @@ function parseMarkdown(text) {
   const lines = html.split("\n");
   const result = [];
   let inMenu = false;
+  let inResultGroup = false;
   let inUl = false;
 
   for (let i = 0; i < lines.length; i++) {
@@ -189,45 +190,65 @@ function parseMarkdown(text) {
         result.push("</ul>");
         inUl = false;
       }
-      if (!inMenu) {
-        result.push('<div class="chat-menu-group">');
-        inMenu = true;
-      }
+
       const num = numMatch[1];
       const labelRaw = numMatch[2];
-      // Strip HTML tags from label to get plain text for sending
       const labelPlain = labelRaw.replace(/<[^>]+>/g, "").trim();
-      result.push(
-        `<div class="chat-menu-item" data-option="${labelPlain}" title="Pilih opsi ${num}">` +
-          `<span class="chat-menu-num">${num}</span>` +
-          `<span class="chat-menu-text">${labelRaw}</span>` +
-          `<span class="material-symbols-outlined chat-menu-arrow">chevron_right</span>` +
-        `</div>`
-      );
-    } else if (bulletMatch) {
-      if (inMenu) {
-        result.push("</div>");
-        inMenu = false;
+
+      // Look-ahead: check if any of the next few lines (skip blanks) is a bullet
+      // If yes → this is a result card (non-clickable), not a menu choice
+      let nextNonEmpty = "";
+      for (let j = i + 1; j < lines.length && j <= i + 3; j++) {
+        if (lines[j].trim() !== "") { nextNonEmpty = lines[j]; break; }
       }
+      const isResultCard = /^\s*[-*•]\s+/.test(nextNonEmpty);
+
+      if (isResultCard) {
+        // Close any open menu group first
+        if (inMenu) { result.push("</div>"); inMenu = false; }
+        if (!inResultGroup) {
+          result.push('<div class="chat-result-group">');
+          inResultGroup = true;
+        }
+        result.push(
+          `<div class="chat-result-card">` +
+            `<span class="chat-menu-num">${num}</span>` +
+            `<span class="chat-menu-text">${labelRaw}</span>` +
+          `</div>`
+        );
+      } else {
+        // Standalone numbered item → clickable menu choice
+        if (inResultGroup) { result.push("</div>"); inResultGroup = false; }
+        if (!inMenu) {
+          result.push('<div class="chat-menu-group">');
+          inMenu = true;
+        }
+        result.push(
+          `<div class="chat-menu-item" data-option="${labelPlain}" title="Pilih opsi ${num}">` +
+            `<span class="chat-menu-num">${num}</span>` +
+            `<span class="chat-menu-text">${labelRaw}</span>` +
+            `<span class="material-symbols-outlined chat-menu-arrow">chevron_right</span>` +
+          `</div>`
+        );
+      }
+    } else if (bulletMatch) {
+      if (inMenu) { result.push("</div>"); inMenu = false; }
+      if (inResultGroup) { result.push("</div>"); inResultGroup = false; }
       if (!inUl) {
         result.push('<ul class="chat-ul">');
         inUl = true;
       }
       result.push(`<li>${bulletMatch[1]}</li>`);
     } else {
-      if (inMenu) {
-        result.push("</div>");
-        inMenu = false;
-      }
-      if (inUl) {
-        result.push("</ul>");
-        inUl = false;
-      }
+      if (inMenu) { result.push("</div>"); inMenu = false; }
+      if (inResultGroup) { result.push("</div>"); inResultGroup = false; }
+      if (inUl) { result.push("</ul>"); inUl = false; }
       result.push(line);
     }
   }
 
   if (inMenu) result.push("</div>");
+  if (inResultGroup) result.push("</div>");
   if (inUl) result.push("</ul>");
 
   let parsed = result.join("\n");
