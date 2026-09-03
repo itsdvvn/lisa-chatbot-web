@@ -3,3 +3,11 @@
 /DESIGN.md
 /FITUR-MENDATANG.md
 /index.html
+
+# Environment & Secrets
+.env
+.env.*
+*.key
+*.token
+askpass.*
+

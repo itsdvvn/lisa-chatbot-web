@@ -1,0 +1,51 @@
+kategori,jenis_sampah,langkah_olah,alat_dibutuhkan,hasil_akhir,sumber
+Organik,Sisa Sayur & Buah,"Cacah kecil, masukkan ke komposter, aduk rata tiap 3-5 hari, jaga kelembapan.","Komposter (ember/tong), alat pencacah (pisau/gunting)",Pupuk Kompos Padat,KLHK
+Organik,Kulit Buah (Jeruk/Nanas),"Potong kecil, masukkan toples, tambah gula merah (1:3:10 gula:sampah:air), tutup rapat, fermentasi 3 bulan.","Toples/botol kedap udara, gula merah, air",Eco-Enzyme (Cairan Pembersih),Zero Waste ID
+Organik,Sisa Nasi,"Campur dengan tanah atau kompos, atau berikan ke ternak. Hindari penumpukan di kompos (mengundang bau).","Wadah pakan (jika ke ternak), Komposter",Pakan Ternak / Kompos,Edukasi Pengelolaan Pangan
+Organik,Daun Kering,"Kumpulkan, gunakan sebagai 'komponen coklat' (sumber karbon) dalam komposter aerob.","Komposter, karung",Bahan Kompos,Waste4Change
+Organik,Ampas Kopi/Teh,Tebarkan langsung di media tanam sebagai pupuk ringan atau campur ke komposter.,"Media tanam, komposter",Pupuk/Penyubur Tanah,Zero Waste ID
+Organik,Cangkang Telur,"Bersihkan, keringkan (jemur/oven), hancurkan (blender/tumbuk) hingga jadi bubuk.","Blender/Tumbukan, wadah kering",Pupuk Kalsium (Pencegah busuk tomat),Komunitas Berani Kompos
+Organik,Tulang Ikan/Ayam,"Bersihkan, rebus/presto, keringkan, hancurkan. Agak lama, tapi kaya fosfor.","Panci presto, alat penghancur",Tepung Tulang (Pupuk Fosfor),Panduan Pertanian Organik
+Organik,Air Cucian Beras,Siramkan langsung ke tanaman sebagai pupuk cair ringan (kaya B1).,"Wadah penampung, alat siram",Pupuk Cair Organik (PCO),Praktik Umum Berkebun
+Organik,Sisa Makanan Matang (berminyak/daging),Gunakan metode Bokashi. Campur dengan dedak/sekam padi + EM4 di ember tertutup rapat. Fermentasi 2 minggu.,"Ember Bokashi, dedak, EM4",Kompos Bokashi,Metode Bokashi
+Organik,Ranting Kayu Kecil,"Cacah kecil (chopped), gunakan sebagai 'komponen coklat' di dasar komposter untuk aerasi.","Gunting dahan, mesin pencacah (jika ada)",Bahan Kompos (Karbon),Waste4Change
+Organik,Sisa Sayuran (Bonggol),"Potong bagian bonggol (sawi, seledri), letakkan di wadah berisi sedikit air hingga akar tumbuh, lalu pindah ke tanah.","Gelas/wadah kecil, air, tanah",Tanaman Baru (Regrow),Tren 'Regrow' Kitchen
+Organik,Batang Pisang (Debog),"Cacah, campur dengan EM4 dan tetes tebu, fermentasi di drum tertutup.","Drum, mesin pencacah, EM4, tetes tebu",Pupuk Organik Cair (PCO) Super,Panduan Petani Lokal
+Organik,Sampah Kebun (Campuran),Metode Lubang Resapan Biopori. Masukkan sampah organik ke lubang biopori secara berkala.,"Bor Biopori, Pipa PVC berlubang",Kompos (langsung di tanah) & Resapan Air,KLHK
+Anorganik (Plastik),Botol PET (Air Mineral),"Bersihkan, keringkan, remukkan. Kumpulkan & setor ke bank sampah/pengepul.",Tempat sampah terpilah,Biji Plastik (didaur ulang),Waste4Change
+Anorganik (Plastik),Botol HDPE (Shampo/Sabun),"Bersihkan sisa sabun, keringkan. Kumpulkan & setor ke bank sampah (terpisah dari PET).",Tempat sampah terpilah,Biji Plastik HDPE,Waste4Change
+Anorganik (Plastik),Gelas PP (Kopi/Minuman),"Bersihkan sisa minuman & gula, keringkan. Kumpulkan & setor ke bank sampah.",Tempat sampah terpilah,Biji Plastik PP,Waste4Change
+Anorganik (Plastik),Sachet (Multilayer),"Bersihkan, keringkan. Kumpulkan & setor ke dropbox khusus (jika ada) atau jadikan ecobrick.","Dropbox (misal: TerraCycle), Botol PET, Tongkat pemadat",Ecobrick / Bahan bakar (Refuse-Derived Fuel),Ecobricks.org
+Anorganik (Plastik),Ecobrick (Pembuatan),"Gunting sampah plastik bersih & kering, masukkan ke botol PET. Padatkan (min. 1/3 berat botol). Tutup rapat.","Gunting, Tongkat pemadat, Timbangan, Botol PET",Bahan Bangunan Modular,Ecobricks.org
+Anorganik (Plastik),Kantong Kresek,"Bersihkan, keringkan. Lipat rapi. Setor ke bank sampah (nilai rendah) atau gunakan ulang sebagai pelapis tempat sampah.",Tempat sampah terpilah,Didaur ulang (nilai rendah) / Lapisan sampah,Zero Waste ID
+Anorganik (Plastik),Tutup Botol (HDPE/PP),Kumpulkan terpisah (jangan disetor menempel di botol PET). Setor ke bank sampah atau pengrajin.,Wadah terpisah,Dicacah / Bahan kerajinan,Waste4Change
+Anorganik (Plastik),Bubble Wrap,"Gunakan ulang untuk packing. Jika sudah rusak, kumpulkan bersih & kering. Setor ke bank sampah (beberapa menerima).",Tempat sampah terpilah,Bahan packing / Biji plastik,Bank Sampah (Terkait)
+Anorganik (Plastik),Wadah Makanan (Thinwall PP),"Bersihkan sisa makanan/minyak, keringkan. Kumpulkan & setor ke bank sampah.",Tempat sampah terpilah,Biji Plastik PP,Waste4Change
+Anorganik (Plastik),Sedotan Plastik,"Bersihkan, keringkan. Kumpulkan terpisah. Sangat sulit didaur ulang. Alternatif: kumpulkan untuk kerajinan.",Wadah khusus,Bahan Kerajinan,Edukasi Daur Ulang
+Anorganik (Kertas),Kardus Coklat,"Pastikan kering & tidak berminyak. Lipat/pipihkan, ikat rapi. Setor ke bank sampah/pengepul.","Tali, tempat kering",Bubur Kertas (Pulp),Waste4Change
+Anorganik (Kertas),Kertas HVS/Putih,"Pastikan kering, tidak diremas. Kumpulkan terpisah (nilai paling tinggi). Setor ke bank sampah.",Map/box file bekas,Bubur Kertas (Pulp Kualitas Tinggi),Waste4Change
+Anorganik (Kertas),Koran/Majalah,Pastikan kering. Kumpulkan terpisah. Setor ke bank sampah.,Tempat kering,Bubur Kertas (Pulp Kualitas Rendah),Waste4Change
+Anorganik (Kertas),Kertas (Daur Ulang Mandiri),"Sobek kertas, rendam 24 jam, blender jadi bubur, saring, cetak di bingkai kasa, jemur.","Blender, ember, bingkai saring (screen), kain",Kertas Daur Ulang (Kerajinan),Tutorial Kerajinan Kertas
+Anorganik (Campuran),Karton Susu (Tetra Pak),"Bilas bersih (gunting & buka), keringkan. Kumpulkan & setor ke dropbox khusus (misal: di Bank Sampah Induk).","Gunting, tempat kering",Bahan (Poly-Al) / Pulp,Dropbox Tetra Pak
+Anorganik (Logam),Kaleng Aluminium (Minuman),"Bersihkan, keringkan, remukkan jika bisa. Setor ke bank sampah (nilai tinggi).",Tempat sampah terpilah,Dilebur (Aluminium baru),Waste4Change
+Anorganik (Logam),Kaleng Baja (Sarden/Susu),"Bersihkan sisa makanan/minyak, keringkan. Setor ke bank sampah.",Tempat sampah terpilah,Dilebur (Baja baru),Waste4Change
+Anorganik (Kaca),Botol Kaca Bening/Berwarna,"Bersihkan, keringkan. Setor ke bank sampah (terpilah berdasarkan warna jika diminta).",Tempat sampah terpilah,Dilebur (Kaca baru) / Digunakan ulang,Waste4Change
+Anorganik (Logam),Foil Aluminium,Bersihkan dari sisa makanan/minyak. Kumpulkan jadi bola besar. Setor ke bank sampah (beberapa menerima).,Wadah,Dilebur (Aluminium baru),Zero Waste ID
+Anorganik (Logam),Tutup Botol (Besi/Seng),Kumpulkan terpisah. Setor ke bank sampah kategori logam campuran.,Wadah,Dilebur (Logam baru),Bank Sampah Lokal
+B3 (Limbah RT),Minyak Jelantah,"Dinginkan, saring. Kumpulkan di botol/jerigen tertutup rapat. Setor ke pengelola jelantah (misal: BeliJelantah).","Saringan, corong, botol/jerigen bekas",Bahan Biodiesel / Sabun,Waste4Change
+B3 (E-Waste),Baterai Bekas (Alkaline/ABC),Lakban/selotip kedua ujung kutubnya (mencegah korslet). Kumpulkan di wadah khusus. Setor ke dropbox E-waste/B3.,"Selotip, wadah B3",Dikelola oleh pengolah B3 (Ekstraksi logam),EwasteRJ
+B3 (E-Waste),Baterai HP/Laptop (Li-ion),Lakban kutubnya. Kumpulkan terpisah (rentan terbakar). Setor ke dropbox E-waste resmi (misal: di gerai elektronik).,"Selotip, wadah B3",Dikelola oleh pengolah B3 (Ekstraksi logam berat),EwasteRJ
+B3 (Limbah RT),Lampu Neon (TL/CFL),"Simpan utuh (jangan dipecah, mengandung merkuri). Masukkan ke kardus/pembungkusnya. Setor ke dropbox B3/E-waste.",Kardus/pembungkus bekas,Dikelola oleh pengolah B3 (Recovery merkuri),KLHK
+B3 (Limbah RT),Obat Kadaluwarsa (Tablet),"Keluarkan dari kemasan. Hancurkan, campur dengan ampas kopi/tanah. Masukkan plastik, buang ke residu.","Alat penumbuk, tanah/ampas kopi, plastik",Dibuang ke TPA (Inert),Kemenkes RI
+B3 (Spesifik),Masker Medis Bekas,"Gunting/rusak maskernya, lipat. Semprot disinfektan (jika habis sakit). Bungkus rapat (plastik/kertas). Buang ke residu.","Gunting, disinfektan, plastik",Dibuang ke TPA (Residu),Satgas COVID-19
+Residu,Popok Sekali Pakai,Bersihkan kotoran (feses) ke toilet. Bungkus popok rapat-rapat. Buang ke sampah residu.,Plastik pembungkus,Dibuang ke TPA (Residu),Zero Waste ID
+Residu,Puntung Rokok,Pastikan mati total. Kumpulkan (jika ada program daur ulang filter) atau buang ke residu.,"Asbak, wadah khusus",Dikelola (jika ada) / Dibuang ke TPA,Waste4Change
+Residu,Styrofoam,"Bersihkan. Jika ada pengelola khusus (jarang), kumpulkan. Jika tidak ada, buang ke residu.",Tempat sampah residu,Dibuang ke TPA / Didaur ulang (jarang),Edukasi Daur Ulang
+Residu,Kertas Struk Thermal,Jangan dimasukkan ke daur ulang kertas (mengandung BPA). Langsung buang ke sampah residu.,Tempat sampah residu,Dibuang ke TPA,Zero Waste ID
+Anorganik (Tekstil),Pakaian Layak Pakai,"Donasikan ke panti asuhan, jual (preloved), atau tukar (swap event).","Lembaga donasi, platform preloved",Digunakan Ulang (Reuse),Zero Waste ID
+Anorganik (Tekstil),Kain Perca / Baju Rusak,"Jadikan lap pembersih, atau kumpulkan untuk kerajinan (patchwork, isi bantal).","Gunting, mesin jahit (opsional)",Lap / Bahan Kerajinan,Panduan Upcycle
+Anorganik (Tekstil),Jeans Bekas,"Potong dan jahit ulang menjadi tas, dompet, atau apron.","Gunting, mesin jahit",Produk Upcycle,Ide Kerajinan
+Residu (Karet),Sandal Karet Rusak,Buang ke sampah residu. Sangat sulit didaur ulang.,Tempat sampah residu,Dibuang ke TPA,Zero Waste ID
+B3 (E-Waste),Kabel Bekas/Charger Rusak,Kumpulkan. Setor ke dropbox E-waste.,Wadah E-waste,Dikelola oleh pengolah B3 (Ekstraksi tembaga),EwasteRJ
+Anorganik (Lainnya),Ban Bekas,"Upcycle menjadi pot tanaman, ayunan, atau pembatas jalan. Setor ke pengrajin (jika ada).","Pisau, cat (jika upcycle)",Produk Upcycle,Ide Daur Ulang
+B3 (Limbah RT),Kaleng Cat / Aerosol,Pastikan kosong total (jangan ditusuk). Kumpulkan terpisah. Setor ke dropbox B3/E-waste.,Wadah B3,Dikelola oleh pengolah B3,KLHK
