@@ -405,7 +405,7 @@ html.dark .chat-result-card .chat-menu-num {
   color: var(--on-surface);
 }
 
-/* ===== Unordered List ===== */
+/* ===== Lists (Ordered & Unordered) ===== */
 .chat-ul {
   list-style: none;
   padding: 0;
@@ -428,6 +428,96 @@ html.dark .chat-result-card .chat-menu-num {
   height: 6px;
   border-radius: 50%;
   background-color: var(--primary);
+}
+
+.chat-ol {
+  list-style: none;
+  counter-reset: chat-ol-counter;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.chat-ol li {
+  position: relative;
+  counter-increment: chat-ol-counter;
+  padding-left: 28px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.chat-ol li::before {
+  content: counter(chat-ol-counter);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+[data-theme="dark"] .chat-ol li::before,
+html.dark .chat-ol li::before {
+  background: var(--primary);
+  color: #121413;
+}
+
+/* ===== Quick Reply / Buttons Container ===== */
+.quick-reply-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--outline-variant);
+}
+
+.quick-reply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--surface);
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.quick-reply-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 108, 75, 0.2);
+}
+
+.quick-reply-btn:active {
+  transform: scale(0.96);
+}
+
+[data-theme="dark"] .quick-reply-btn,
+html.dark .quick-reply-btn {
+  background: var(--surface-container);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+[data-theme="dark"] .quick-reply-btn:hover,
+html.dark .quick-reply-btn:hover {
+  background: var(--primary);
+  color: #121413;
 }
 
 /* ===== Message In Animation ===== */

@@ -159,16 +159,16 @@ document.addEventListener("DOMContentLoaded", function () {
       openForm();
       return;
     }
-    // Check for quick reply format: [QR:label1|value1,label2|value2]
-    const qrMatch = text.match(/\[QR:(.+?)\]$/);
+    // Check for quick reply format: [BUTTONS:label1|value1,label2|value2] or [QR:...]
+    const qrMatch = text.match(/\[(BUTTONS|QR):(.+?)\]$/i);
     let qrData = null;
     let cleanText = text;
     if (qrMatch) {
-      qrData = qrMatch[1].split(",").map((pair) => {
+      qrData = qrMatch[2].split(",").map((pair) => {
         const [label, value] = pair.split("|");
         return { label: label.trim(), value: (value || label).trim() };
       });
-      cleanText = text.replace(/\[QR:.+?\]$/, "").trim();
+      cleanText = text.replace(/\[(BUTTONS|QR):.+?\]$/i, "").trim();
     }
 
     if (message.date !== lastMessageDate) {
@@ -550,18 +550,8 @@ document.addEventListener("DOMContentLoaded", function () {
       chatbox.scrollTop = chatbox.scrollHeight;
     }, 150);
   });
-  // --- CHATBOX CLICK DELEGATION (Interactive Menu Choices & Quick Replies) ---
+  // --- CHATBOX CLICK DELEGATION (Quick Replies & Buttons) ---
   chatbox.addEventListener("click", (e) => {
-    const menuItem = e.target.closest("[data-option]");
-    if (menuItem) {
-      const opt = menuItem.getAttribute("data-option");
-      input.value = opt;
-      input.style.height = "auto";
-      input.style.height = Math.min(input.scrollHeight, 112) + "px";
-      updateSendBtn();
-      sendMessage();
-      return;
-    }
     const qrBtn = e.target.closest(".quick-reply-btn");
     if (qrBtn) {
       input.value = qrBtn.getAttribute("data-value") || qrBtn.textContent;
