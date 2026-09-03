@@ -158,35 +158,57 @@ def parse_bank_sampah():
             daerah = row.get("daerah", "").strip()
             kota = row.get("kota", "").strip()
             ket = row.get("keterangan", "").strip().lower()
-            if not nama or "belum ada" in ket:
-                continue
-            alamat = row.get("alamat", "").strip()
-            jenis = row.get("jenisSampah", "").strip()
-            jam = row.get("jam oprasional", "").strip()
 
-            content = (
-                f"Bank Sampah: {nama}\n"
-                f"Daerah / Wilayah: {daerah}\n"
-                f"Kota: {kota}\n"
-                f"Alamat / Maps: {alamat}\n"
-                f"Jenis Sampah yang Diterima: {jenis}\n"
-                f"Jam Operasional: {jam}"
-            )
-            metadata = {
-                "nama_bank_sampah": nama,
-                "daerah": daerah,
-                "kota": kota,
-                "alamat": alamat,
-                "jenis_sampah": jenis,
-                "jam_operasional": jam
-            }
-            records.append({
-                "source_type": "bank_sampah",
-                "title": f"{nama} ({daerah}, {kota})",
-                "category": "Bank Sampah",
-                "content": content,
-                "metadata": metadata
-            })
+            if nama:
+                alamat = row.get("alamat", "").strip()
+                jenis = row.get("jenisSampah", "").strip()
+                jam = row.get("jam oprasional", "").strip()
+
+                content = (
+                    f"Bank Sampah: {nama}\n"
+                    f"Daerah / Wilayah: {daerah}\n"
+                    f"Kota: {kota}\n"
+                    f"Alamat / Maps: {alamat}\n"
+                    f"Jenis Sampah yang Diterima: {jenis}\n"
+                    f"Jam Operasional: {jam}"
+                )
+                metadata = {
+                    "nama_bank_sampah": nama,
+                    "daerah": daerah,
+                    "kota": kota,
+                    "alamat": alamat,
+                    "jenis_sampah": jenis,
+                    "jam_operasional": jam,
+                    "status": "aktif"
+                }
+                title = f"{nama} ({daerah}, {kota})" if daerah else f"{nama} ({kota})"
+                records.append({
+                    "source_type": "bank_sampah",
+                    "title": title,
+                    "category": "Bank Sampah",
+                    "content": content,
+                    "metadata": metadata
+                })
+            elif daerah:
+                content = (
+                    f"Daerah / Kelurahan: {daerah}\n"
+                    f"Kota: {kota}\n"
+                    f"Status Bank Sampah: Belum ada bank sampah terdaftar di daerah {daerah}.\n"
+                    f"Informasi: Siswa atau warga di daerah {daerah} ({kota}) dapat menyalurkan sampah ke bank sampah terdekat di kota {kota}."
+                )
+                metadata = {
+                    "daerah": daerah,
+                    "kota": kota,
+                    "nama_bank_sampah": None,
+                    "status": "belum_ada"
+                }
+                records.append({
+                    "source_type": "bank_sampah",
+                    "title": f"Daerah: {daerah} ({kota}) - Belum Ada Bank Sampah",
+                    "category": "Bank Sampah (Belum Ada)",
+                    "content": content,
+                    "metadata": metadata
+                })
     return records
 
 def test_semantic_search(query):
