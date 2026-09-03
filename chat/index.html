@@ -2,7 +2,7 @@
 <html lang="id">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content" />
         <meta name="theme-color" content="#006c4b" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -36,6 +36,16 @@
                 },
             };
         </script>
+        <script>
+            // Enforce Light Theme as strict default on all devices unless user explicitly switched to dark
+            if (localStorage.getItem("lisaDarkMode") === "true") {
+                document.documentElement.setAttribute("data-theme", "dark");
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.removeAttribute("data-theme");
+                document.documentElement.classList.remove("dark");
+            }
+        </script>
         <link rel="stylesheet" href="../css/chat.css" />
     </head>
     <body class="font-sans bg-surface">
@@ -44,11 +54,11 @@
             <span class="material-symbols-outlined">refresh</span>
         </div>
 
-        <!-- Desktop wrapper -->
-        <div class="sm:min-h-screen sm:flex sm:items-center sm:justify-center sm:p-4">
-            <div class="sm:w-full sm:max-w-2xl sm:h-[860px] sm:max-h-[95vh] sm:bg-white sm:rounded-[2rem] sm:shadow-xl sm:flex sm:flex-col sm:overflow-hidden sm:border sm:border-outline-variant/30">
+        <!-- Desktop / Mobile wrapper -->
+        <div class="chat-app-wrapper flex flex-col sm:h-auto sm:min-h-screen sm:flex sm:items-center sm:justify-center sm:p-4">
+            <div class="w-full h-full sm:max-w-2xl sm:h-[860px] sm:max-h-[95vh] bg-white sm:rounded-[2rem] sm:shadow-xl flex flex-col overflow-hidden sm:border sm:border-outline-variant/30 relative">
                 <!-- HEADER -->
-                <header class="flex items-center px-5 py-3.5 bg-primary text-white shrink-0 gap-3">
+                <header class="flex items-center px-4 py-3 sm:px-5 sm:py-3.5 bg-primary text-white shrink-0 gap-3 safe-top">
                     <img src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg" alt="Profile" id="headerProfilePic" class="w-10 h-10 rounded-full object-cover border-2 border-white/40 shadow-sm" />
                     <div id="headerInfo" class="flex-1">
                         <h1 class="text-base font-bold leading-tight">LISA Ai</h1>
@@ -95,20 +105,29 @@
                     <span class="material-symbols-outlined text-primary">keyboard_double_arrow_down</span>
                 </button>
 
+                <!-- QUICK ACTION CHIPS -->
+                <div id="quickChipsBar" class="px-3 sm:px-4 py-2 bg-white dark:bg-surface border-t border-outline-variant/20 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0">
+                    <button type="button" class="quick-chip" data-send="menu">📋 Menu</button>
+                    <button type="button" class="quick-chip" data-send="1">♻️ Olah Sampah</button>
+                    <button type="button" class="quick-chip" data-send="2">📍 Bank Sampah</button>
+                    <button type="button" class="quick-chip" data-send="3">✍️ Kasih Saran</button>
+                    <button type="button" class="quick-chip" data-send="4">ℹ️ Tentang LISA</button>
+                </div>
+
                 <!-- INPUT AREA -->
-                <div id="inputArea" class="bg-white border-t border-outline-variant/30 px-4 pt-3 pb-[max(12px,env(safe-area-inset-bottom))] shrink-0 relative">
+                <div id="inputArea" class="bg-white border-t border-outline-variant/20 px-3 sm:px-4 pt-2.5 sm:pt-3 shrink-0 relative safe-bottom">
                     <div id="filePreview" style="display: none" class="flex items-center gap-2 mb-2 px-3 py-1.5 bg-primary/10 rounded-lg text-sm">
                         <span class="material-symbols-outlined text-primary text-[18px]">attach_file</span>
                         <span id="fileName" class="text-primary truncate flex-1 text-xs">namafilepanjang.jpg</span>
                         <button id="removeFileBtn" class="text-outline hover:text-on-surface text-lg leading-none cursor-pointer bg-transparent border-none">&times;</button>
                     </div>
                     <div class="flex items-end gap-2">
-                        <div class="flex-1 flex items-end gap-2 bg-surface rounded-2xl px-4 py-2 focus-within:ring-2 focus-within:ring-primary/30 focus-within:bg-white transition-all border border-outline-variant/30">
+                        <div class="flex-1 flex items-center gap-1.5 sm:gap-2 bg-surface rounded-2xl px-3 sm:px-4 py-1 sm:py-1.5 focus-within:ring-2 focus-within:ring-primary/30 focus-within:bg-white transition-all border border-outline-variant/30">
                             <!-- Voice input button -->
                             <button id="voiceBtn" class="voice-btn cursor-pointer p-1.5 rounded-full hover:bg-surface-container transition shrink-0 bg-transparent border-none" aria-label="Rekam suara">
                                 <span class="material-symbols-outlined text-[20px] text-outline hover:text-primary">mic</span>
                             </button>
-                            <textarea id="userInput" placeholder="Tulis pesanmu..." rows="1" class="flex-1 resize-none bg-transparent outline-none text-on-surface leading-relaxed max-h-28 py-1.5 font-sans placeholder:text-outline/60" style="font-size: 16px"></textarea>
+                            <textarea id="userInput" placeholder="Tulis pesanmu..." rows="1" class="flex-1 resize-none bg-transparent border-0 focus:border-0 focus:ring-0 focus:outline-none outline-none text-on-surface leading-relaxed max-h-28 py-1.5 font-sans placeholder:text-outline/60 text-[15px] sm:text-base" style="font-size: 16px"></textarea>
                             <label for="fileInput" class="cursor-pointer p-1.5 rounded-full hover:bg-surface-container transition shrink-0">
                                 <span class="material-symbols-outlined text-[20px] text-outline hover:text-primary">attach_file</span>
                             </label>
