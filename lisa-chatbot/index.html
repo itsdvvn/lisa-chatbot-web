@@ -46,14 +46,14 @@
         <!-- SKIP LINK -->
         <a href="#main-content" class="skip-link" data-i18n="skip_link">Langsung ke konten utama</a>
 
-        <div class="mx-auto min-h-screen bg-white relative overflow-x-hidden">
+        <div class="mx-auto min-h-screen bg-white dark:bg-surface relative overflow-x-hidden">
             <div class="max-w-6xl mx-auto">
                 <!-- ========================= -->
                 <!-- VIEW: HOME                -->
                 <!-- ========================= -->
                 <div id="view-home">
                     <!-- HEADER -->
-                    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-outline-variant/30 px-6 py-4 flex justify-between items-center shadow-sm" id="header">
+                    <header class="sticky top-0 z-50 bg-white/90 dark:bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 dark:border-white/10 px-6 py-4 flex justify-between items-center shadow-sm" id="header">
                         <div class="flex items-center gap-3 cursor-pointer group" onclick="navigateTo('home')">
                             <div class="w-12 h-12 bg-surface-container rounded-xl flex items-center justify-center shadow-sm overflow-hidden group-hover:scale-105 transition-transform">
                                 <img alt="Logo GBL" class="w-10 h-10 object-contain" loading="lazy" src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png" />
@@ -200,7 +200,7 @@
                                     <h3 class="font-bold text-xl mb-3 relative z-10" data-i18n="csr_card2_title">Seminar Edukasi Lingkungan</h3>
                                                                         <p class="text-sm leading-relaxed opacity-90 relative z-10" data-i18n="csr_card2_desc">Kegiatan seminar langsung untuk memperdalam pemahaman masyarakat mengenai pengelolaan sampah dan 3R.</p>
                                 </div>
-                                <div class="csr-card-3 bg-white border border-outline-variant/30 text-on-surface p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300 xl:flex-1 xl:pt-8 reveal reveal-delay-3">
+                                <div class="csr-card-3 bg-white dark:bg-surface-container border border-outline-variant/30 text-on-surface p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300 xl:flex-1 xl:pt-8 reveal reveal-delay-3">
                                     <div class="absolute top-0 right-0 p-6 opacity-10 text-primary transform translate-x-4 group-hover:scale-110 transition-transform xl:top-8">
                                         <span class="material-symbols-outlined text-6xl">smart_toy</span>
                                     </div>
@@ -212,7 +212,7 @@
                     </section>
 
                     <!-- BEHIND LISA -->
-                    <section class="py-24 px-6 bg-white relative overflow-hidden reveal">
+                    <section class="py-24 px-6 bg-white dark:bg-surface relative overflow-hidden reveal">
                         <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
                         <div class="max-w-5xl mx-auto flex flex-col xl:flex-row xl:items-center xl:gap-12 text-center xl:text-left">
                             <div class="xl:w-5/12 reveal reveal-delay-1">
@@ -272,7 +272,7 @@
 
                     <!-- MEDIA KIT SECTION -->
                     <section class="px-4 sm:px-8 pb-24">
-                        <div class="max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-[2rem] shadow-sm border border-outline-variant/20">
+                        <div class="max-w-2xl mx-auto bg-white dark:bg-surface-container p-6 sm:p-8 rounded-[2rem] shadow-sm border border-outline-variant/20">
                             <div class="flex items-center gap-3 font-bold text-xl text-on-surface mb-8">
                                 <span class="material-symbols-outlined text-primary">description</span>
                                 <span data-i18n="documents">Dokumen Publik</span>
@@ -371,7 +371,7 @@
 
             <!-- DOCUMENT PREVIEW MODAL -->
             <div class="modal-overlay fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4" id="docPreviewModal">
-                <div class="modal-box bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+                <div class="modal-box bg-white dark:bg-surface-container rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-outline-variant/20">
                     <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/20 shrink-0">
                         <h3 class="font-bold text-on-surface truncate" id="docPreviewTitle" data-i18n="doc_preview_title">Dokumen</h3>
                         <button class="w-10 h-10 rounded-full bg-surface-container hover:bg-outline-variant/30 flex items-center justify-center transition active:scale-90 cursor-pointer border-none" onclick="closeDocPreview()" aria-label="Tutup">
@@ -386,7 +386,7 @@
 
             <!-- FEEDBACK MODAL -->
             <div class="modal-overlay fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4" id="subModal">
-                <div class="modal-box bg-white rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto p-8 shadow-2xl">
+                <div class="modal-box bg-white dark:bg-surface-container rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto p-8 shadow-2xl border border-outline-variant/20">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-bold text-on-surface" data-i18n="feedback_title">Kasih Saran &amp; Masukan</h3>
                         <button class="w-10 h-10 rounded-full bg-surface-container hover:bg-outline-variant/30 flex items-center justify-center transition active:scale-90 cursor-pointer border-none" id="closeSubModal" aria-label="Tutup">
@@ -396,15 +396,15 @@
                     <form class="space-y-4" id="subscribeForm">
                         <div>
                             <label for="feedbackName" class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide" data-i18n="feedback_name">Nama Kamu</label>
-                            <input type="text" id="feedbackName" name="name" class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-surface text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition font-sans" placeholder="Nama lengkap" data-i18n-placeholder="feedback_name_placeholder" />
+                            <input type="text" id="feedbackName" name="name" class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-surface dark:bg-surface text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition font-sans" placeholder="Nama lengkap" data-i18n-placeholder="feedback_name_placeholder" />
                         </div>
                         <div>
                             <label for="feedbackEmail" class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide" data-i18n="feedback_email">Email Kamu</label>
-                            <input type="email" id="feedbackEmail" name="email" required class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-surface text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition font-sans" placeholder="email@contoh.com" data-i18n-placeholder="feedback_email_placeholder" />
+                            <input type="email" id="feedbackEmail" name="email" required class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-surface dark:bg-surface text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition font-sans" placeholder="email@contoh.com" data-i18n-placeholder="feedback_email_placeholder" />
                         </div>
                         <div>
                             <label for="feedbackMessage" class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide" data-i18n="feedback_message">Pesan Kamu</label>
-                            <textarea id="feedbackMessage" name="feedback" rows="4" required class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-surface text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition resize-none font-sans" placeholder="Tulis pesan atau saran kamu..." data-i18n-placeholder="feedback_message_placeholder"></textarea>
+                            <textarea id="feedbackMessage" name="feedback" rows="4" required class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-surface dark:bg-surface text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition resize-none font-sans" placeholder="Tulis pesan atau saran kamu..." data-i18n-placeholder="feedback_message_placeholder"></textarea>
                         </div>
                         <button type="submit" class="w-full py-3 bg-primary hover:bg-primary-variant text-white font-bold rounded-full active:scale-[0.98] transition-all text-sm shadow-md">
                             <span data-i18n="feedback_send">Kirim</span>

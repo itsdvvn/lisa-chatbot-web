@@ -67,6 +67,10 @@ function initDarkMode() {
     const isDark = stored === "true";
     if (isDark) {
       document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+      document.documentElement.classList.remove("dark");
     }
     return isDark;
   }
@@ -78,9 +82,11 @@ function toggleDarkMode() {
   const isDark = html.getAttribute("data-theme") === "dark";
   if (isDark) {
     html.removeAttribute("data-theme");
+    html.classList.remove("dark");
     localStorage.setItem("lisaDarkMode", "false");
   } else {
     html.setAttribute("data-theme", "dark");
+    html.classList.add("dark");
     localStorage.setItem("lisaDarkMode", "true");
   }
 }

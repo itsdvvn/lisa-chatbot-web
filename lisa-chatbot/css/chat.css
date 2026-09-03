@@ -11,16 +11,17 @@
   --outline-variant: #c0c9c1;
 }
 
-[data-theme="dark"] {
+[data-theme="dark"],
+html.dark {
   --primary: #4cd98e;
   --primary-variant: #6ee8a5;
   --secondary: #b8ccbe;
-  --surface: #1a1c1b;
-  --surface-container: #2a2c2b;
-  --on-surface: #e2e3e1;
-  --on-surface-variant: #bfc9c3;
-  --outline: #89938d;
-  --outline-variant: #3f4943;
+  --surface: #121413;
+  --surface-container: #1c1f1d;
+  --on-surface: #e2e5e3;
+  --on-surface-variant: #c4cdc7;
+  --outline: #9aa59f;
+  --outline-variant: #2c332f;
 }
 
 /* ===== Reset ===== */

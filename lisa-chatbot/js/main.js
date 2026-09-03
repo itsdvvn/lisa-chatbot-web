@@ -90,8 +90,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // --- DARK MODE TOGGLE ---
   const darkToggle = document.getElementById("darkModeToggle");
+  function updateDarkIcon() {
+    if (!darkToggle) return;
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    const icon = darkToggle.querySelector(".material-symbols-outlined");
+    if (icon) {
+      icon.textContent = isDark ? "light_mode" : "dark_mode";
+    }
+  }
   if (darkToggle) {
-    darkToggle.addEventListener("click", toggleDarkMode);
+    darkToggle.addEventListener("click", function () {
+      toggleDarkMode();
+      updateDarkIcon();
+    });
+    updateDarkIcon();
   }
 
   // --- LANGUAGE TOGGLE ---

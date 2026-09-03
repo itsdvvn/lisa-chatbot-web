@@ -19,6 +19,25 @@ document.addEventListener("DOMContentLoaded", function () {
   let audioChunks = [];
   let isRecording = false;
 
+  // --- DARK MODE INIT & TOGGLE ---
+  initDarkMode();
+  const chatDarkToggle = document.getElementById("chatDarkToggle");
+  function updateChatDarkIcon() {
+    if (!chatDarkToggle) return;
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    const icon = chatDarkToggle.querySelector(".material-symbols-outlined");
+    if (icon) {
+      icon.textContent = isDark ? "light_mode" : "dark_mode";
+    }
+  }
+  if (chatDarkToggle) {
+    chatDarkToggle.addEventListener("click", function () {
+      toggleDarkMode();
+      updateChatDarkIcon();
+    });
+    updateChatDarkIcon();
+  }
+
   function hideWelcome() {
     if (welcomeCard) welcomeCard.style.display = "none";
   }
