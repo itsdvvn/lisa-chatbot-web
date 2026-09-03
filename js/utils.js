@@ -194,11 +194,13 @@ function parseMarkdown(text) {
         inMenu = true;
       }
       const num = numMatch[1];
-      const label = numMatch[2];
+      const labelRaw = numMatch[2];
+      // Strip HTML tags from label to get plain text for sending
+      const labelPlain = labelRaw.replace(/<[^>]+>/g, "").trim();
       result.push(
-        `<div class="chat-menu-item" data-option="${num}" title="Pilih opsi ${num}">` +
+        `<div class="chat-menu-item" data-option="${labelPlain}" title="Pilih opsi ${num}">` +
           `<span class="chat-menu-num">${num}</span>` +
-          `<span class="chat-menu-text">${label}</span>` +
+          `<span class="chat-menu-text">${labelRaw}</span>` +
           `<span class="material-symbols-outlined chat-menu-arrow">chevron_right</span>` +
         `</div>`
       );
