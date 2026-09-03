@@ -509,34 +509,40 @@ document.addEventListener("DOMContentLoaded", function () {
   // --- PULL-TO-REFRESH ---
   let touchStartY = 0;
   let isPulling = false;
+  let pullDistance = 0;
   let ptrIndicator = document.getElementById("ptrIndicator");
 
   chatbox.addEventListener("touchstart", (e) => {
     if (chatbox.scrollTop === 0) {
       touchStartY = e.touches[0].clientY;
       isPulling = true;
+      pullDistance = 0;
     }
   }, { passive: true });
 
   chatbox.addEventListener("touchmove", (e) => {
     if (!isPulling) return;
-    const diff = e.touches[0].clientY - touchStartY;
-    if (diff > 0 && ptrIndicator) {
-      ptrIndicator.style.transform = "translateY(" + Math.min(diff * 0.5, 60) + "px)";
-      ptrIndicator.style.opacity = Math.min(diff / 100, 1);
+    pullDistance = e.touches[0].clientY - touchStartY;
+    if (pullDistance > 0 && ptrIndicator) {
+      ptrIndicator.style.transform = "translateY(" + Math.min(pullDistance * 0.5, 60) + "px)";
+      ptrIndicator.style.opacity = Math.min(pullDistance / 100, 1);
     }
   }, { passive: true });
 
   chatbox.addEventListener("touchend", () => {
     if (!isPulling) return;
+    const shouldRefresh = pullDistance > 70;
     isPulling = false;
+    pullDistance = 0;
     if (ptrIndicator) {
       ptrIndicator.style.transform = "";
       ptrIndicator.style.opacity = "";
     }
-    // Refresh by reloading chat history
-    localStorage.removeItem(HISTORY_KEY);
-    location.reload();
+    if (shouldRefresh) {
+      // Refresh by reloading chat history
+      localStorage.removeItem(HISTORY_KEY);
+      location.reload();
+    }
   }, { passive: true });
 
   // --- FORM ---
