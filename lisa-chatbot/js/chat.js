@@ -145,101 +145,108 @@ document.addEventListener("DOMContentLoaded", function () {
     if (message.date !== lastMessageDate) {
       const dateSep = document.createElement("div");
       dateSep.classList.add("date-separator");
-      dateSep.textContent = getFormattedDate(message.date);
+      dateSep.innerHTML = `<span class="date-separator-badge">${getFormattedDate(message.date)}</span>`;
       chatbox.appendChild(dateSep);
       lastMessageDate = message.date;
     }
-    const msg = document.createElement("div");
-    msg.classList.add(
-      "bubble",
-      sender,
-      "py-1.5",
-      "px-3",
-      "mb-2",
-      "w-fit",
-      "max-w-[85%]",
-      "sm:max-w-[70%]",
-      "text-sm",
-      "leading-relaxed",
-      "relative",
-    );
-    if (sender === "user") msg.classList.add("ml-auto");
-    else msg.classList.add("mr-auto");
+
+    const row = document.createElement("div");
+    row.classList.add("msg-row", sender);
+
+    const wrap = document.createElement("div");
+    wrap.classList.add("msg-wrap");
+
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble", sender);
 
     const content = document.createElement("div");
+    content.classList.add("bubble-content");
+
     if (typeof text === "string" && text.startsWith("data:image/")) {
       content.innerHTML =
         '<img src="' +
         text +
-        '" alt="Lampiran gambar" style="max-width:200px;border-radius:8px;display:block">';
-      msg.style.padding = "8px";
+        '" alt="Lampiran gambar" class="rounded-xl max-w-[240px] block my-1">';
     } else if (typeof text === "string" && text.startsWith("data:application/")) {
       content.innerHTML =
-        '<div class="flex items-center gap-2 text-primary"><span class="material-symbols-outlined">description</span> Dokumen terlampir</div>';
-      msg.style.padding = "8px";
+        '<div class="flex items-center gap-2 text-primary font-medium"><span class="material-symbols-outlined">description</span> Dokumen terlampir</div>';
     } else {
-      // Use Markdown parser for bot messages, linkify for user
       if (sender === "bot") {
         content.innerHTML = parseMarkdown(cleanText || text);
       } else {
         content.innerHTML = linkify(cleanText || text);
       }
     }
-    msg.appendChild(content);
-
-    const timeContent = document.createElement("span");
-    timeContent.classList.add("timestamp", "block", "text-[10px]", "mt-1.5");
-    timeContent.textContent = message.time;
-    msg.appendChild(timeContent);
+    bubble.appendChild(content);
 
     // Quick reply buttons
     if (qrData && qrData.length > 0) {
       const qrContainer = document.createElement("div");
-      qrContainer.classList.add("quick-reply", "mt-2", "flex", "flex-wrap", "gap-1.5");
+      qrContainer.classList.add("quick-reply-container");
       qrData.forEach((qr) => {
         const btn = document.createElement("button");
-        btn.classList.add(
-          "quick-reply-btn",
-          "px-3",
-          "py-1.5",
-          "text-xs",
-          "font-semibold",
-          "rounded-full",
-          "border",
-          "border-primary",
-          "text-primary",
-          "bg-white",
-          "hover:bg-primary",
-          "hover:text-white",
-          "transition-colors",
-          "active:scale-95",
-          "cursor-pointer",
-        );
+        btn.classList.add("quick-reply-btn");
         btn.setAttribute("data-value", qr.value);
         btn.textContent = qr.label;
         qrContainer.appendChild(btn);
       });
-      msg.appendChild(qrContainer);
+      bubble.appendChild(qrContainer);
     }
+
+    wrap.appendChild(bubble);
+
+    const timeEl = document.createElement("span");
+    timeEl.classList.add("msg-time");
+    timeEl.textContent = message.time;
+    wrap.appendChild(timeEl);
+
+    if (sender === "bot") {
+      const avatar = document.createElement("img");
+      avatar.src = "https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg";
+      avatar.alt = "LISA";
+      avatar.classList.add("msg-avatar");
+      avatar.loading = "lazy";
+      row.appendChild(avatar);
+    }
+
+    row.appendChild(wrap);
 
     const isScrolledToBottom =
       chatbox.scrollHeight - chatbox.clientHeight <=
       chatbox.scrollTop + 100;
-    chatbox.appendChild(msg);
-    if (isScrolledToBottom)
+    chatbox.appendChild(row);
+
+    if (isScrolledToBottom) {
       chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: "smooth" });
+    }
+
     if (text.startsWith("Saran & Masukan (ID:")) save = false;
     if (save) saveChatHistory(message, sender);
   }
 
   // --- TYPING INDICATOR ---
   function addTyping() {
+    const row = document.createElement("div");
+    row.classList.add("msg-row", "bot");
+    row.id = "typing";
+
+    const avatar = document.createElement("img");
+    avatar.src = "https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg";
+    avatar.alt = "LISA";
+    avatar.classList.add("msg-avatar");
+    row.appendChild(avatar);
+
     const wrap = document.createElement("div");
-    wrap.classList.add("bubble", "bot", "mr-auto", "px-4", "py-3", "mb-2");
-    wrap.id = "typing";
-    wrap.innerHTML =
+    wrap.classList.add("msg-wrap");
+
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble", "bot");
+    bubble.innerHTML =
       '<div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
-    chatbox.appendChild(wrap);
+
+    wrap.appendChild(bubble);
+    row.appendChild(wrap);
+    chatbox.appendChild(row);
     chatbox.scrollTop = chatbox.scrollHeight;
   }
 
@@ -514,6 +521,29 @@ document.addEventListener("DOMContentLoaded", function () {
       chatbox.scrollTop = chatbox.scrollHeight;
     }, 150);
   });
+  // --- CHATBOX CLICK DELEGATION (Interactive Menu Choices & Quick Replies) ---
+  chatbox.addEventListener("click", (e) => {
+    const menuItem = e.target.closest("[data-option]");
+    if (menuItem) {
+      const opt = menuItem.getAttribute("data-option");
+      input.value = opt;
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 112) + "px";
+      updateSendBtn();
+      sendMessage();
+      return;
+    }
+    const qrBtn = e.target.closest(".quick-reply-btn");
+    if (qrBtn) {
+      input.value = qrBtn.getAttribute("data-value") || qrBtn.textContent;
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 112) + "px";
+      updateSendBtn();
+      sendMessage();
+      return;
+    }
+  });
+
   fileInput.value = null;
   filePreview.style.display = "none";
   fileName.textContent = "";

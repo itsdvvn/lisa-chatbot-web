@@ -113,20 +113,88 @@ function parseMarkdown(text) {
   let html = text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/^### (.+)$/gm, "<h3>$1</h3>")
-    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-    .replace(/^# (.+)$/gm, "<h1>$1</h1>")
+    .replace(/>/g, "&gt;");
+
+  // Headings
+  html = html
+    .replace(/^### (.+)$/gm, '<h3 class="font-bold text-sm sm:text-base my-1.5 text-primary">$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2 class="font-bold text-base sm:text-lg my-2 text-primary">$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1 class="font-bold text-lg sm:text-xl my-2.5 text-primary">$1</h1>');
+
+  // Bold, italic, inline code
+  html = html
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
-    .replace(/^- (.+)$/gm, "<li>$1</li>")
-    .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
-    .replace(/^(\d+)\. (.+)$/gm, "<li>$2</li>")
-    .replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>")
-    .replace(/\n/g, "<br>");
-  // Then apply linkify
-  return linkify(html);
+    .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10 text-xs font-mono">$1</code>')
+    .replace(/^> (.+)$/gm, '<blockquote class="border-l-3 border-primary pl-3 my-2 italic text-outline">$1</blockquote>');
+
+  // Process lines for numbered choices vs bullet items vs normal paragraphs
+  const lines = html.split("\n");
+  const result = [];
+  let inMenu = false;
+  let inUl = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const numMatch = line.match(/^\s*(\d+)\.\s+(.+)$/);
+    const bulletMatch = line.match(/^\s*[-*•]\s+(.+)$/);
+
+    if (numMatch) {
+      if (inUl) {
+        result.push("</ul>");
+        inUl = false;
+      }
+      if (!inMenu) {
+        result.push('<div class="chat-menu-group">');
+        inMenu = true;
+      }
+      const num = numMatch[1];
+      const label = numMatch[2];
+      result.push(
+        `<div class="chat-menu-item" data-option="${num}" title="Pilih opsi ${num}">` +
+          `<span class="chat-menu-num">${num}</span>` +
+          `<span class="chat-menu-text">${label}</span>` +
+          `<span class="material-symbols-outlined chat-menu-arrow">chevron_right</span>` +
+        `</div>`
+      );
+    } else if (bulletMatch) {
+      if (inMenu) {
+        result.push("</div>");
+        inMenu = false;
+      }
+      if (!inUl) {
+        result.push('<ul class="chat-ul">');
+        inUl = true;
+      }
+      result.push(`<li>${bulletMatch[1]}</li>`);
+    } else {
+      if (inMenu) {
+        result.push("</div>");
+        inMenu = false;
+      }
+      if (inUl) {
+        result.push("</ul>");
+        inUl = false;
+      }
+      result.push(line);
+    }
+  }
+
+  if (inMenu) result.push("</div>");
+  if (inUl) result.push("</ul>");
+
+  let parsed = result.join("\n");
+  // Clean up extra blank lines around menu groups and lists
+  parsed = parsed.replace(/<\/div>\n+/g, "</div>");
+  parsed = parsed.replace(/<div class="chat-menu-group">\n+/g, '<div class="chat-menu-group">');
+  parsed = parsed.replace(/<\/ul>\n+/g, "</ul>");
+  parsed = parsed.replace(/<ul class="chat-ul">\n+/g, '<ul class="chat-ul">');
+
+  // Convert paragraph gaps and newlines
+  parsed = parsed.replace(/\n{2,}/g, '<div class="my-1.5"></div>');
+  parsed = parsed.replace(/\n/g, "<br>");
+
+  return linkify(parsed);
 }
 
 // Export for use in other scripts
