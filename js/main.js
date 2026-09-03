@@ -77,12 +77,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // --- SCROLL TO TOP ---
+  // --- SCROLL TO TOP & FLOATING CHAT FAB ---
   const scrollBtn = document.getElementById("scrollToTopBtn");
+  const floatingFab = document.getElementById("floatingChatFab");
+  
+  function handleScrollElements() {
+    const isScrolled = window.scrollY > 320;
+    if (scrollBtn) scrollBtn.classList.toggle("show", isScrolled);
+    if (floatingFab) floatingFab.classList.toggle("show", isScrolled);
+  }
+
+  window.addEventListener("scroll", handleScrollElements, { passive: true });
+  handleScrollElements();
+
   if (scrollBtn) {
-    window.addEventListener("scroll", function () {
-      scrollBtn.classList.toggle("show", window.scrollY > 300);
-    });
     scrollBtn.addEventListener("click", function () {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });

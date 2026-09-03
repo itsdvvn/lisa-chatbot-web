@@ -80,18 +80,26 @@ body {
   transform: translateY(0) scale(1);
 }
 
-/* ===== Scroll to Top ===== */
-.scroll-to-top {
+/* ===== Floating Chat FAB & Scroll to Top ===== */
+.scroll-to-top,
+#floatingChatFab {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
+  transform: translateY(16px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+  pointer-events: none;
 }
 
-.scroll-to-top.show {
+.scroll-to-top.show,
+#floatingChatFab.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  pointer-events: auto;
+}
+
+#floatingChatFab.show:hover {
+  transform: translateY(-2px);
 }
 
 /* ===== Hero Background Mask ===== */
