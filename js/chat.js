@@ -80,11 +80,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  let isSending = false;
+
   // --- QUICK REPLY BUTTONS & ACTION CHIPS (dynamic) ---
   document.addEventListener("click", function (e) {
     const qr = e.target.closest(".quick-reply-btn");
     if (qr) {
-      input.value = qr.getAttribute("data-value");
+      if (isSending) return;
+      input.value = qr.getAttribute("data-value") || qr.textContent.trim();
       input.style.height = "auto";
       input.style.height = Math.min(input.scrollHeight, 112) + "px";
       updateSendBtn();
@@ -94,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const chip = e.target.closest(".quick-chip");
     if (chip) {
+      if (isSending) return;
       input.value = chip.getAttribute("data-send");
       input.style.height = "auto";
       input.style.height = Math.min(input.scrollHeight, 112) + "px";
@@ -287,9 +291,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // --- SEND MESSAGE ---
   async function sendMessage() {
+    if (isSending) return;
     const text = input.value.trim();
     const files = fileInput.files;
     if (!text && files.length === 0) return;
+
+    isSending = true;
     hideWelcome();
     const now = new Date();
     const time = now
@@ -364,6 +371,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "bot",
       );
       console.error(e);
+    } finally {
+      isSending = false;
+      updateSendBtn();
     }
   }
 
@@ -551,19 +561,6 @@ document.addEventListener("DOMContentLoaded", function () {
       chatbox.scrollTop = chatbox.scrollHeight;
     }, 150);
   });
-  // --- CHATBOX CLICK DELEGATION (Quick Replies & Buttons) ---
-  chatbox.addEventListener("click", (e) => {
-    const qrBtn = e.target.closest(".quick-reply-btn");
-    if (qrBtn) {
-      input.value = qrBtn.getAttribute("data-value") || qrBtn.textContent;
-      input.style.height = "auto";
-      input.style.height = Math.min(input.scrollHeight, 112) + "px";
-      updateSendBtn();
-      sendMessage();
-      return;
-    }
-  });
-
   fileInput.value = null;
   filePreview.style.display = "none";
   fileName.textContent = "";
