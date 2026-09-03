@@ -168,13 +168,26 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // --- PARALLAX HERO ---
-  window.addEventListener("scroll", function () {
-    const heroBg = document.querySelector(".hero-bg-mask img");
-    if (heroBg) {
-      const scrolled = window.scrollY;
-      heroBg.style.transform = "translateY(" + scrolled * 0.3 + "px)";
-    }
-  }, { passive: true });
+  let parallaxTicking = false;
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!parallaxTicking) {
+        window.requestAnimationFrame(function () {
+          const heroBg = document.querySelector(".hero-bg-mask img");
+          if (heroBg) {
+            const scrolled = window.scrollY;
+            if (scrolled < 700) {
+              heroBg.style.transform = "translate3d(0, " + (scrolled * 0.15) + "px, 0)";
+            }
+          }
+          parallaxTicking = false;
+        });
+        parallaxTicking = true;
+      }
+    },
+    { passive: true },
+  );
 
   // --- PWA INSTALL ---
   let deferredPrompt;

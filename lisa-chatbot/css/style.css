@@ -96,14 +96,25 @@ body {
 .hero-bg-mask {
   -webkit-mask-image: linear-gradient(
     to bottom,
-    black 40%,
+    transparent 0%,
+    black 10%,
+    black 60%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
-    black 40%,
+    transparent 0%,
+    black 10%,
+    black 60%,
     transparent 100%
   );
+}
+
+.hero-bg-mask img {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* ===== CSR Cards Stack ===== */
