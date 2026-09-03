@@ -61,6 +61,11 @@
                             <span class="font-display font-extrabold text-xl tracking-tight text-primary">LISA</span>
                         </div>
                         <div class="flex items-center gap-2">
+                            <!-- Quick Chat CTA Button in Header -->
+                            <a href="chat/" class="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 bg-primary text-white text-xs sm:text-sm font-bold rounded-full shadow hover:bg-primary-variant hover:shadow-md transition active:scale-95">
+                                <span class="material-symbols-outlined text-[16px] sm:text-[18px]">smart_toy</span>
+                                <span class="hidden xs:inline-block sm:inline-block">Chat LISA</span>
+                            </a>
                             <!-- Language toggle -->
                             <button id="langToggle" class="w-9 h-9 rounded-full bg-surface-container hover:bg-outline-variant/50 flex items-center justify-center text-xs font-bold text-on-surface-variant transition active:scale-90" aria-label="Ganti bahasa">EN</button>
                             <!-- Dark mode toggle -->
@@ -69,9 +74,9 @@
                             </button>
                             <!-- Feedback trigger -->
                             <div class="flex items-center cursor-pointer group" id="subscribeTrigger">
-                                <div class="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary hover:bg-primary/20 transition-colors">
+                                <div class="flex items-center gap-2 px-3 sm:px-4 py-2 bg-primary/10 rounded-full text-primary hover:bg-primary/20 transition-colors">
                                     <span class="material-symbols-outlined text-[20px]">chat_bubble_outline</span>
-                                    <span class="font-semibold text-sm hidden sm:inline-block" data-i18n="feedback_title">Masukan</span>
+                                    <span class="font-semibold text-sm hidden md:inline-block" data-i18n="feedback_title">Masukan</span>
                                 </div>
                             </div>
                         </div>
@@ -106,6 +111,65 @@
                                 </a>
                                 <a class="w-full sm:w-auto bg-surface-container text-primary font-bold py-4 px-8 rounded-full hover:bg-outline-variant/30 transition-colors" href="#csr" data-i18n="cta_csr">Program CSR</a>
                             </div>
+
+                            <!-- STATS BADGES -->
+                            <div class="hero-anim hero-anim-delay-5 mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-xl">
+                                <div class="bg-white/80 dark:bg-surface-container border border-outline-variant/30 rounded-2xl p-3 shadow-sm text-center">
+                                    <div class="text-xl sm:text-2xl font-black text-primary">139+</div>
+                                    <div class="text-[11px] sm:text-xs text-on-surface-variant font-medium mt-0.5">Panduan Sampah</div>
+                                </div>
+                                <div class="bg-white/80 dark:bg-surface-container border border-outline-variant/30 rounded-2xl p-3 shadow-sm text-center">
+                                    <div class="text-xl sm:text-2xl font-black text-primary">39</div>
+                                    <div class="text-[11px] sm:text-xs text-on-surface-variant font-medium mt-0.5">Bank Sampah</div>
+                                </div>
+                                <div class="bg-white/80 dark:bg-surface-container border border-outline-variant/30 rounded-2xl p-3 shadow-sm text-center">
+                                    <div class="text-xl sm:text-2xl font-black text-primary">&lt; 2s</div>
+                                    <div class="text-[11px] sm:text-xs text-on-surface-variant font-medium mt-0.5">Respon Cepat AI</div>
+                                </div>
+                                <div class="bg-white/80 dark:bg-surface-container border border-outline-variant/30 rounded-2xl p-3 shadow-sm text-center">
+                                    <div class="text-xl sm:text-2xl font-black text-primary">100%</div>
+                                    <div class="text-[11px] sm:text-xs text-on-surface-variant font-medium mt-0.5">Akses Gratis</div>
+                                </div>
+                            </div>
+
+                            <!-- INTERACTIVE CHAT PREVIEW CARD -->
+                            <div class="hero-anim hero-anim-delay-5 mt-8 w-full max-w-md bg-white dark:bg-surface-container rounded-3xl p-5 shadow-xl border border-outline-variant/30 text-left relative overflow-hidden group">
+                                <div class="flex items-center justify-between pb-3 border-b border-outline-variant/20 mb-3">
+                                    <div class="flex items-center gap-2.5">
+                                        <div class="relative">
+                                            <img src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg" alt="LISA Avatar" class="w-8 h-8 rounded-full object-cover border border-primary/20" />
+                                            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-white"></span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xs font-bold text-on-surface">Simulasi Obrolan LISA</h4>
+                                            <p class="text-[10px] text-primary font-medium">Online • Siap bantu kamu</p>
+                                        </div>
+                                    </div>
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">AI Live</span>
+                                </div>
+                                
+                                <div class="space-y-2.5 text-xs">
+                                    <!-- User snippet -->
+                                    <div class="flex justify-end">
+                                        <div class="bg-primary text-white px-3.5 py-2 rounded-2xl rounded-tr-none max-w-[85%] shadow-sm">
+                                            Kak, kalau botol plastik aqua bekas enaknya diapain ya? 🤔
+                                        </div>
+                                    </div>
+                                    <!-- Bot snippet -->
+                                    <div class="flex justify-start">
+                                        <div class="bg-surface-container/70 dark:bg-surface text-on-surface px-3.5 py-2.5 rounded-2xl rounded-tl-none max-w-[90%] border border-outline-variant/20 shadow-sm leading-relaxed">
+                                            Bisa disetor ke <b>Bank Sampah</b> terdekat atau didaur ulang jadi biji plastik loh! ♻️ Aku bisa bantu cariin lokasi dan caranyaa.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Mini CTA to open Chat -->
+                                <a href="chat/" class="mt-4 w-full py-2.5 bg-primary/10 hover:bg-primary hover:text-white text-primary text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 group-hover:bg-primary group-hover:text-white">
+                                    <span>Coba Tanya LISA Sekarang</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </a>
+                            </div>
+
                             <!-- Install App button (hidden by default) -->
                             <button id="installAppBtn" class="hero-anim hero-anim-delay-5 mt-4 hidden items-center gap-2 text-sm font-semibold text-primary bg-primary/5 px-4 py-2 rounded-full border border-primary/20 hover:bg-primary/10 transition-colors" style="display:none">
                                 <span class="material-symbols-outlined text-[18px]">download</span>
@@ -162,7 +226,7 @@
                                     <p class="text-base xl:text-lg text-on-surface-variant leading-relaxed font-medium">
                                         <span data-i18n="behind_desc_before">Bukan sekadar bot, LISA adalah hasil</span>
                                         <span class="text-primary font-bold bg-primary/10 px-2 py-0.5 rounded" data-i18n="behind_desc_highlight">kurasi ratusan data lapangan yang solid.</span>
-                                        <span data-i18n="behind_desc_after">Dengan kecerdasan Google Gemini Flash dan automasi n8n, ia aktif 24 jam untuk menjawab pertanyaan lingkungan dengan bahasa yang luwes dan akrab bagi siswa.</span>
+                                        <span data-i18n="behind_desc_after">Dengan kecerdasan AI modern, teknologi vector database Supabase, dan automasi n8n, ia aktif 24 jam untuk menjawab pertanyaan lingkungan dengan bahasa yang luwes dan akrab bagi siswa.</span>
                                     </p>
                                 </div>
                             </div>
@@ -289,6 +353,16 @@
                     <!-- Media Kit documents (same list as home) -->
                 </div>
             </div>
+
+            <!-- FLOATING CHAT FAB -->
+            <a id="floatingChatFab" href="chat/" class="fixed bottom-6 left-6 sm:left-auto sm:right-22 z-50 flex items-center gap-2.5 bg-primary hover:bg-primary-variant text-white px-4 py-3 rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all active:scale-95 group border-2 border-white/30 backdrop-blur-sm" aria-label="Buka Chat LISA">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400"></span>
+                </span>
+                <span class="text-xs sm:text-sm font-bold tracking-wide">Tanya LISA</span>
+                <span class="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 transition-transform">chat</span>
+            </a>
 
             <!-- SCROLL TO TOP -->
             <button id="scrollToTopBtn" class="scroll-to-top fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg flex items-center justify-center z-50 hover:bg-primary-variant hover:shadow-xl active:scale-90 transition-all" aria-label="Kembali ke atas">

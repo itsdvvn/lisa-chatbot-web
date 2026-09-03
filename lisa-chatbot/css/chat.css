@@ -783,3 +783,131 @@ body {
 [data-theme="dark"] .text-primary {
   color: var(--primary) !important;
 }
+
+/* ===== Quick Action Chips ===== */
+.quick-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--surface-container);
+  color: var(--on-surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.quick-chip:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 108, 75, 0.25);
+}
+
+.quick-chip:active {
+  transform: scale(0.95);
+}
+
+/* ===== Chat Video Card ===== */
+.chat-video-card {
+  margin: 10px 0;
+  background: rgba(0, 108, 75, 0.05);
+  border: 1px solid rgba(0, 108, 75, 0.15);
+  border-radius: 14px;
+  overflow: hidden;
+  max-width: 320px;
+}
+
+[data-theme="dark"] .chat-video-card {
+  background: rgba(76, 217, 142, 0.08);
+  border-color: rgba(76, 217, 142, 0.2);
+}
+
+.chat-video-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--primary);
+  border-bottom: 1px solid rgba(0, 108, 75, 0.1);
+}
+
+.chat-video-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-video-player {
+  width: 100%;
+  display: block;
+  background: #000;
+  outline: none;
+}
+
+/* ===== Chat Google Maps Button ===== */
+.chat-maps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0;
+  padding: 8px 14px;
+  background: #ffffff;
+  color: #1a1c1b;
+  border: 1.5px solid #ea4335;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(234, 67, 53, 0.15);
+  transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .chat-maps-btn {
+  background: #2a2c2b;
+  color: #f1f3f4;
+  border-color: #f28b82;
+}
+
+.chat-maps-btn:hover {
+  background: #ea4335;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(234, 67, 53, 0.3);
+}
+
+.chat-maps-btn:hover span {
+  color: #ffffff !important;
+}
+
+/* ===== Chat Link ===== */
+.chat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+
+.chat-link:hover {
+  opacity: 0.8;
+}
+
+.chat-embedded-img {
+  max-width: 260px;
+  border-radius: 12px;
+  display: block;
+  margin: 8px 0;
+  border: 1px solid var(--outline-variant);
+}

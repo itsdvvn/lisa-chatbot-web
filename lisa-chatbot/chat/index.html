@@ -95,8 +95,17 @@
                     <span class="material-symbols-outlined text-primary">keyboard_double_arrow_down</span>
                 </button>
 
+                <!-- QUICK ACTION CHIPS -->
+                <div id="quickChipsBar" class="px-3 sm:px-4 py-2 bg-white dark:bg-surface border-t border-outline-variant/20 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0">
+                    <button type="button" class="quick-chip" data-send="menu">📋 Menu</button>
+                    <button type="button" class="quick-chip" data-send="1">♻️ Olah Sampah</button>
+                    <button type="button" class="quick-chip" data-send="2">📍 Bank Sampah</button>
+                    <button type="button" class="quick-chip" data-send="3">✍️ Kasih Saran</button>
+                    <button type="button" class="quick-chip" data-send="4">ℹ️ Tentang LISA</button>
+                </div>
+
                 <!-- INPUT AREA -->
-                <div id="inputArea" class="bg-white border-t border-outline-variant/30 px-3 sm:px-4 pt-2.5 sm:pt-3 shrink-0 relative safe-bottom">
+                <div id="inputArea" class="bg-white border-t border-outline-variant/20 px-3 sm:px-4 pt-2.5 sm:pt-3 shrink-0 relative safe-bottom">
                     <div id="filePreview" style="display: none" class="flex items-center gap-2 mb-2 px-3 py-1.5 bg-primary/10 rounded-lg text-sm">
                         <span class="material-symbols-outlined text-primary text-[18px]">attach_file</span>
                         <span id="fileName" class="text-primary truncate flex-1 text-xs">namafilepanjang.jpg</span>

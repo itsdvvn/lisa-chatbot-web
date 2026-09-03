@@ -61,11 +61,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // --- QUICK REPLY BUTTONS (dynamic) ---
+  // --- QUICK REPLY BUTTONS & ACTION CHIPS (dynamic) ---
   document.addEventListener("click", function (e) {
     const qr = e.target.closest(".quick-reply-btn");
     if (qr) {
       input.value = qr.getAttribute("data-value");
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 112) + "px";
+      updateSendBtn();
+      sendMessage();
+      return;
+    }
+
+    const chip = e.target.closest(".quick-chip");
+    if (chip) {
+      input.value = chip.getAttribute("data-send");
       input.style.height = "auto";
       input.style.height = Math.min(input.scrollHeight, 112) + "px";
       updateSendBtn();

@@ -86,23 +86,56 @@ function toggleDarkMode() {
 }
 
 /**
- * Linkify text (URLs, bold, images, videos)
+ * Helper to render media, maps, or rich links
+ */
+function renderLinkOrMedia(label, url) {
+  let href = url.trim();
+  if (href.startsWith("www.")) href = "http://" + href;
+
+  // 1. Video files (.mp4, .webm)
+  if (href.includes(".mp4") || href.includes(".webm")) {
+    const title = label && !label.startsWith("http") ? label : "Video Tutorial";
+    return `<div class="chat-video-card">` +
+      `<div class="chat-video-header">` +
+        `<span class="material-symbols-outlined text-primary text-[18px]">play_circle</span>` +
+        `<span class="chat-video-title">${title}</span>` +
+      `</div>` +
+      `<video controls playsinline preload="metadata" class="chat-video-player">` +
+        `<source src="${href}" type="video/mp4">Browser kamu belum support pemutar video.` +
+      `</video>` +
+    `</div>`;
+  }
+
+  // 2. Images (.jpg, .png, .jpeg, .webp)
+  if (href.includes(".jpg") || href.includes(".png") || href.includes(".jpeg") || href.includes(".webp")) {
+    return `<img src="${href}" alt="${label || 'Foto'}" class="chat-embedded-img" loading="lazy">`;
+  }
+
+  // 3. Google Maps links
+  if (href.includes("maps.app.goo.gl") || href.includes("share.google") || href.includes("google.com/maps")) {
+    const btnText = label && !label.startsWith("http") ? label : "Buka di Google Maps";
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="chat-maps-btn">` +
+      `<span class="material-symbols-outlined text-[16px] text-red-500">location_on</span>` +
+      `<span>${btnText}</span>` +
+      `<span class="material-symbols-outlined text-[14px]">open_in_new</span>` +
+    `</a>`;
+  }
+
+  // 4. Regular hyperlink
+  const displayLabel = label || href;
+  return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="chat-link">` +
+    `<span>${displayLabel}</span>` +
+    `<span class="material-symbols-outlined text-[14px]">open_in_new</span>` +
+  `</a>`;
+}
+
+/**
+ * Linkify raw URLs in text that are not part of tags
  */
 function linkify(text) {
-  let processedText = text.replace(/\n/g, "<br>");
-  processedText = processedText.replace(/\*(.*?)\*/g, "<strong>$1</strong>");
-  const urlRegex = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])|(\bwww\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-  return processedText.replace(urlRegex, function (url) {
-    if (url.includes('href="') || url.includes('src="')) return url;
-    let href = url;
-    if (url.startsWith("www.")) href = "http://" + url;
-    if (url.startsWith("https://files.lingkungansehatasri.my.id") && (url.includes(".mp4") || url.includes(".webm"))) {
-      return '<video controls playsinline preload="metadata" style="width:100%;max-width:280px;border-radius:10px;display:block;margin-top:8px;"><source src="' + url + '" type="video/mp4"></video>';
-    }
-    if (url.startsWith("https://files.lingkungansehatasri.my.id") && (url.includes(".jpg") || url.includes(".png"))) {
-      return '<img src="' + url + '" alt="Lampiran" style="width:100%;max-width:250px;border-radius:10px;display:block;margin-top:8px;">';
-    }
-    return '<a href="' + href + '" target="_blank" rel="noopener noreferrer" style="color:#006c4b;text-decoration:underline;">' + url + "</a>";
+  const urlRegex = /(?<!href="|src=")(https?:\/\/[^\s<>"]+)/gi;
+  return text.replace(urlRegex, function (url) {
+    return renderLinkOrMedia("", url);
   });
 }
 
@@ -114,6 +147,11 @@ function parseMarkdown(text) {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
+
+  // Markdown links: [label](url)
+  html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, function (_, label, url) {
+    return renderLinkOrMedia(label, url);
+  });
 
   // Headings
   html = html
