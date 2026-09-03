@@ -35,8 +35,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const HISTORY_KEY = "lisaChatHistory";
   const EXPIRATION_DAYS = 7;
 
+  function generateUUID() {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      return crypto.randomUUID();
+    }
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+      const r = (Math.random() * 16) | 0;
+      const v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+
   const sessionId =
-    localStorage.getItem("lisaSession") || crypto.randomUUID();
+    localStorage.getItem("lisaSession") || generateUUID();
   localStorage.setItem("lisaSession", sessionId);
 
   // --- SUGGESTION CHIPS ---
@@ -459,33 +470,49 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // --- VISUAL VIEWPORT SYNC (iOS Safari / Mobile Keyboard) ---
+  function syncAppHeight() {
+    const height = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    document.documentElement.style.setProperty("--app-height", `${height}px`);
+  }
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", () => {
+      syncAppHeight();
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      chatbox.scrollTop = chatbox.scrollHeight;
+    });
+    window.visualViewport.addEventListener("scroll", () => {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+    });
+  }
+  window.addEventListener("resize", syncAppHeight);
+  syncAppHeight();
+
   // --- EVENT LISTENERS ---
   sendBtn.addEventListener("click", sendMessage);
-  const isMobile = /Mobi/i.test(navigator.userAgent);
+
   input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      if (e.shiftKey || isMobile) return;
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
   });
+
   input.addEventListener("input", () => {
     input.style.height = "auto";
     input.style.height = Math.min(input.scrollHeight, 112) + "px";
     updateSendBtn();
   });
+
   input.addEventListener("focus", () => {
     setTimeout(() => {
-      input.scrollIntoView({ behavior: "smooth", block: "end" });
-    }, 300);
-  });
-  window.addEventListener("resize", () => {
-    if (document.activeElement === input)
-      setTimeout(
-        () =>
-          input.scrollIntoView({ behavior: "smooth", block: "end" }),
-        200,
-      );
+      syncAppHeight();
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }, 150);
   });
   fileInput.value = null;
   filePreview.style.display = "none";

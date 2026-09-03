@@ -2,7 +2,7 @@
 <html lang="id">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content" />
         <meta name="theme-color" content="#006c4b" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -45,10 +45,10 @@
         </div>
 
         <!-- Desktop / Mobile wrapper -->
-        <div class="h-screen h-[100dvh] flex flex-col sm:h-auto sm:min-h-screen sm:flex sm:items-center sm:justify-center sm:p-4">
+        <div class="chat-app-wrapper flex flex-col sm:h-auto sm:min-h-screen sm:flex sm:items-center sm:justify-center sm:p-4">
             <div class="w-full h-full sm:max-w-2xl sm:h-[860px] sm:max-h-[95vh] bg-white sm:rounded-[2rem] sm:shadow-xl flex flex-col overflow-hidden sm:border sm:border-outline-variant/30 relative">
                 <!-- HEADER -->
-                <header class="flex items-center px-4 py-3 sm:px-5 sm:py-3.5 bg-primary text-white shrink-0 gap-3 pt-[max(12px,env(safe-area-inset-top))]">
+                <header class="flex items-center px-4 py-3 sm:px-5 sm:py-3.5 bg-primary text-white shrink-0 gap-3 safe-top">
                     <img src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg" alt="Profile" id="headerProfilePic" class="w-10 h-10 rounded-full object-cover border-2 border-white/40 shadow-sm" />
                     <div id="headerInfo" class="flex-1">
                         <h1 class="text-base font-bold leading-tight">LISA Ai</h1>
@@ -96,7 +96,7 @@
                 </button>
 
                 <!-- INPUT AREA -->
-                <div id="inputArea" class="bg-white border-t border-outline-variant/30 px-3 sm:px-4 pt-2.5 sm:pt-3 pb-[max(12px,env(safe-area-inset-bottom))] shrink-0 relative">
+                <div id="inputArea" class="bg-white border-t border-outline-variant/30 px-3 sm:px-4 pt-2.5 sm:pt-3 shrink-0 relative safe-bottom">
                     <div id="filePreview" style="display: none" class="flex items-center gap-2 mb-2 px-3 py-1.5 bg-primary/10 rounded-lg text-sm">
                         <span class="material-symbols-outlined text-primary text-[18px]">attach_file</span>
                         <span id="fileName" class="text-primary truncate flex-1 text-xs">namafilepanjang.jpg</span>
