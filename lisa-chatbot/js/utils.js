@@ -63,18 +63,19 @@ function setLang(lang) {
  */
 function initDarkMode() {
   const stored = localStorage.getItem("lisaDarkMode");
-  if (stored !== null) {
-    const isDark = stored === "true";
-    if (isDark) {
-      document.documentElement.setAttribute("data-theme", "dark");
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-      document.documentElement.classList.remove("dark");
+  // Strict default: LIGHT mode for all new visitors/devices
+  const isDark = stored === "true";
+  if (isDark) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+    document.documentElement.classList.remove("dark");
+    if (stored === null) {
+      localStorage.setItem("lisaDarkMode", "false");
     }
-    return isDark;
   }
-  return false;
+  return isDark;
 }
 
 function toggleDarkMode() {

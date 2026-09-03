@@ -40,6 +40,16 @@
                 },
             };
         </script>
+        <script>
+            // Enforce Light Theme as strict default on all devices unless user explicitly switched to dark
+            if (localStorage.getItem("lisaDarkMode") === "true") {
+                document.documentElement.setAttribute("data-theme", "dark");
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.removeAttribute("data-theme");
+                document.documentElement.classList.remove("dark");
+            }
+        </script>
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body class="bg-surface text-on-surface">
