@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
     )
       return;
     localStorage.removeItem(HISTORY_KEY);
+    localStorage.removeItem("lisaSession");
     location.reload();
   });
 
