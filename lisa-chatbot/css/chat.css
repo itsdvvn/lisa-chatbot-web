@@ -365,6 +365,46 @@ body {
   color: #1a1c1b;
 }
 
+/* ===== Result Cards (non-clickable numbered items, e.g. bank sampah list) ===== */
+.chat-result-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 10px 0 4px;
+}
+
+.chat-result-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: 12px;
+  cursor: default;
+  user-select: none;
+  pointer-events: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.chat-result-card .chat-menu-num {
+  background: var(--outline);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .chat-result-card,
+html.dark .chat-result-card {
+  background: var(--surface-container);
+  border-color: var(--outline-variant);
+}
+
+[data-theme="dark"] .chat-result-card .chat-menu-num,
+html.dark .chat-result-card .chat-menu-num {
+  background: var(--outline);
+  color: var(--on-surface);
+}
+
 /* ===== Unordered List ===== */
 .chat-ul {
   list-style: none;
