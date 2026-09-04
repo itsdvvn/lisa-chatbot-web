@@ -53,7 +53,15 @@ document.addEventListener("DOMContentLoaded", function () {
     "https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf";
   const HISTORY_KEY = "lisaChatHistory";
   const EXPIRATION_DAYS = 7;
+
+  // --- RATE LIMIT & QUOTA CONSTANTS ---
   const MAX_PHOTO_UPLOADS = 3;
+  const MAX_MESSAGES_PER_SESSION = 50;
+  const MAX_MESSAGES_PER_MINUTE = 12;
+  const MIN_SEND_INTERVAL_MS = 1500; // 1.5 detik cooldown
+
+  let lastSendTimestamp = 0;
+  let recentMessageTimestamps = [];
 
   function generateUUID() {
     if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
@@ -70,8 +78,9 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.getItem("lisaSession") || generateUUID();
   localStorage.setItem("lisaSession", sessionId);
 
-  // --- PHOTO UPLOAD LIMIT PER SESSION ---
+  // --- PHOTO & MESSAGE RATE LIMIT PER SESSION ---
   const PHOTO_COUNT_KEY = "lisaPhotoCount_" + sessionId;
+  const MSG_COUNT_KEY = "lisaMsgCount_" + sessionId;
 
   function getPhotoUploadCount() {
     return parseInt(localStorage.getItem(PHOTO_COUNT_KEY) || "0", 10);
@@ -85,13 +94,55 @@ document.addEventListener("DOMContentLoaded", function () {
     return updated;
   }
 
-  function resetPhotoUploadCount() {
+  function getSessionMessageCount() {
+    return parseInt(localStorage.getItem(MSG_COUNT_KEY) || "0", 10);
+  }
+
+  function incrementSessionMessageCount() {
+    const current = getSessionMessageCount();
+    const updated = current + 1;
+    localStorage.setItem(MSG_COUNT_KEY, updated.toString());
+    return updated;
+  }
+
+  function resetSessionLimits() {
     localStorage.removeItem(PHOTO_COUNT_KEY);
+    localStorage.removeItem(MSG_COUNT_KEY);
     updateUploadButtonState();
   }
 
   function getRemainingPhotoUploads() {
     return Math.max(0, MAX_PHOTO_UPLOADS - getPhotoUploadCount());
+  }
+
+  function checkRateLimit() {
+    const now = Date.now();
+
+    // 1. Minimum send interval cooldown
+    if (now - lastSendTimestamp < MIN_SEND_INTERVAL_MS) {
+      return {
+        allowed: false,
+        reason: "cooldown",
+        waitSec: Math.ceil((MIN_SEND_INTERVAL_MS - (now - lastSendTimestamp)) / 1000),
+      };
+    }
+
+    // 2. Velocity limit (messages in last 60 seconds)
+    recentMessageTimestamps = recentMessageTimestamps.filter(
+      (t) => now - t < 60000,
+    );
+    if (recentMessageTimestamps.length >= MAX_MESSAGES_PER_MINUTE) {
+      const oldestInWindow = recentMessageTimestamps[0];
+      const waitSec = Math.max(1, Math.ceil((60000 - (now - oldestInWindow)) / 1000));
+      return { allowed: false, reason: "velocity", waitSec };
+    }
+
+    // 3. Max messages per session
+    if (getSessionMessageCount() >= MAX_MESSAGES_PER_SESSION) {
+      return { allowed: false, reason: "session_limit" };
+    }
+
+    return { allowed: true };
   }
 
   const fileInputLabel = document.querySelector('label[for="fileInput"]');
@@ -164,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     localStorage.removeItem(HISTORY_KEY);
     localStorage.removeItem("lisaSession");
-    resetPhotoUploadCount();
+    resetSessionLimits();
     location.reload();
   });
 
@@ -381,6 +432,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const files = fileInput.files;
     if (!text && files.length === 0) return;
 
+    // Rate Limit Check
+    const rateCheck = checkRateLimit();
+    if (!rateCheck.allowed) {
+      if (rateCheck.reason === "cooldown") {
+        return;
+      } else if (rateCheck.reason === "velocity") {
+        alert(
+          `⏳ Kamu mengetik terlalu cepat. Silakan tunggu ${rateCheck.waitSec} detik sebelum mengirim pesan berikutnya ya 😊`,
+        );
+        return;
+      } else if (rateCheck.reason === "session_limit") {
+        alert(
+          `⚠️ Batas kuota percakapan untuk sesi ini (${MAX_MESSAGES_PER_SESSION} pesan) telah tercapai.\n\nSilakan klik ikon tempat sampah di pojok kanan atas untuk menghapus riwayat chat dan memulai sesi percakapan baru.`,
+        );
+        return;
+      }
+    }
+
+    lastSendTimestamp = Date.now();
+    recentMessageTimestamps.push(lastSendTimestamp);
+    incrementSessionMessageCount();
+
     isSending = true;
     hideWelcome();
     const now = new Date();
@@ -396,6 +469,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (text) addMessage({ text, time, date }, "user");
 
+    const formData = new FormData();
     formData.append("text", text);
     formData.append("chatInput", text);
     formData.append("sessionId", sessionId);

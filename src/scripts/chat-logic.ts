@@ -25,7 +25,15 @@ export function initChat() {
   localStorage.setItem('lisaSession', sessionId);
 
   const MAX_PHOTO_UPLOADS = 3;
+  const MAX_MESSAGES_PER_SESSION = 50;
+  const MAX_MESSAGES_PER_MINUTE = 12;
+  const MIN_SEND_INTERVAL_MS = 1500;
+
+  let lastSendTimestamp = 0;
+  let recentMessageTimestamps: number[] = [];
+
   const PHOTO_COUNT_KEY = `lisaPhotoCount_${sessionId}`;
+  const MSG_COUNT_KEY = `lisaMsgCount_${sessionId}`;
 
   function getPhotoUploadCount(): number {
     return parseInt(localStorage.getItem(PHOTO_COUNT_KEY) || '0', 10);
@@ -39,13 +47,50 @@ export function initChat() {
     return updated;
   }
 
-  function resetPhotoUploadCount() {
+  function getSessionMessageCount(): number {
+    return parseInt(localStorage.getItem(MSG_COUNT_KEY) || '0', 10);
+  }
+
+  function incrementSessionMessageCount(): number {
+    const current = getSessionMessageCount();
+    const updated = current + 1;
+    localStorage.setItem(MSG_COUNT_KEY, updated.toString());
+    return updated;
+  }
+
+  function resetSessionLimits() {
     localStorage.removeItem(PHOTO_COUNT_KEY);
+    localStorage.removeItem(MSG_COUNT_KEY);
     updateUploadButtonState();
   }
 
   function getRemainingPhotoUploads(): number {
     return Math.max(0, MAX_PHOTO_UPLOADS - getPhotoUploadCount());
+  }
+
+  function checkRateLimit(): { allowed: boolean; reason?: string; waitSec?: number } {
+    const now = Date.now();
+
+    if (now - lastSendTimestamp < MIN_SEND_INTERVAL_MS) {
+      return {
+        allowed: false,
+        reason: 'cooldown',
+        waitSec: Math.ceil((MIN_SEND_INTERVAL_MS - (now - lastSendTimestamp)) / 1000),
+      };
+    }
+
+    recentMessageTimestamps = recentMessageTimestamps.filter((t) => now - t < 60000);
+    if (recentMessageTimestamps.length >= MAX_MESSAGES_PER_MINUTE) {
+      const oldestInWindow = recentMessageTimestamps[0];
+      const waitSec = Math.max(1, Math.ceil((60000 - (now - oldestInWindow)) / 1000));
+      return { allowed: false, reason: 'velocity', waitSec };
+    }
+
+    if (getSessionMessageCount() >= MAX_MESSAGES_PER_SESSION) {
+      return { allowed: false, reason: 'session_limit' };
+    }
+
+    return { allowed: true };
   }
 
   const fileInputLabel = document.querySelector('label[for="fileInput"]');
@@ -339,6 +384,27 @@ export function initChat() {
     const file = fileInput?.files?.[0];
 
     if (!text && !file) return;
+
+    const rateCheck = checkRateLimit();
+    if (!rateCheck.allowed) {
+      if (rateCheck.reason === 'cooldown') {
+        return;
+      } else if (rateCheck.reason === 'velocity') {
+        alert(
+          `⏳ Kamu mengetik terlalu cepat. Silakan tunggu ${rateCheck.waitSec} detik sebelum mengirim pesan berikutnya ya 😊`,
+        );
+        return;
+      } else if (rateCheck.reason === 'session_limit') {
+        alert(
+          `⚠️ Batas kuota percakapan untuk sesi ini (${MAX_MESSAGES_PER_SESSION} pesan) telah tercapai.\n\nSilakan klik ikon tempat sampah di pojok kanan atas untuk menghapus riwayat chat dan memulai sesi baru.`,
+        );
+        return;
+      }
+    }
+
+    lastSendTimestamp = Date.now();
+    recentMessageTimestamps.push(lastSendTimestamp);
+    incrementSessionMessageCount();
 
     isSending = true;
     const now = new Date();
