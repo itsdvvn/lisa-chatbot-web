@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf";
   const HISTORY_KEY = "lisaChatHistory";
   const EXPIRATION_DAYS = 7;
+  const MAX_PHOTO_UPLOADS = 3;
 
   function generateUUID() {
     if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
@@ -68,6 +69,52 @@ document.addEventListener("DOMContentLoaded", function () {
   const sessionId =
     localStorage.getItem("lisaSession") || generateUUID();
   localStorage.setItem("lisaSession", sessionId);
+
+  // --- PHOTO UPLOAD LIMIT PER SESSION ---
+  const PHOTO_COUNT_KEY = "lisaPhotoCount_" + sessionId;
+
+  function getPhotoUploadCount() {
+    return parseInt(localStorage.getItem(PHOTO_COUNT_KEY) || "0", 10);
+  }
+
+  function incrementPhotoUploadCount(amount = 1) {
+    const current = getPhotoUploadCount();
+    const updated = current + amount;
+    localStorage.setItem(PHOTO_COUNT_KEY, updated.toString());
+    updateUploadButtonState();
+    return updated;
+  }
+
+  function resetPhotoUploadCount() {
+    localStorage.removeItem(PHOTO_COUNT_KEY);
+    updateUploadButtonState();
+  }
+
+  function getRemainingPhotoUploads() {
+    return Math.max(0, MAX_PHOTO_UPLOADS - getPhotoUploadCount());
+  }
+
+  const fileInputLabel = document.querySelector('label[for="fileInput"]');
+
+  function updateUploadButtonState() {
+    const remaining = getRemainingPhotoUploads();
+    if (fileInputLabel) {
+      if (remaining <= 0) {
+        fileInputLabel.classList.add("opacity-40", "cursor-not-allowed");
+        fileInputLabel.setAttribute(
+          "title",
+          `Batas upload foto (${MAX_PHOTO_UPLOADS}/${MAX_PHOTO_UPLOADS}) tercapai. Hapus chat untuk sesi baru.`,
+        );
+      } else {
+        fileInputLabel.classList.remove("opacity-40", "cursor-not-allowed");
+        fileInputLabel.setAttribute(
+          "title",
+          `Upload foto (${remaining} kuota tersisa dari maks. ${MAX_PHOTO_UPLOADS})`,
+        );
+      }
+    }
+  }
+  updateUploadButtonState();
 
   // --- SUGGESTION CHIPS ---
   document.querySelectorAll(".suggestion-chip").forEach((chip) => {
@@ -117,11 +164,48 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     localStorage.removeItem(HISTORY_KEY);
     localStorage.removeItem("lisaSession");
+    resetPhotoUploadCount();
     location.reload();
   });
 
-  // --- FILE INPUT ---
+  // --- FILE INPUT & LIMIT VALIDATION ---
+  fileInput.addEventListener("click", (e) => {
+    const remaining = getRemainingPhotoUploads();
+    if (remaining <= 0) {
+      e.preventDefault();
+      alert(
+        `⚠️ Batas kuota upload foto per sesi telah tercapai (maksimal ${MAX_PHOTO_UPLOADS} foto per sesi).\n\nKamu tetap bisa berkonsultasi via teks, atau bersihkan riwayat chat (ikon tempat sampah) untuk memulai sesi baru dengan kuota penuh.`,
+      );
+    }
+  });
+
   fileInput.addEventListener("change", () => {
+    const files = Array.from(fileInput.files || []);
+    const remaining = getRemainingPhotoUploads();
+
+    if (files.length > remaining) {
+      alert(
+        `⚠️ Kamu memilih ${files.length} foto, tetapi sisa kuota sesi ini hanya ${remaining} foto (maks. ${MAX_PHOTO_UPLOADS} foto per sesi).\n\nSilakan pilih foto lebih sedikit atau hapus riwayat chat untuk memulai sesi baru.`,
+      );
+      fileInput.value = null;
+      updateFilePreview();
+      updateSendBtn();
+      return;
+    }
+
+    // Validate size (max 5MB per file)
+    for (const f of files) {
+      if (f.size > 5 * 1024 * 1024) {
+        alert(
+          `⚠️ File "${f.name}" melebihi batas ukuran 5MB. Silakan pilih foto dengan ukuran lebih kecil.`,
+        );
+        fileInput.value = null;
+        updateFilePreview();
+        updateSendBtn();
+        return;
+      }
+    }
+
     updateFilePreview();
     updateSendBtn();
   });
@@ -139,7 +223,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const names = Array.from(files)
         .map((f) => f.name)
         .join(", ");
-      fileName.textContent = names;
+      const remaining = getRemainingPhotoUploads();
+      fileName.textContent = `${names} (${files.length} foto — sisa kuota sesi: ${remaining - files.length})`;
       filePreview.style.display = "flex";
     } else {
       filePreview.style.display = "none";
@@ -317,7 +402,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Multi-file upload
     if (files.length > 0) {
-      for (let i = 0; i < files.length; i++) {
+      const fileCount = files.length;
+      for (let i = 0; i < fileCount; i++) {
         const file = files[i];
         try {
           const b = await readFileAsDataURL(file);
@@ -330,6 +416,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         formData.append("file", file);
       }
+      incrementPhotoUploadCount(fileCount);
       fileInput.value = null;
     }
 

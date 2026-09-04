@@ -24,6 +24,52 @@ export function initChat() {
   const sessionId = localStorage.getItem('lisaSession') || generateUUID();
   localStorage.setItem('lisaSession', sessionId);
 
+  const MAX_PHOTO_UPLOADS = 3;
+  const PHOTO_COUNT_KEY = `lisaPhotoCount_${sessionId}`;
+
+  function getPhotoUploadCount(): number {
+    return parseInt(localStorage.getItem(PHOTO_COUNT_KEY) || '0', 10);
+  }
+
+  function incrementPhotoUploadCount(amount = 1): number {
+    const current = getPhotoUploadCount();
+    const updated = current + amount;
+    localStorage.setItem(PHOTO_COUNT_KEY, updated.toString());
+    updateUploadButtonState();
+    return updated;
+  }
+
+  function resetPhotoUploadCount() {
+    localStorage.removeItem(PHOTO_COUNT_KEY);
+    updateUploadButtonState();
+  }
+
+  function getRemainingPhotoUploads(): number {
+    return Math.max(0, MAX_PHOTO_UPLOADS - getPhotoUploadCount());
+  }
+
+  const fileInputLabel = document.querySelector('label[for="fileInput"]');
+
+  function updateUploadButtonState() {
+    const remaining = getRemainingPhotoUploads();
+    if (fileInputLabel) {
+      if (remaining <= 0) {
+        fileInputLabel.classList.add('opacity-40', 'cursor-not-allowed');
+        fileInputLabel.setAttribute(
+          'title',
+          `Batas upload foto (${MAX_PHOTO_UPLOADS}/${MAX_PHOTO_UPLOADS}) tercapai. Hapus chat untuk sesi baru.`,
+        );
+      } else {
+        fileInputLabel.classList.remove('opacity-40', 'cursor-not-allowed');
+        fileInputLabel.setAttribute(
+          'title',
+          `Upload foto (${remaining} kuota tersisa dari maks. ${MAX_PHOTO_UPLOADS})`,
+        );
+      }
+    }
+  }
+  updateUploadButtonState();
+
   function hideWelcome() {
     if (welcomeCard) welcomeCard.style.display = 'none';
   }
@@ -82,6 +128,7 @@ export function initChat() {
       if (confirm('Hapus seluruh riwayat percakapan?')) {
         localStorage.removeItem(HISTORY_KEY);
         localStorage.removeItem('lisaSession');
+        resetPhotoUploadCount();
         location.reload();
       }
     });
@@ -89,16 +136,41 @@ export function initChat() {
 
   // File Upload handling
   if (fileInput && filePreview && fileName && removeFileBtn) {
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files && fileInput.files.length > 0) {
-        fileName.textContent = fileInput.files[0].name;
-        filePreview.classList.remove('hidden');
-        filePreview.classList.add('flex');
-      } else {
-        filePreview.classList.add('hidden');
-        filePreview.classList.remove('flex');
-        fileName.textContent = '';
+    fileInput.addEventListener('click', (e) => {
+      const remaining = getRemainingPhotoUploads();
+      if (remaining <= 0) {
+        e.preventDefault();
+        alert(
+          `⚠️ Batas kuota upload foto per sesi telah tercapai (maksimal ${MAX_PHOTO_UPLOADS} foto per sesi).\n\nKamu tetap bisa berkonsultasi via teks, atau bersihkan riwayat chat untuk memulai sesi baru.`,
+        );
       }
+    });
+
+    fileInput.addEventListener('change', () => {
+      const files = Array.from(fileInput.files || []);
+      const remaining = getRemainingPhotoUploads();
+
+      if (files.length > remaining) {
+        alert(
+          `⚠️ Kamu memilih ${files.length} foto, tetapi sisa kuota sesi ini hanya ${remaining} foto (maks. ${MAX_PHOTO_UPLOADS} foto per sesi).\n\nSilakan pilih foto lebih sedikit atau bersihkan riwayat chat.`,
+        );
+        fileInput.value = '';
+        updateFilePreview();
+        updateSendBtn();
+        return;
+      }
+
+      for (const f of files) {
+        if (f.size > 5 * 1024 * 1024) {
+          alert(`⚠️ File "${f.name}" melebihi batas ukuran 5MB.`);
+          fileInput.value = '';
+          updateFilePreview();
+          updateSendBtn();
+          return;
+        }
+      }
+
+      updateFilePreview();
       updateSendBtn();
     });
 
@@ -109,6 +181,23 @@ export function initChat() {
       fileName.textContent = '';
       updateSendBtn();
     });
+  }
+
+  function updateFilePreview() {
+    if (fileInput && filePreview && fileName) {
+      const files = fileInput.files;
+      if (files && files.length > 0) {
+        const names = Array.from(files).map((f) => f.name).join(', ');
+        const remaining = getRemainingPhotoUploads();
+        fileName.textContent = `${names} (${files.length} foto — sisa kuota sesi: ${remaining - files.length})`;
+        filePreview.classList.remove('hidden');
+        filePreview.classList.add('flex');
+      } else {
+        filePreview.classList.add('hidden');
+        filePreview.classList.remove('flex');
+        fileName.textContent = '';
+      }
+    }
   }
 
   function renderMessage(message: Message, save = true) {
@@ -286,6 +375,7 @@ export function initChat() {
         formData.append('sessionId', sessionId);
         formData.append('chatInput', text);
         formData.append('file', file);
+        incrementPhotoUploadCount(1);
         response = await fetch(WEBHOOK_URL, {
           method: 'POST',
           body: formData,
