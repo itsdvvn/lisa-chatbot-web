@@ -78,20 +78,25 @@ User (Browser) ──► Astro 5 Frontend (Tailwind CSS) ──► n8n Webhook W
 
 ```text
 lisa-chatbot-web/
-├── lisa-chatbot-astro/       # 🚀 Frontend Modern (Astro 5 + Tailwind CSS)
-│   ├── src/
-│   │   ├── components/       # Komponen UI (Navbar, Hero, Chat, FAQ, Footer, dll)
-│   │   ├── layouts/          # Layout template halaman
-│   │   ├── pages/            # Halaman Astro (index.astro, dll)
-│   │   └── styles/           # Global styles & Tailwind configuration
-│   ├── public/               # Asset statis, gambar, dan ikon
-│   ├── Dockerfile            # Konfigurasi container produksi
-│   ├── nginx.conf            # Server web Nginx dalam container
-│   ├── astro.config.mjs      # Konfigurasi Astro framework
-│   └── package.json          # Dependensi frontend Astro
-├── lisa-chatbot/             # 📦 Legacy static HTML/JS version
+├── src/                      # 🚀 Kode Sumber Astro
+│   ├── components/           # Komponen UI (Navbar, Hero, Chat, FAQ, Footer, dll)
+│   │   ├── chat/             # Komponen antarmuka chat
+│   │   ├── landing/          # Komponen halaman landing
+│   │   └── layout/           # Komponen layout global
+│   ├── layouts/              # Template layout Astro (BaseLayout, ChatLayout)
+│   ├── pages/                # File routing (index.astro, chat/index.astro)
+│   ├── scripts/              # Logic client-side chat, parser, & utilities
+│   ├── styles/               # Global CSS & theme tokens
+│   └── types/                # Definisi TypeScript
+├── public/                   # Asset statis, gambar, manifest, & file bahasa (i18n)
 ├── database/                 # Skema dan referensi database
 ├── supabase/                 # Konfigurasi backend pendukung Supabase
+├── Dockerfile                # Multi-stage Docker build untuk produksi
+├── nginx.conf                # Konfigurasi web server Nginx
+├── astro.config.mjs          # Konfigurasi framework Astro
+├── tailwind.config.mjs       # Konfigurasi styling Tailwind CSS
+├── tsconfig.json             # Konfigurasi TypeScript
+├── package.json              # Dependensi & script proyek
 └── README.md                 # Dokumentasi proyek
 ```
 
@@ -103,50 +108,46 @@ lisa-chatbot-web/
 - [Node.js](https://nodejs.org/) (versi 18.x atau 20.x+)
 - `npm`, `pnpm`, atau `yarn`
 
-### 1. Clone Repositori
+### 1. Clone & Masuk ke Repositori
 ```bash
 git clone https://github.com/itsdvvn/lisa-chatbot-web.git
 cd lisa-chatbot-web
 ```
 
-### 2. Menjalankan Versi Astro (Direkomendasikan)
+### 2. Setup & Jalankan Development Server
 ```bash
-# Masuk ke folder proyek Astro
-cd lisa-chatbot-astro
-
-# Install dependensi
+# Install seluruh dependensi
 npm install
 
 # Setup environment variable (opsional)
 cp .env.example .env
 
-# Jalankan development server
+# Jalankan dev server
 npm run dev
 ```
-Buka browser di `http://localhost:4321` untuk melihat aplikasi secara lokal.
+Buka browser di `http://localhost:4321` untuk melihat aplikasi.
 
 ### 3. Build untuk Produksi
 ```bash
 npm run build
 npm run preview
 ```
-Output static build akan berada di direktori `dist/`.
+Output static build yang teroptimasi akan dihasilkan di direktori `dist/`.
 
 ---
 
 ## 🐳 Deployment via Docker
 
-Aplikasi Astro telah dilengkapi dengan multi-stage `Dockerfile` berbasis Nginx Alpine yang sangat ringan dan efisien:
+Aplikasi telah dilengkapi dengan multi-stage `Dockerfile` berbasis Nginx Alpine yang sangat ringan dan efisien:
 
 ```bash
-cd lisa-chatbot-astro
-
 # Build Docker Image
-docker build -t lisa-chatbot-astro:latest .
+docker build -t lisa-chatbot:latest .
 
 # Jalankan Kontainer
-docker run -d --name lisa-chatbot -p 3000:80 --restart unless-stopped lisa-chatbot-astro:latest
+docker run -d --name lisa-chatbot -p 3000:80 --restart unless-stopped lisa-chatbot:latest
 ```
+
 
 ---
 
