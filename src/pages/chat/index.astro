@@ -7,18 +7,17 @@ import '../../styles/chat.css';
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content" />
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="0" />
+        <title>Chatbot LISA - Asisten AI Lingkungan Sehat dan Asri</title>
+        <meta name="description" content="Tanya LISA seputar klasifikasi sampah, 3R, dan lokasi bank sampah secara instan dan interaktif." />
         <meta name="theme-color" content="#006c4b" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg" />
-        <title>Chatbot LISA</title>
+        <link rel="icon" type="image/webp" href="/images/logo-gbl.webp" />
+        <link rel="apple-touch-icon" href="/images/lisa-avatar.webp" />
 
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
 
         <script is:inline>
             // Enforce Light Theme as strict default on all devices unless user explicitly switched to dark
@@ -42,7 +41,7 @@ import '../../styles/chat.css';
             <div class="w-full h-full sm:max-w-2xl sm:h-[860px] sm:max-h-[95vh] bg-white sm:rounded-[2rem] sm:shadow-xl flex flex-col overflow-hidden sm:border sm:border-outline-variant/30 relative">
                 <!-- HEADER -->
                 <header class="flex items-center px-4 py-3 sm:px-5 sm:py-3.5 bg-primary text-white shrink-0 gap-3 safe-top">
-                    <img src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg" alt="Profile" id="headerProfilePic" class="w-10 h-10 rounded-full object-cover border-2 border-white/40 shadow-sm" />
+                    <img src="/images/lisa-avatar.webp" alt="Profile" id="headerProfilePic" width="40" height="40" class="w-10 h-10 rounded-full object-cover border-2 border-white/40 shadow-sm" />
                     <div id="headerInfo" class="flex-1">
                         <h1 class="text-base font-bold leading-tight">LISA Ai</h1>
                         <p class="text-xs text-white/70 flex items-center gap-1.5">
@@ -72,7 +71,7 @@ import '../../styles/chat.css';
                 <div id="chatbox" class="flex-1 overflow-y-auto px-4 pt-4 pb-2 bg-surface/50">
                     <!-- Welcome card -->
                     <div id="welcomeCard" class="welcome-card">
-                        <img src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg" alt="LISA" class="avatar" loading="lazy" />
+                        <img src="/images/lisa-avatar.webp" alt="LISA" width="64" height="64" class="avatar" loading="eager" />
                         <h2>Hai, aku LISA! 👋</h2>
                         <p>Tanya apa aja soal sampah, 3R, bank sampah, dan lingkungan sekolah. Aku siap bantu 24 jam!</p>
                         <div class="suggestion-chips">

@@ -312,7 +312,7 @@ export function initChat() {
 
     if (message.sender === 'bot') {
       const avatar = document.createElement('img');
-      avatar.src = 'https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg';
+      avatar.src = '/images/lisa-avatar.webp';
       avatar.alt = 'LISA';
       avatar.className = 'w-8 h-8 rounded-full border border-primary/20 shrink-0 mt-1 shadow-sm';
       row.appendChild(avatar);
@@ -333,7 +333,7 @@ export function initChat() {
     row.id = 'typingIndicator';
 
     const avatar = document.createElement('img');
-    avatar.src = 'https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg';
+    avatar.src = '/images/lisa-avatar.webp';
     avatar.alt = 'LISA';
     avatar.className = 'w-8 h-8 rounded-full border border-primary/20 shrink-0 mt-1 shadow-sm';
     row.appendChild(avatar);

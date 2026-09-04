@@ -1,6 +1,9 @@
 # Build output
 dist/
 
+# Lighthouse test outputs
+lighthouse-mobile*.json
+
 # Generated types & cache
 .astro/
 
