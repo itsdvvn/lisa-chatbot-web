@@ -7,7 +7,7 @@
     bantu masyarakat memahami sampah, 3R, dan bank sampah dalam satu percakapan cerdas.
   </p>
   <p align="center">
-    <a href="https://chatbot.lingkungansehatasri.my.id" target="_blank">🌐 Kunjungi LISA (Live App)</a>
+    <a href="https://lingkungansehatasri.my.id" target="_blank">🌐 Kunjungi LISA (Live App)</a>
     &nbsp;·&nbsp;
     <a href="https://instagram.com/gerakanbicaralingkungan_" target="_blank">📸 Instagram GBL</a>
   </p>
@@ -166,7 +166,7 @@ Didukung oleh:
 
 ## 📄 Media & Kontak
 
-- **Live Chatbot:** [chatbot.lingkungansehatasri.my.id](https://chatbot.lingkungansehatasri.my.id)
+- **Live Chatbot:** [lingkungansehatasri.my.id](https://lingkungansehatasri.my.id)
 - **Instagram:** [@gerakanbicaralingkungan_](https://instagram.com/gerakanbicaralingkungan_)
 - **Email PR:** [publicrelation2344@gmail.com](mailto:publicrelation2344@gmail.com)
 
