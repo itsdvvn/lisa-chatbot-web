@@ -372,8 +372,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (sender === "bot") {
       const avatar = document.createElement("img");
-      avatar.src = "https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg";
+      avatar.src = "/images/lisa-avatar.webp";
       avatar.alt = "LISA";
+      avatar.width = 32;
+      avatar.height = 32;
       avatar.classList.add("msg-avatar");
       avatar.loading = "lazy";
       row.appendChild(avatar);
@@ -401,8 +403,10 @@ document.addEventListener("DOMContentLoaded", function () {
     row.id = "typing";
 
     const avatar = document.createElement("img");
-    avatar.src = "https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg";
+    avatar.src = "/images/lisa-avatar.webp";
     avatar.alt = "LISA";
+    avatar.width = 32;
+    avatar.height = 32;
     avatar.classList.add("msg-avatar");
     row.appendChild(avatar);
 
