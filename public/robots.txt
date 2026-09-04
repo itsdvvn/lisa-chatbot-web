@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lingkungansehatasri.my.id/sitemap.xml
