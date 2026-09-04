@@ -373,8 +373,10 @@ export function initChat() {
       if (file) {
         const formData = new FormData();
         formData.append('sessionId', sessionId);
+        formData.append('text', text);
         formData.append('chatInput', text);
         formData.append('file', file);
+        formData.append('file0', file);
         incrementPhotoUploadCount(1);
         response = await fetch(WEBHOOK_URL, {
           method: 'POST',

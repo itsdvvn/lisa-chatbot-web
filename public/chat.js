@@ -396,8 +396,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (text) addMessage({ text, time, date }, "user");
 
-    const formData = new FormData();
     formData.append("text", text);
+    formData.append("chatInput", text);
     formData.append("sessionId", sessionId);
 
     // Multi-file upload
@@ -415,6 +415,7 @@ document.addEventListener("DOMContentLoaded", function () {
           );
         }
         formData.append("file", file);
+        formData.append("file0", file);
       }
       incrementPhotoUploadCount(fileCount);
       fileInput.value = null;
