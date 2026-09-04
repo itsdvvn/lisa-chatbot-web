@@ -251,7 +251,7 @@ async function loadTranslations() {
   window.translations = window.translations || {};
   for (const code of locales) {
     try {
-      const res = await fetch("locales/" + code + ".json");
+      const res = await fetch("/locales/" + code + ".json");
       if (res.ok) {
         window.translations[code] = await res.json();
       }
