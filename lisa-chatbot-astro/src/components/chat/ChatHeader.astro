@@ -1,0 +1,58 @@
+---
+---
+<header class="px-4 py-3 bg-white/90 dark:bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 flex items-center justify-between shrink-0 z-20">
+  <div class="flex items-center gap-3">
+    <a href="/" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline hover:text-primary transition" aria-label="Kembali ke Beranda">
+      <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+    </a>
+    <div class="relative">
+      <img alt="LISA" class="w-10 h-10 rounded-full object-cover border-2 border-primary/20 shadow-sm" src="https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg" />
+      <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-surface rounded-full"></span>
+    </div>
+    <div>
+      <div class="font-extrabold text-sm text-on-surface leading-tight flex items-center gap-1.5">
+        <span>LISA</span>
+        <span class="text-[10px] bg-primary/10 text-primary font-bold px-1.5 py-0.5 rounded-full">AI Bot</span>
+      </div>
+      <div class="text-[11px] text-green-600 dark:text-green-400 font-medium">Online &bull; 24 Jam</div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-1.5">
+    <button id="clearChatBtn" class="w-8 h-8 rounded-full bg-surface-container hover:bg-red-500/10 hover:text-red-500 flex items-center justify-center text-outline transition" title="Hapus Percakapan" aria-label="Hapus Percakapan">
+      <span class="material-symbols-outlined text-[18px]">delete_sweep</span>
+    </button>
+    <button id="chatDarkToggle" class="w-8 h-8 rounded-full bg-surface-container hover:bg-outline-variant/50 flex items-center justify-center text-outline transition" title="Mode Gelap" aria-label="Mode Gelap">
+      <span class="material-symbols-outlined text-[18px]" id="chatDarkIcon">dark_mode</span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const darkBtn = document.getElementById("chatDarkToggle");
+  const darkIcon = document.getElementById("chatDarkIcon");
+
+  function syncIcon() {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (darkIcon) {
+      darkIcon.textContent = isDark ? "light_mode" : "dark_mode";
+    }
+  }
+
+  if (darkBtn) {
+    darkBtn.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      if (isDark) {
+        document.documentElement.removeAttribute("data-theme");
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("lisaDarkMode", "false");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("lisaDarkMode", "true");
+      }
+      syncIcon();
+    });
+    syncIcon();
+  }
+</script>

@@ -1,0 +1,68 @@
+---
+---
+<div id="feedbackModal" class="modal-overlay fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+  <div class="modal-box bg-white dark:bg-surface-container rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-outline-variant/30">
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex items-center gap-2 text-primary font-bold text-lg">
+        <span class="material-symbols-outlined">rate_review</span>
+        <h3>Kasih Saran & Masukan</h3>
+      </div>
+      <button id="closeFeedbackBtn" class="w-8 h-8 rounded-full bg-surface hover:bg-outline-variant/30 flex items-center justify-center text-outline cursor-pointer">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>
+    </div>
+
+    <form id="feedbackForm" class="space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-on-surface-variant mb-1">Nama Kamu</label>
+        <input type="text" id="feedbackName" class="w-full px-4 py-2.5 rounded-xl bg-surface dark:bg-surface border border-outline-variant/60 focus:border-primary focus:ring-1 focus:ring-primary outline-none text-sm transition" placeholder="Nama lengkap" required />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-on-surface-variant mb-1">Email Kamu</label>
+        <input type="email" id="feedbackEmail" class="w-full px-4 py-2.5 rounded-xl bg-surface dark:bg-surface border border-outline-variant/60 focus:border-primary focus:ring-1 focus:ring-primary outline-none text-sm transition" placeholder="email@contoh.com" required />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-on-surface-variant mb-1">Pesan Kamu</label>
+        <textarea id="feedbackMessage" rows="3" class="w-full px-4 py-2.5 rounded-xl bg-surface dark:bg-surface border border-outline-variant/60 focus:border-primary focus:ring-1 focus:ring-primary outline-none text-sm transition" placeholder="Tulis saran atau masukan kamu..." required></textarea>
+      </div>
+
+      <button type="submit" id="submitFeedbackBtn" class="w-full py-3 bg-primary hover:bg-primary-variant text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer active:scale-98">
+        <span>Kirim</span>
+        <span class="material-symbols-outlined text-[18px]">send</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById("feedbackModal");
+  const closeBtn = document.getElementById("closeFeedbackBtn");
+  const form = document.getElementById("feedbackForm") as HTMLFormElement | null;
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener("click", () => modal.classList.remove("active"));
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.remove("active");
+    });
+  }
+
+  if (form && modal) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById("submitFeedbackBtn");
+      if (submitBtn) {
+        submitBtn.innerHTML = '<span>Mengirim...</span>';
+      }
+
+      // Simulate submission or send to webhook
+      setTimeout(() => {
+        alert("Terima kasih atas saran dan masukan kamu!");
+        form.reset();
+        if (submitBtn) {
+          submitBtn.innerHTML = '<span>Kirim</span><span class="material-symbols-outlined text-[18px]">send</span>';
+        }
+        modal.classList.remove("active");
+      }, 600);
+    });
+  }
+</script>

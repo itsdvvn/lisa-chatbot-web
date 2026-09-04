@@ -1,0 +1,85 @@
+---
+---
+<header class="sticky top-0 z-50 bg-white/90 dark:bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 dark:border-white/10 px-6 py-4 flex justify-between items-center shadow-sm" id="header">
+  <a href="/" class="flex items-center gap-3 group">
+    <div class="w-12 h-12 bg-surface-container rounded-xl flex items-center justify-center shadow-sm overflow-hidden group-hover:scale-105 transition-transform">
+      <img alt="Logo GBL" class="w-10 h-10 object-contain" loading="lazy" src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png" />
+    </div>
+    <span class="font-extrabold text-xl tracking-tight text-primary">LISA</span>
+  </a>
+
+  <div class="flex items-center gap-2 sm:gap-3">
+    <!-- Quick Chat CTA Button in Header -->
+    <a href="/chat" class="flex items-center gap-1.5 px-3.5 py-1.5 bg-primary text-white text-xs sm:text-sm font-bold rounded-full shadow hover:bg-primary-variant hover:shadow-md transition active:scale-95">
+      <span class="material-symbols-outlined text-[16px] sm:text-[18px]">smart_toy</span>
+      <span class="hidden xs:inline-block sm:inline-block">Chat LISA</span>
+    </a>
+
+    <!-- Language toggle -->
+    <button id="langToggle" class="w-9 h-9 rounded-full bg-surface-container hover:bg-outline-variant/50 flex items-center justify-center text-xs font-bold text-on-surface-variant transition active:scale-90" aria-label="Ganti bahasa">EN</button>
+
+    <!-- Dark mode toggle -->
+    <button id="darkModeToggle" class="w-9 h-9 rounded-full bg-surface-container hover:bg-outline-variant/50 flex items-center justify-center transition active:scale-90" aria-label="Mode Gelap">
+      <span class="material-symbols-outlined text-[20px] text-on-surface-variant" id="darkModeIcon">dark_mode</span>
+    </button>
+
+    <!-- Feedback trigger -->
+    <button id="feedbackHeaderBtn" class="flex items-center gap-2 px-3 sm:px-4 py-2 bg-primary/10 rounded-full text-primary hover:bg-primary/20 transition-colors cursor-pointer">
+      <span class="material-symbols-outlined text-[20px]">chat_bubble_outline</span>
+      <span class="font-semibold text-sm hidden md:inline-block">Masukan</span>
+    </button>
+  </div>
+</header>
+
+<script>
+  // Theme Toggle
+  const darkToggle = document.getElementById("darkModeToggle");
+  const darkIcon = document.getElementById("darkModeIcon");
+
+  function updateIcon() {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (darkIcon) {
+      darkIcon.textContent = isDark ? "light_mode" : "dark_mode";
+    }
+  }
+
+  if (darkToggle) {
+    darkToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      if (isDark) {
+        document.documentElement.removeAttribute("data-theme");
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("lisaDarkMode", "false");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("lisaDarkMode", "true");
+      }
+      updateIcon();
+    });
+    updateIcon();
+  }
+
+  // Language Toggle
+  const langToggle = document.getElementById("langToggle");
+  if (langToggle) {
+    langToggle.addEventListener("click", () => {
+      const current = localStorage.getItem("lisaLang") || "id";
+      const next = current === "id" ? "en" : "id";
+      localStorage.setItem("lisaLang", next);
+      langToggle.textContent = next === "id" ? "EN" : "ID";
+      window.dispatchEvent(new CustomEvent("languageChanged", { detail: { lang: next } }));
+    });
+    const current = localStorage.getItem("lisaLang") || "id";
+    langToggle.textContent = current === "id" ? "EN" : "ID";
+  }
+
+  // Feedback Trigger
+  const feedbackBtn = document.getElementById("feedbackHeaderBtn");
+  if (feedbackBtn) {
+    feedbackBtn.addEventListener("click", () => {
+      const modal = document.getElementById("feedbackModal");
+      if (modal) modal.classList.add("active");
+    });
+  }
+</script>

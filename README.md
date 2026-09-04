@@ -4,12 +4,12 @@
   <p align="center"><strong>Lingkungan Sehat dan Asri</strong></p>
   <p align="center">
     Chatbot berbasis AI untuk edukasi lingkungan — <br/>
-    bantu masyarakat memahami sampah, 3R, dan bank sampah dalam satu percakapan.
+    bantu masyarakat memahami sampah, 3R, dan bank sampah dalam satu percakapan cerdas.
   </p>
   <p align="center">
-    <a href="https://itsdvvn.github.io/lisa-chatbot-web/" target="_blank">🌐 Kunjungi LISA</a>
+    <a href="https://chatbot.lingkungansehatasri.my.id" target="_blank">🌐 Kunjungi LISA (Live App)</a>
     &nbsp;·&nbsp;
-    <a href="https://instagram.com/gerakanbicaralingkungan_" target="_blank">📸 Instagram</a>
+    <a href="https://instagram.com/gerakanbicaralingkungan_" target="_blank">📸 Instagram GBL</a>
   </p>
 </div>
 
@@ -19,141 +19,160 @@
 
 ## 📖 Tentang LISA
 
-**LISA (Lingkungan Sehat dan Asri)** adalah chatbot berbasis kecerdasan buatan yang dirancang untuk mempermudah masyarakat — terutama pelajar dan remaja — dalam memahami isu lingkungan melalui percakapan yang cepat, interaktif, dan mudah dipahami.
+**LISA (Lingkungan Sehat dan Asri)** adalah platform chatbot edukasi lingkungan berbasis AI yang dirancang untuk mempermudah masyarakat — khususnya pelajar dan generasi muda — dalam memahami isu pengelolaan sampah melalui percakapan interaktif yang cepat, akurat, dan ramah pengguna.
 
-Dikembangkan oleh mahasiswa **Public Relations Universitas Bina Sarana Informatika (UBSI)** kampus Ciledug dan Ciputat sebagai proyek semester 5, LISA hadir untuk menjembatani kesenjangan antara kepedulian lingkungan dan akses terhadap informasi yang akurat dan praktis.
+Dikembangkan oleh mahasiswa **Public Relations Universitas Bina Sarana Informatika (UBSI)** kampus Ciledug dan Ciputat sebagai proyek inovasi sosial, LISA hadir untuk menjembatani kesenjangan (*communication gap*) antara kesadaran lingkungan generasi muda dengan akses terhadap panduan praktis pengelolaan sampah.
 
 > *"Harapan saya, hadirnya chatbot LISA bisa menutup GAP komunikasi yang terjadi sekarang antara remaja yang peduli lingkungan dan kebutuhan informasi yang akurat."*<br/>
 > — **Wahyudi Setiawan**, Ketua Tim Pengembang
 
 ---
 
-## 🎯 Latar Belakang
+## 🎯 Latar Belakang & Masalah
 
-Banyak masyarakat, khususnya pelajar, masih mengalami kebingungan dalam:
-- Memilah sampah berdasarkan jenis material
-- Memahami konsep pengolahan sampah
-- Menerapkan prinsip **Reduce, Reuse, Recycle (3R)**
-- Menemukan lokasi bank sampah terdekat
+Masyarakat di perkotaan seringkali menghadapi kendala dalam:
+- Memilah sampah berdasarkan jenis material (organik, anorganik, B3, residu)
+- Memahami teknik daur ulang dan komposting rumahan
+- Menerapkan prinsip **Reduce, Reuse, Recycle (3R)** secara konsisten
+- Menemukan lokasi bank sampah terdekat untuk penyaluran sampah anorganik bernilai ekonomis
 
-LISA menjawab tantangan ini dengan menyajikan informasi yang **akurat, praktis, dan mudah diaplikasikan** — cukup melalui satu percakapan chat.
-
-LISA pertama kali diperkenalkan dalam **Seminar Edukasi Gerakan Bicara Lingkungan** di **SMKN 18 Jakarta**, sebelum diakses oleh masyarakat umum.
+LISA menjawab tantangan ini dengan menyajikan informasi yang **akurat, praktis, dan mudah diaplikasikan** secara *real-time*.
 
 ---
 
 ## ✨ Fitur Utama
 
 | Fitur | Deskripsi |
-|-------|-----------|
-| 💬 **Percakapan Interaktif** | Tanya jawab seputar sampah dan lingkungan dalam bahasa yang santai dan akrab |
-| ♻️ **Edukasi 3R** | Panduan Reduce, Reuse, Recycle yang mudah dipahami |
-| 🗑️ **Klasifikasi Sampah** | Informasi jenis sampah dan cara pengolahannya |
-| 🏦 **Bank Sampah** | Referensi lokasi dan informasi bank sampah |
-| 🖼️ **Dukungan Media** | Kirim gambar sampah untuk identifikasi lebih lanjut |
-| 📱 **Responsif** | Tampilan optimal di mobile maupun desktop |
-| 🌐 **Landing Page** | Halaman informasi program CSR, media kit, dan profil tim |
+|---|---|
+| 💬 **Percakapan Interaktif AI** | Tanya jawab seputar lingkungan dengan bahasa santai, didukung pemrosesan bahasa alami (NLP). |
+| ⚡ **Streaming Respon Cepat** | Menampilkan jawaban secara responsif dan interaktif. |
+| 🔊 **Text-to-Speech (Audio)** | Fitur suara untuk mendengarkan pesan balasan secara langsung. |
+| 🌐 **Multi-bahasa (i18n)** | Dukungan Bahasa Indonesia dan Bahasa Inggris untuk aksesibilitas yang lebih luas. |
+| 🌓 **Tema Gelap & Terang** | Dukungan Dark Mode otomatis & manual untuk kenyamanan membaca. |
+| ♻️ **Panduan 3R & Klasifikasi** | Database klasifikasi jenis sampah serta tips pemilahan terstandar. |
+| ❓ **FAQ Interaktif** | Panduan pertanyaan umum tentang LISA dan pengelolaan lingkungan. |
+| 📱 **Ultra-Responsive & Modern** | Dioptimalkan untuk performa tinggi pada desktop, tablet, maupun smartphone. |
 
 ---
 
-## 🛠️ Teknologi
+## 🛠️ Arsitektur & Teknologi
 
-| Teknologi | Peran |
-|-----------|-------|
-| [Google Gemini Flash](https://deepmind.google/technologies/gemini/) | Kecerdasan buatan / pemrosesan bahasa alami |
-| [n8n](https://n8n.io/) | Automasi alur percakapan dan integrasi |
-| [Tailwind CSS](https://tailwindcss.com/) | Framework CSS untuk antarmuka |
-| [Google Fonts (Inter)](https://fonts.google.com/specimen/Inter) | Tipografi |
-| [Material Symbols](https://fonts.google.com/icons) | Ikon antarmuka |
-| [GitHub Pages](https://pages.github.com/) | Hosting halaman landing |
-| Server Pribadi | Backend aktif 24 jam (biaya < $6/bulan) |
-
-### Arsitektur
+LISA dibangun menggunakan arsitektur modern berorientasi performa dan skalabilitas:
 
 ```
-User → Landing Page (GitHub Pages) → Chat Interface → n8n Webhook → Google Gemini API → Response
+User (Browser) ──► Astro 5 Frontend (Tailwind CSS) ──► n8n Webhook Workflow ──► Google Gemini API
+```
+
+| Komponen | Teknologi | Deskripsi |
+|---|---|---|
+| **Frontend Framework** | [Astro v5](https://astro.build/) | Static Site Generation (SSG) & Island Architecture berkecepatan tinggi |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | Utilitas CSS modern dan desain responsif |
+| **Icons & Typography** | [Google Inter](https://fonts.google.com/specimen/Inter) & [Material Symbols](https://fonts.google.com/icons) | Desain visual yang bersih dan konsisten |
+| **AI Orchestration** | [n8n Automation](https://n8n.io/) | Manajemen flow chat, session, and fallback handling |
+| **AI LLM Engine** | [Google Gemini](https://deepmind.google/technologies/gemini/) | Mesin pemrosesan bahasa alami |
+| **Deployment** | Docker & Nginx Reverse Proxy | Kontainerisasi aplikasi untuk produksi |
+
+---
+
+## 📁 Struktur Repositori
+
+```text
+lisa-chatbot-web/
+├── lisa-chatbot-astro/       # 🚀 Frontend Modern (Astro 5 + Tailwind CSS)
+│   ├── src/
+│   │   ├── components/       # Komponen UI (Navbar, Hero, Chat, FAQ, Footer, dll)
+│   │   ├── layouts/          # Layout template halaman
+│   │   ├── pages/            # Halaman Astro (index.astro, dll)
+│   │   └── styles/           # Global styles & Tailwind configuration
+│   ├── public/               # Asset statis, gambar, dan ikon
+│   ├── Dockerfile            # Konfigurasi container produksi
+│   ├── nginx.conf            # Server web Nginx dalam container
+│   ├── astro.config.mjs      # Konfigurasi Astro framework
+│   └── package.json          # Dependensi frontend Astro
+├── lisa-chatbot/             # 📦 Legacy static HTML/JS version
+├── database/                 # Skema dan referensi database
+├── supabase/                 # Konfigurasi backend pendukung Supabase
+└── README.md                 # Dokumentasi proyek
 ```
 
 ---
 
-## 🚀 Akses Cepat
+## 🚀 Panduan Memulai (Local Development)
 
-- **Landing Page:** [itsdvvn.github.io/lisa-chatbot-web](https://itsdvvn.github.io/lisa-chatbot-web/)
-- **Chat Langsung:** Klik tombol **"Mulai Chat"** di halaman utama
-- **Media Kit:** Akses dokumen publik melalui halaman **Media Kit**
+### Prasyarat
+- [Node.js](https://nodejs.org/) (versi 18.x atau 20.x+)
+- `npm`, `pnpm`, atau `yarn`
 
-### Menjalankan Secara Lokal
+### 1. Clone Repositori
+```bash
+git clone https://github.com/itsdvvn/lisa-chatbot-web.git
+cd lisa-chatbot-web
+```
+
+### 2. Menjalankan Versi Astro (Direkomendasikan)
+```bash
+# Masuk ke folder proyek Astro
+cd lisa-chatbot-astro
+
+# Install dependensi
+npm install
+
+# Setup environment variable (opsional)
+cp .env.example .env
+
+# Jalankan development server
+npm run dev
+```
+Buka browser di `http://localhost:4321` untuk melihat aplikasi secara lokal.
+
+### 3. Build untuk Produksi
+```bash
+npm run build
+npm run preview
+```
+Output static build akan berada di direktori `dist/`.
+
+---
+
+## 🐳 Deployment via Docker
+
+Aplikasi Astro telah dilengkapi dengan multi-stage `Dockerfile` berbasis Nginx Alpine yang sangat ringan dan efisien:
 
 ```bash
-# Clone repositori
-git clone https://github.com/itsdvvn/lisa-chatbot-web.git
+cd lisa-chatbot-astro
 
-# Buka file index.html di browser
-open lisa-chatbot/index.html
-# atau cukup klik dua kali file index.html
+# Build Docker Image
+docker build -t lisa-chatbot-astro:latest .
+
+# Jalankan Kontainer
+docker run -d --name lisa-chatbot -p 3000:80 --restart unless-stopped lisa-chatbot-astro:latest
 ```
 
-Tidak ada build step — cukup HTML, CSS, dan JavaScript statis.
-
 ---
 
-## 👥 Tim Pengembang
+## 👥 Tim & Kontributor
 
 | Peran | Nama |
-|-------|------|
+|---|---|
 | **Ketua Tim Pengembang** | **Wahyudi Setiawan** |
-| Tim Pengembang | Mahasiswa Public Relations UBSI Ciledug & Ciputat |
+| Tim Riset & Konten | Mahasiswa Public Relations UBSI Ciledug & Ciputat |
 
-Dibawah naungan **Gerakan Bicara Lingkungan (GBL)** dan didukung oleh:
-
-- **Komunitas Guna Ulang Saja (GUA)** — Mitra kampanye gaya hidup minim sampah
-
-> *"Chatbot LISA sangat membantu penyebaran informasi terkait cara menjaga lingkungan melalui gaya hidup minim sampah."*<br/>
-> — **Ardianto Prabowo**, Koordinator Komunitas GUA
+Didukung oleh:
+- **Gerakan Bicara Lingkungan (GBL)**
+- **Komunitas Guna Ulang Saja (GUA)**
 
 ---
 
-## 📚 Sumber Data
+## 📄 Media & Kontak
 
-LISA dibangun menggunakan **lebih dari seratus tabel data lapangan** yang mencakup:
-
-- 📋 Klasifikasi sampah (organik, anorganik, B3)
-- 🔄 Mekanisme pengolahan sederhana
-- 🏦 Referensi bank sampah
-- ♻️ Panduan praktis 3R
-
-Data tersebut dikurasi ulang untuk memastikan setiap jawaban bersifat **akurat, praktis, dan mudah diaplikasikan**.
-
----
-
-## 📄 Media Kit
-
-Dokumen resmi tersedia di halaman **Media Kit**:
-- Company Profile
-- Press Release
-- Press Conference
-- Advertorial
-- Backgrounders
-
-📧 **Kontak PR:** [publicrelation2344@gmail.com](mailto:publicrelation2344@gmail.com)
-
----
-
-## 📸 Media Sosial
-
-Ikuti perjalanan Gerakan Bicara Lingkungan:
+- **Live Chatbot:** [chatbot.lingkungansehatasri.my.id](https://chatbot.lingkungansehatasri.my.id)
 - **Instagram:** [@gerakanbicaralingkungan_](https://instagram.com/gerakanbicaralingkungan_)
+- **Email PR:** [publicrelation2344@gmail.com](mailto:publicrelation2344@gmail.com)
 
 ---
 
 ## 📜 Lisensi
 
-Hak cipta © 2025 LISA — Gerakan Bicara Lingkungan.
-
+Hak Cipta © 2025–2026 LISA — Gerakan Bicara Lingkungan.  
 Dibuat dengan ❤️ untuk Bumi.
 
----
-
-<div align="center">
-  <sub>Proyek Semester 5 — Public Relations, Universitas Bina Sarana Informatika</sub>
-</div>

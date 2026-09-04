@@ -1,0 +1,40 @@
+---
+---
+<div class="p-3 bg-white dark:bg-surface border-t border-outline-variant/30 shrink-0 z-20">
+  <!-- File Preview Bar -->
+  <div id="filePreview" class="hidden items-center justify-between px-3 py-1.5 mb-2 bg-surface-container rounded-xl text-xs text-on-surface-variant border border-outline-variant/30">
+    <div class="flex items-center gap-2 truncate">
+      <span class="material-symbols-outlined text-[16px] text-primary">image</span>
+      <span id="fileName" class="truncate font-medium">foto-sampah.jpg</span>
+    </div>
+    <button id="removeFileBtn" class="text-outline hover:text-red-500 transition p-1">
+      <span class="material-symbols-outlined text-[16px]">close</span>
+    </button>
+  </div>
+
+  <div class="flex items-end gap-2 bg-surface dark:bg-surface-container rounded-2xl p-1.5 border border-outline-variant/40 focus-within:border-primary transition shadow-inner">
+    <!-- File attachment trigger -->
+    <label for="fileInput" class="w-9 h-9 rounded-xl flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container transition cursor-pointer shrink-0" title="Lampirkan Gambar">
+      <span class="material-symbols-outlined text-[20px]">add_photo_alternate</span>
+    </label>
+    <input type="file" id="fileInput" accept="image/*" class="hidden" />
+
+    <!-- Textarea input -->
+    <textarea
+      id="userInput"
+      rows="1"
+      placeholder="Tulis pertanyaanmu seputar sampah..."
+      class="w-full bg-transparent border-none outline-none resize-none text-sm text-on-surface py-2 max-h-28 min-h-[36px]"
+    ></textarea>
+
+    <!-- Send button -->
+    <button
+      id="sendBtn"
+      disabled
+      class="w-9 h-9 bg-primary disabled:opacity-40 disabled:hover:bg-primary hover:bg-primary-variant text-white rounded-xl flex items-center justify-center transition shrink-0 cursor-pointer disabled:cursor-not-allowed shadow active:scale-95"
+      aria-label="Kirim Pesan"
+    >
+      <span class="material-symbols-outlined text-[18px]">send</span>
+    </button>
+  </div>
+</div>

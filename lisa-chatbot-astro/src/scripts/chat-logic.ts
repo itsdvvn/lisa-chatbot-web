@@ -1,0 +1,334 @@
+import { parseMarkdown, linkify } from './parser';
+import { getFormattedDate, formatTime, generateUUID } from './utils';
+import type { Message } from '../types/chat';
+
+const HISTORY_KEY = 'lisaChatHistory';
+const WEBHOOK_URL = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || 'https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf';
+
+export function initChat() {
+  const chatbox = document.getElementById('chatbox');
+  const input = document.getElementById('userInput') as HTMLTextAreaElement | null;
+  const sendBtn = document.getElementById('sendBtn') as HTMLButtonElement | null;
+  const fileInput = document.getElementById('fileInput') as HTMLInputElement | null;
+  const filePreview = document.getElementById('filePreview');
+  const fileName = document.getElementById('fileName');
+  const removeFileBtn = document.getElementById('removeFileBtn');
+  const welcomeCard = document.getElementById('welcomeCard');
+  const clearChatBtn = document.getElementById('clearChatBtn');
+
+  if (!chatbox || !input || !sendBtn) return;
+
+  let isSending = false;
+  let lastMessageDate: string | null = null;
+
+  const sessionId = localStorage.getItem('lisaSession') || generateUUID();
+  localStorage.setItem('lisaSession', sessionId);
+
+  function hideWelcome() {
+    if (welcomeCard) welcomeCard.style.display = 'none';
+  }
+
+  function updateSendBtn() {
+    const hasText = input?.value.trim().length || 0;
+    const hasFile = fileInput?.files?.length || 0;
+    if (sendBtn) {
+      sendBtn.disabled = !hasText && !hasFile;
+    }
+  }
+
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 112) + 'px';
+    updateSendBtn();
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  sendBtn.addEventListener('click', () => {
+    sendMessage();
+  });
+
+  // Quick Action Chips & Buttons delegation
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const chip = target.closest('.quick-chip') as HTMLElement | null;
+    if (chip && input) {
+      if (isSending) return;
+      const text = chip.getAttribute('data-send') || chip.textContent?.trim() || '';
+      input.value = text;
+      updateSendBtn();
+      sendMessage();
+      return;
+    }
+
+    const qrBtn = target.closest('.quick-reply-btn') as HTMLElement | null;
+    if (qrBtn && input) {
+      if (isSending) return;
+      const text = qrBtn.getAttribute('data-value') || qrBtn.textContent?.trim() || '';
+      input.value = text;
+      updateSendBtn();
+      sendMessage();
+    }
+  });
+
+  // Clear Chat
+  if (clearChatBtn) {
+    clearChatBtn.addEventListener('click', () => {
+      if (confirm('Hapus seluruh riwayat percakapan?')) {
+        localStorage.removeItem(HISTORY_KEY);
+        localStorage.removeItem('lisaSession');
+        location.reload();
+      }
+    });
+  }
+
+  // File Upload handling
+  if (fileInput && filePreview && fileName && removeFileBtn) {
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files && fileInput.files.length > 0) {
+        fileName.textContent = fileInput.files[0].name;
+        filePreview.classList.remove('hidden');
+        filePreview.classList.add('flex');
+      } else {
+        filePreview.classList.add('hidden');
+        filePreview.classList.remove('flex');
+        fileName.textContent = '';
+      }
+      updateSendBtn();
+    });
+
+    removeFileBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      filePreview.classList.add('hidden');
+      filePreview.classList.remove('flex');
+      fileName.textContent = '';
+      updateSendBtn();
+    });
+  }
+
+  function renderMessage(message: Message, save = true) {
+    hideWelcome();
+    const text = message.text.trim();
+
+    // Parse quick reply tags [BUTTONS: label1|val1, label2|val2]
+    const qrMatch = text.match(/\[(BUTTONS|QR):(.+?)\]$/i);
+    let qrData: Array<{ label: string; value: string }> | null = null;
+    let cleanText = text;
+    if (qrMatch) {
+      qrData = qrMatch[2].split(',').map((pair) => {
+        const [label, value] = pair.split('|');
+        return { label: label.trim(), value: (value || label).trim() };
+      });
+      cleanText = text.replace(/\[(BUTTONS|QR):.+?\]$/i, '').trim();
+    }
+
+    // Date separator
+    if (message.date !== lastMessageDate) {
+      const dateSep = document.createElement('div');
+      dateSep.className = 'flex justify-center my-3';
+      dateSep.innerHTML = `<span class="px-3 py-1 bg-surface-container text-outline text-[11px] font-semibold rounded-full border border-outline-variant/30">${getFormattedDate(message.date)}</span>`;
+      chatbox.appendChild(dateSep);
+      lastMessageDate = message.date;
+    }
+
+    const row = document.createElement('div');
+    row.className = `msg-row ${message.sender}`;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'flex flex-col max-w-[85%] sm:max-w-[75%]';
+    if (message.sender === 'user') wrap.classList.add('items-end');
+    else wrap.classList.add('items-start');
+
+    const bubble = document.createElement('div');
+    bubble.className = `bubble ${message.sender}`;
+
+    const content = document.createElement('div');
+    if (message.sender === 'bot') {
+      content.innerHTML = parseMarkdown(cleanText);
+    } else {
+      content.innerHTML = linkify(cleanText);
+    }
+    bubble.appendChild(content);
+
+    // Render quick reply buttons inside bubble
+    if (qrData && qrData.length > 0) {
+      const qrContainer = document.createElement('div');
+      qrContainer.className = 'quick-reply-container';
+      qrData.forEach((qr) => {
+        const btn = document.createElement('button');
+        btn.className = 'quick-reply-btn';
+        btn.setAttribute('data-value', qr.value);
+        btn.textContent = qr.label;
+        qrContainer.appendChild(btn);
+      });
+      bubble.appendChild(qrContainer);
+    }
+
+    wrap.appendChild(bubble);
+
+    const timeEl = document.createElement('span');
+    timeEl.className = 'msg-time';
+    timeEl.textContent = message.time;
+    wrap.appendChild(timeEl);
+
+    if (message.sender === 'bot') {
+      const avatar = document.createElement('img');
+      avatar.src = 'https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg';
+      avatar.alt = 'LISA';
+      avatar.className = 'w-8 h-8 rounded-full border border-primary/20 shrink-0 mt-1 shadow-sm';
+      row.appendChild(avatar);
+    }
+
+    row.appendChild(wrap);
+    chatbox.appendChild(row);
+    chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
+
+    if (save) {
+      saveHistory(message);
+    }
+  }
+
+  function addTyping() {
+    const row = document.createElement('div');
+    row.className = 'msg-row bot';
+    row.id = 'typingIndicator';
+
+    const avatar = document.createElement('img');
+    avatar.src = 'https://files.lingkungansehatasri.my.id/lisa-profile-picture.jpg';
+    avatar.alt = 'LISA';
+    avatar.className = 'w-8 h-8 rounded-full border border-primary/20 shrink-0 mt-1 shadow-sm';
+    row.appendChild(avatar);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'flex flex-col items-start';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble bot';
+    bubble.innerHTML = '<div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+
+    wrap.appendChild(bubble);
+    row.appendChild(wrap);
+    chatbox.appendChild(row);
+    chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: 'smooth' });
+  }
+
+  function removeTyping() {
+    const el = document.getElementById('typingIndicator');
+    if (el) el.remove();
+  }
+
+  function saveHistory(message: Message) {
+    try {
+      const history: Message[] = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+      history.push(message);
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    } catch {
+      // ignore storage errors
+    }
+  }
+
+  function loadHistory() {
+    try {
+      const history: Message[] = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+      if (history.length > 0) {
+        hideWelcome();
+        history.forEach((msg) => renderMessage(msg, false));
+      }
+    } catch {
+      // ignore parse errors
+    }
+  }
+
+  async function sendMessage() {
+    if (isSending) return;
+    const text = input?.value.trim() || '';
+    const file = fileInput?.files?.[0];
+
+    if (!text && !file) return;
+
+    isSending = true;
+    const now = new Date();
+    const currentDate = now.toLocaleDateString('id-ID');
+    const currentTime = formatTime(now);
+
+    const userMessage: Message = {
+      text,
+      sender: 'user',
+      date: currentDate,
+      time: currentTime,
+    };
+
+    renderMessage(userMessage, true);
+
+    if (input) {
+      input.value = '';
+      input.style.height = 'auto';
+    }
+    if (fileInput && filePreview && fileName) {
+      fileInput.value = '';
+      filePreview.classList.add('hidden');
+      filePreview.classList.remove('flex');
+      fileName.textContent = '';
+    }
+    updateSendBtn();
+
+    addTyping();
+
+    try {
+      let response: Response;
+      if (file) {
+        const formData = new FormData();
+        formData.append('sessionId', sessionId);
+        formData.append('chatInput', text);
+        formData.append('file', file);
+        response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          body: formData,
+        });
+      } else {
+        response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId, chatInput: text }),
+        });
+      }
+
+      removeTyping();
+
+      if (!response.ok) {
+        throw new Error('Network error');
+      }
+
+      const data = await response.json();
+      const botReply = data.output || data.response || data.text || 'Maaf, LISA sedang tidak bisa merespons saat ini.';
+
+      const botMessage: Message = {
+        text: botReply,
+        sender: 'bot',
+        date: new Date().toLocaleDateString('id-ID'),
+        time: formatTime(new Date()),
+      };
+
+      renderMessage(botMessage, true);
+    } catch {
+      removeTyping();
+      const errMessage: Message = {
+        text: '⚠️ Maaf, gagal terhubung ke server LISA. Coba lagi dalam beberapa saat ya.',
+        sender: 'bot',
+        date: new Date().toLocaleDateString('id-ID'),
+        time: formatTime(new Date()),
+      };
+      renderMessage(errMessage, false);
+    } finally {
+      isSending = false;
+      updateSendBtn();
+    }
+  }
+
+  loadHistory();
+}
