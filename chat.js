@@ -498,10 +498,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (text) addMessage({ text, time, date }, "user");
 
+    // Retrieve recent conversation history from localStorage to guarantee 100% multi-turn context
+    let recentHistory = [];
+    try {
+      const st = localStorage.getItem(HISTORY_KEY);
+      if (st) {
+        const d = JSON.parse(st);
+        if (d && Array.isArray(d.chats)) {
+          // Take last 6 messages
+          recentHistory = d.chats.slice(-6).map((c) => {
+            const senderLabel = c.sender === "user" ? "User" : "LISA";
+            const msgTxt = (c.message && c.message.text ? c.message.text : "").replace(/\[(BUTTONS|QR):.+?\]$/i, "").trim();
+            return `${senderLabel}: ${msgTxt}`;
+          });
+        }
+      }
+    } catch (e) {}
+
+    const conversationContext = recentHistory.join("\n");
+
     const formData = new FormData();
     formData.append("text", text);
     formData.append("chatInput", text);
     formData.append("sessionId", sessionId);
+    formData.append("conversationHistory", conversationContext);
 
     // Multi-file upload
     if (files.length > 0) {
