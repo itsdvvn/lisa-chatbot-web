@@ -989,6 +989,28 @@ html.dark .quick-reply-btn:hover {
   outline: none;
 }
 
+.chat-video-credit {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  font-size: 0.725rem;
+  color: var(--on-surface-variant, #49454f);
+  background: rgba(0, 0, 0, 0.03);
+  border-top: 1px solid rgba(0, 108, 75, 0.08);
+}
+
+[data-theme="dark"] .chat-video-credit {
+  color: #c4c7c5;
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 1px solid rgba(76, 217, 142, 0.12);
+}
+
+.chat-video-credit strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
 /* ===== Chat Google Maps Button ===== */
 .chat-maps-btn {
   display: inline-flex;

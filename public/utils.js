@@ -114,7 +114,35 @@ function renderLinkOrMedia(label, url) {
 
   // 1. Video files (.mp4, .webm)
   if (href.includes(".mp4") || href.includes(".webm")) {
-    const title = label && !label.startsWith("http") ? label : "Video Tutorial";
+    let title = label && !label.startsWith("http") ? label : "Video Tutorial";
+    let credit = "";
+
+    // Extract creator from title if provided like "[Video Tutorial](url) (Sumber: ...)" or from filename
+    const creditMatch = title.match(/(?:sumber|kredit|credit|by|creator)\s*:\s*([^)]+)/i);
+    if (creditMatch) {
+      credit = creditMatch[1].trim();
+      title = title.replace(/\s*\([^)]*(?:sumber|kredit|credit|by|creator)[^)]*\)/gi, "").trim();
+    } else {
+      // Fallback: extract from R2 filename pattern e.g. PlasticBottlePET_BotolPlastikAirMineral_Anorganik_YoutubeRezarisaGATARI.mp4
+      const filenameMatch = href.match(/([^\/]+)\.(?:mp4|webm)/i);
+      if (filenameMatch) {
+        const rawName = decodeURIComponent(filenameMatch[1]);
+        const parts = rawName.split("_");
+        if (parts.length >= 4) {
+          const lastPart = parts[parts.length - 1];
+          // Format e.g. YoutubeRezarisaGATARI -> Youtube: Rezarisa GATARI
+          credit = lastPart.replace(/^(Youtube|Tiktok|TikTok)/i, "$1: ").trim();
+        }
+      }
+    }
+
+    const creditHtml = credit
+      ? `<div class="chat-video-credit">` +
+          `<span class="material-symbols-outlined text-[13px] opacity-70">smart_display</span>` +
+          `<span>Sumber: <strong>${credit}</strong></span>` +
+        `</div>`
+      : "";
+
     return `<div class="chat-video-card">` +
       `<div class="chat-video-header">` +
         `<span class="material-symbols-outlined text-primary text-[18px]">play_circle</span>` +
@@ -123,6 +151,7 @@ function renderLinkOrMedia(label, url) {
       `<video controls playsinline preload="metadata" class="chat-video-player">` +
         `<source src="${href}" type="video/mp4">Browser kamu belum support pemutar video.` +
       `</video>` +
+      creditHtml +
     `</div>`;
   }
 
