@@ -23,6 +23,16 @@ const {
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" type="image/webp" href="/images/logo-gbl.webp" />
     <link rel="apple-touch-icon" href="/images/lisa-avatar.webp" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8V9TQWP6X"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K8V9TQWP6X');
+    </script>
     
     <title>{title}</title>
     <meta name="description" content={description} />
