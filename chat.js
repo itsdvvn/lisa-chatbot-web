@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
     chatDarkToggle.addEventListener("click", function () {
       toggleDarkMode();
       updateChatDarkIcon();
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+      trackGAEvent("theme_toggle", { theme: currentTheme, page: "chat" });
     });
     updateChatDarkIcon();
   }
@@ -53,6 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
     "https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf";
   const HISTORY_KEY = "lisaChatHistory";
   const EXPIRATION_DAYS = 7;
+
+  // Track Chat Session Start
+  trackGAEvent("chat_session_start", { page: "chat" });
 
   // --- RATE LIMIT & QUOTA CONSTANTS ---
   const MAX_PHOTO_UPLOADS = 3;
@@ -170,7 +175,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // --- SUGGESTION CHIPS ---
   document.querySelectorAll(".suggestion-chip").forEach((chip) => {
     chip.addEventListener("click", () => {
-      input.value = chip.getAttribute("data-suggestion");
+      const promptText = chip.getAttribute("data-suggestion");
+      trackGAEvent("quick_suggestion_click", { suggestion_text: promptText, source: "welcome_card" });
+      input.value = promptText;
       input.style.height = "auto";
       input.style.height = Math.min(input.scrollHeight, 112) + "px";
       updateSendBtn();
@@ -185,7 +192,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const qr = e.target.closest(".quick-reply-btn");
     if (qr) {
       if (isSending) return;
-      input.value = qr.getAttribute("data-value") || qr.textContent.trim();
+      const val = qr.getAttribute("data-value") || qr.textContent.trim();
+      trackGAEvent("quick_reply_click", { reply_value: val });
+      input.value = val;
       input.style.height = "auto";
       input.style.height = Math.min(input.scrollHeight, 112) + "px";
       updateSendBtn();
@@ -196,7 +205,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const chip = e.target.closest(".quick-chip");
     if (chip) {
       if (isSending) return;
-      input.value = chip.getAttribute("data-send");
+      const sendVal = chip.getAttribute("data-send");
+      trackGAEvent("quick_chip_click", { chip_value: sendVal, source: "bottom_bar" });
+      input.value = sendVal;
       input.style.height = "auto";
       input.style.height = Math.min(input.scrollHeight, 112) + "px";
       updateSendBtn();
@@ -213,6 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
       )
     )
       return;
+    trackGAEvent("clear_chat_history", { total_messages: getSessionMessageCount() });
     localStorage.removeItem(HISTORY_KEY);
     localStorage.removeItem("lisaSession");
     resetSessionLimits();
@@ -255,6 +267,10 @@ document.addEventListener("DOMContentLoaded", function () {
         updateSendBtn();
         return;
       }
+    }
+
+    if (files.length > 0) {
+      trackGAEvent("image_attached", { count: files.length, file_names: files.map(f => f.name).join(",") });
     }
 
     updateFilePreview();
@@ -458,6 +474,15 @@ document.addEventListener("DOMContentLoaded", function () {
     recentMessageTimestamps.push(lastSendTimestamp);
     incrementSessionMessageCount();
 
+    // Track GA4 Send Message Event
+    const hasImageAttachment = files && files.length > 0;
+    trackGAEvent("send_message", {
+      msg_type: hasImageAttachment ? (text ? "image_with_caption" : "image_only") : "text_only",
+      has_image: hasImageAttachment,
+      image_count: hasImageAttachment ? files.length : 0,
+      message_length: text.length
+    });
+
     isSending = true;
     hideWelcome();
     const now = new Date();
@@ -499,6 +524,7 @@ document.addEventListener("DOMContentLoaded", function () {
       fileInput.value = null;
     }
 
+    const requestStartTime = Date.now();
     addTyping();
     try {
       const res = await fetch(webhookUrl, {
@@ -507,6 +533,13 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       const data = await res.json();
       removeTyping();
+
+      const responseDuration = Date.now() - requestStartTime;
+      trackGAEvent("bot_response_received", {
+        response_time_ms: responseDuration,
+        status: "success"
+      });
+
       const botNow = new Date();
       const botTime = botNow
         .toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })
@@ -524,6 +557,12 @@ document.addEventListener("DOMContentLoaded", function () {
         updateHistoryWithURL(data.userInput);
     } catch (e) {
       removeTyping();
+      const responseDuration = Date.now() - requestStartTime;
+      trackGAEvent("bot_response_received", {
+        response_time_ms: responseDuration,
+        status: "error"
+      });
+
       const et = new Date()
         .toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })
         .replace(".", ":");
@@ -561,6 +600,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
           recognition.start();
           isRecording = true;
+          trackGAEvent("voice_input_start", { language: "id-ID" });
           voiceBtn.classList.add("is-recording");
           voiceBtn.querySelector("span").textContent = "mic";
           voiceBtn.setAttribute("aria-label", "Berhenti merekam");
@@ -604,6 +644,7 @@ document.addEventListener("DOMContentLoaded", function () {
     exportChatBtn.addEventListener("click", () => {
       const messages = chatbox.querySelectorAll(".bubble");
       if (messages.length === 0) return;
+      trackGAEvent("export_chat", { message_count: messages.length });
       let text = "LISA Chat Export\n";
       text += "Tanggal: " + new Date().toLocaleDateString("id-ID") + "\n";
       text += "================================\n\n";
