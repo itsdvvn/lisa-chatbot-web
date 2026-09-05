@@ -67,7 +67,7 @@ import '../styles/global.css';
                         </div>
                         <div class="flex items-center gap-2">
                             <!-- Quick Chat CTA Button in Header -->
-                            <a href="/chat" class="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 bg-primary text-white text-xs sm:text-sm font-bold rounded-full shadow hover:bg-primary-variant hover:shadow-md transition active:scale-95">
+                            <a href="/chat" onclick="trackGAEvent('click_cta_chat', { cta_location: 'header_nav' })" class="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 bg-primary text-white text-xs sm:text-sm font-bold rounded-full shadow hover:bg-primary-variant hover:shadow-md transition active:scale-95">
                                 <span class="material-symbols-outlined text-[16px] sm:text-[18px]">smart_toy</span>
                                 <span class="hidden xs:inline-block sm:inline-block">Chat LISA</span>
                             </a>
@@ -110,11 +110,11 @@ import '../styles/global.css';
                                 Satu chat cukup untuk memulai perubahan.
                             </div>
                             <div class="hero-anim hero-anim-delay-5 flex flex-col w-full sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
-                                <a class="w-full sm:w-auto bg-primary text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-primary-variant hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2" href="/chat">
+                                <a class="w-full sm:w-auto bg-primary text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-primary-variant hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2" href="/chat" onclick="trackGAEvent('click_cta_chat', { cta_location: 'hero_main' })">
                                     <span data-i18n="cta_chat">Mulai Chat</span>
                                     <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
                                 </a>
-                                <a class="w-full sm:w-auto bg-surface-container text-primary font-bold py-4 px-8 rounded-full hover:bg-outline-variant/30 transition-colors" href="#csr" data-i18n="cta_csr">Program CSR</a>
+                                <a class="w-full sm:w-auto bg-surface-container text-primary font-bold py-4 px-8 rounded-full hover:bg-outline-variant/30 transition-colors" href="#csr" data-i18n="cta_csr" onclick="trackGAEvent('click_cta_csr', { cta_location: 'hero' })">Program CSR</a>
                             </div>
 
                             <!-- STATS BADGES -->
@@ -165,7 +165,7 @@ import '../styles/global.css';
                                 </div>
 
                                 <!-- Mini CTA to open Chat -->
-                                <a href="/chat" class="mt-4 w-full py-2.5 bg-primary/10 hover:bg-primary hover:text-white text-primary text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 group-hover:bg-primary group-hover:text-white">
+                                <a href="/chat" onclick="trackGAEvent('click_cta_chat', { cta_location: 'chat_simulation_card' })" class="mt-4 w-full py-2.5 bg-primary/10 hover:bg-primary hover:text-white text-primary text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 group-hover:bg-primary group-hover:text-white">
                                     <span>Coba Tanya LISA Sekarang</span>
                                     <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                                 </a>
@@ -395,7 +395,7 @@ import '../styles/global.css';
             </div>
 
             <!-- FLOATING CHAT FAB -->
-            <a id="floatingChatFab" href="/chat" class="fixed bottom-6 left-6 sm:left-auto sm:right-22 z-50 flex items-center gap-2.5 bg-primary hover:bg-primary-variant text-white px-4 py-3 rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all active:scale-95 group border-2 border-white/30 backdrop-blur-sm" aria-label="Buka Chat LISA">
+            <a id="floatingChatFab" href="/chat" onclick="trackGAEvent('click_cta_chat', { cta_location: 'floating_fab' })" class="fixed bottom-6 left-6 sm:left-auto sm:right-22 z-50 flex items-center gap-2.5 bg-primary hover:bg-primary-variant text-white px-4 py-3 rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all active:scale-95 group border-2 border-white/30 backdrop-blur-sm" aria-label="Buka Chat LISA">
                 <span class="relative flex h-2.5 w-2.5">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400"></span>

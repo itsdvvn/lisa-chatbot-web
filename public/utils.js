@@ -1,6 +1,19 @@
 // Shared utility functions for LISA website
 
 /**
+ * Helper to safely trigger Google Analytics (GA4) Custom Events
+ */
+function trackGAEvent(eventName, eventParams = {}) {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    try {
+      window.gtag("event", eventName, eventParams);
+    } catch (err) {
+      console.warn("GA Event error:", err);
+    }
+  }
+}
+
+/**
  * Format a date string to localized format
  */
 function getFormattedDate(dateString) {
@@ -121,7 +134,7 @@ function renderLinkOrMedia(label, url) {
   // 3. Google Maps links
   if (href.includes("maps.app.goo.gl") || href.includes("share.google") || href.includes("google.com/maps")) {
     const btnText = label && !label.startsWith("http") ? label : "Buka di Google Maps";
-    return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="chat-maps-btn">` +
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer" onclick="trackGAEvent('action_maps_click', { destination_url: '${href}' })" class="chat-maps-btn">` +
       `<span class="material-symbols-outlined text-[16px] text-red-500">location_on</span>` +
       `<span>${btnText}</span>` +
       `<span class="material-symbols-outlined text-[14px]">open_in_new</span>` +
@@ -130,7 +143,7 @@ function renderLinkOrMedia(label, url) {
 
   // 4. Regular hyperlink
   const displayLabel = label || href;
-  return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="chat-link">` +
+  return `<a href="${href}" target="_blank" rel="noopener noreferrer" onclick="trackGAEvent('chat_link_click', { link_url: '${href}', link_label: '${displayLabel}' })" class="chat-link">` +
     `<span>${displayLabel}</span>` +
     `<span class="material-symbols-outlined text-[14px]">open_in_new</span>` +
   `</a>`;
@@ -236,5 +249,5 @@ function parseMarkdown(text) {
 
 // Export for use in other scripts
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { getFormattedDate, formatTime, debounce, getLang, setLang, initDarkMode, toggleDarkMode, linkify, parseMarkdown };
+  module.exports = { trackGAEvent, getFormattedDate, formatTime, debounce, getLang, setLang, initDarkMode, toggleDarkMode, linkify, parseMarkdown };
 }

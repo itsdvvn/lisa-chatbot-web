@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const homeView = document.getElementById("view-home");
     const mediaKitView = document.getElementById("view-mediakit");
     window.scrollTo({ top: 0, behavior: "auto" });
+    trackGAEvent("spa_navigate", { view_id: viewId });
     if (viewId === "mediakit") {
       homeView.classList.add("hidden-spa");
       mediaKitView.classList.remove("hidden-spa");
@@ -58,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const docFrame = document.getElementById("docPreviewFrame");
   const docTitle = document.getElementById("docPreviewTitle");
   window.openDocPreview = function (url, title) {
+    trackGAEvent("view_document", { document_title: title, document_url: url });
     docTitle.innerText = title;
     docFrame.src = "https://docs.google.com/viewer?url=" + encodeURIComponent(url) + "&embedded=true";
     docModal.classList.add("active");
@@ -110,6 +112,8 @@ document.addEventListener("DOMContentLoaded", function () {
     darkToggle.addEventListener("click", function () {
       toggleDarkMode();
       updateDarkIcon();
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+      trackGAEvent("theme_toggle", { theme: currentTheme, page: "landing" });
     });
     updateDarkIcon();
   }
@@ -122,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const next = current === "id" ? "en" : "id";
       setLang(next);
       langToggle.textContent = next === "id" ? "EN" : "ID";
+      trackGAEvent("language_change", { language: next, page: "landing" });
     });
     langToggle.textContent = getLang() === "id" ? "EN" : "ID";
   }
@@ -135,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
     subscribeTrigger.addEventListener("click", function () {
       subModal.classList.add("active");
       document.body.style.overflow = "hidden";
+      trackGAEvent("open_feedback_modal", { source: "header_button" });
     });
     if (closeSubModalBtn) {
       closeSubModalBtn.addEventListener("click", function () {
@@ -172,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then(function (r) {
           if (r.ok) {
+            trackGAEvent("submit_feedback", { feedback_length: feedback.length, has_email: Boolean(email) });
             alert("Terima kasih! Masukan kamu sudah kami terima.");
             subModal.classList.remove("active");
             subForm.reset();
