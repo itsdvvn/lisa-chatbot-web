@@ -81,14 +81,20 @@ def parse_klasifikasi():
             alat = row.get("alat_dibutuhkan", "").strip()
             hasil = row.get("hasil_akhir", "").strip()
 
-            content = (
-                f"Jenis Sampah: {local_name} ({keyword})\n"
-                f"Kategori: {category}\n"
-                f"Edukasi Singkat: {edukasi}\n"
-                f"Langkah Pengolahan: {langkah}\n"
-                f"Alat yang Dibutuhkan: {alat}\n"
+            content_lines = [
+                f"Jenis Sampah: {local_name} ({keyword})" if keyword else f"Jenis Sampah: {local_name}",
+                f"Kategori: {category}",
+                f"Edukasi Singkat: {edukasi}",
+                f"Langkah Pengolahan: {langkah}",
+                f"Alat yang Dibutuhkan: {alat}",
                 f"Hasil Akhir: {hasil}"
-            )
+            ]
+            if cf_link:
+                content_lines.append(f"Link Video Tutorial: {cf_link}")
+            if sumber:
+                content_lines.append(f"Sumber Tutorial: {sumber}")
+
+            content = "\n".join(content_lines)
             metadata = {
                 "keyword": keyword,
                 "local_name": local_name,
