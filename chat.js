@@ -299,6 +299,69 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // --- CLIENT-SIDE IMAGE COMPRESSION ---
+  async function compressImage(file, maxWidth = 1280, maxHeight = 1280, quality = 0.8) {
+    // Only compress image files
+    if (!file.type.startsWith("image/")) return file;
+    // Don't re-compress tiny images/GIFs/SVGs
+    if (file.type === "image/gif" || file.type === "image/svg+xml" || file.size < 150 * 1024) {
+      return file;
+    }
+
+    return new Promise((resolve) => {
+      const img = new Image();
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+
+          // Calculate aspect ratio
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width * maxHeight) / height);
+              height = maxHeight;
+            }
+          }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob(
+            (blob) => {
+              if (blob && blob.size < file.size) {
+                const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), {
+                  type: "image/jpeg",
+                  lastModified: Date.now(),
+                });
+                console.log(`[LISA Image Optimizer] Compressed ${file.name} from ${(file.size / 1024).toFixed(1)}KB -> ${(compressedFile.size / 1024).toFixed(1)}KB`);
+                resolve(compressedFile);
+              } else {
+                resolve(file);
+              }
+            },
+            "image/jpeg",
+            quality
+          );
+        };
+        img.onerror = () => resolve(file);
+        img.src = e.target.result;
+      };
+      reader.onerror = () => resolve(file);
+      reader.readAsDataURL(file);
+    });
+  }
+
   // --- READ FILE ---
   function readFileAsDataURL(file) {
     return new Promise((resolve, reject) => {
@@ -523,22 +586,31 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("sessionId", sessionId);
     formData.append("conversationHistory", conversationContext);
 
-    // Multi-file upload
+    // Multi-file upload with client-side auto-compression
     if (files.length > 0) {
       const fileCount = files.length;
       for (let i = 0; i < fileCount; i++) {
-        const file = files[i];
+        const rawFile = files[i];
         try {
-          const b = await readFileAsDataURL(file);
+          const b = await readFileAsDataURL(rawFile);
           addMessage({ text: b, time, date }, "user");
         } catch (e) {
           addMessage(
-            { text: "[Gagal memuat preview " + file.name + "]", time, date },
+            { text: "[Gagal memuat preview " + rawFile.name + "]", time, date },
             "user",
           );
         }
-        formData.append("file", file);
-        formData.append("file0", file);
+
+        // Auto-compress image before upload
+        let fileToUpload = rawFile;
+        try {
+          fileToUpload = await compressImage(rawFile, 1280, 1280, 0.8);
+        } catch (err) {
+          console.warn("[LISA] Compression fallback to raw file:", err);
+        }
+
+        formData.append("file", fileToUpload);
+        formData.append("file0", fileToUpload);
       }
       incrementPhotoUploadCount(fileCount);
       fileInput.value = null;
@@ -546,11 +618,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const requestStartTime = Date.now();
     addTyping();
+    const abortController = new AbortController();
+    const timeoutId = setTimeout(() => abortController.abort(), 35000);
+
     try {
       const res = await fetch(webhookUrl, {
         method: "POST",
         body: formData,
+        signal: abortController.signal,
       });
+      clearTimeout(timeoutId);
       const data = await res.json();
       removeTyping();
 
