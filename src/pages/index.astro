@@ -7,14 +7,127 @@ import '../styles/global.css';
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-        <title>LISA - Lingkungan Sehat dan Asri | Gerakan Bicara Lingkungan</title>
-        <meta name="description" content="LISA membantu siswa memahami pengelolaan sampah, 3R, dan bank sampah dengan cepat dan jelas dalam satu percakapan cerdas." />
-        <meta name="robots" content="index, follow" />
+        <title>Gerakan Bicara Lingkungan - LISA (Lingkungan Sehat dan Asri)</title>
+        <meta name="description" content="Gerakan Bicara Lingkungan (GBL) adalah wadah edukasi dan aksi nyata pelestarian alam oleh mahasiswa Ilmu Komunikasi UBSI. Hadirkan LISA, asisten AI cerdas untuk klasifikasi sampah, 3R, dan panduan Bank Sampah." />
+        <meta name="keywords" content="Gerakan Bicara Lingkungan, GBL, LISA Chatbot, Bank Sampah Tangsel, Edukasi Sampah, 3R, UBSI Ilmu Komunikasi, Lingkungan Sehat dan Asri, Daur Ulang Sampah" />
+        <meta name="author" content="Gerakan Bicara Lingkungan" />
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <link rel="canonical" href="https://lingkungansehatasri.my.id/" />
         <meta name="theme-color" content="#006c4b" />
         <link rel="icon" type="image/webp" href="/images/logo-gbl.webp" />
         <link rel="apple-touch-icon" href="/images/lisa-avatar.webp" />
         <link rel="manifest" href="/manifest.json" />
+
+        <!-- Open Graph / Facebook / WhatsApp -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lingkungansehatasri.my.id/" />
+        <meta property="og:title" content="Gerakan Bicara Lingkungan - LISA (Lingkungan Sehat dan Asri)" />
+        <meta property="og:description" content="Gerakan Bicara Lingkungan (GBL) hadirkan LISA: Asisten AI cerdas edukasi pemilahan sampah, 3R, dan titik lokasi Bank Sampah." />
+        <meta property="og:image" content="https://lingkungansehatasri.my.id/images/hero-bg.webp" />
+        <meta property="og:site_name" content="Gerakan Bicara Lingkungan" />
+        <meta property="og:locale" content="id_ID" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://lingkungansehatasri.my.id/" />
+        <meta name="twitter:title" content="Gerakan Bicara Lingkungan - LISA (Lingkungan Sehat dan Asri)" />
+        <meta name="twitter:description" content="Komunitas aksi nyata anak muda & AI Chatbot LISA untuk edukasi sampah dan bank sampah." />
+        <meta name="twitter:image" content="https://lingkungansehatasri.my.id/images/hero-bg.webp" />
+
+        <!-- Google Knowledge Graph & AI Overview Structured Data (JSON-LD) -->
+        <script type="application/ld+json" is:inline>
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://lingkungansehatasri.my.id/#organization",
+              "name": "Gerakan Bicara Lingkungan",
+              "alternateName": ["GBL", "Gerakan Bicara Lingkungan UBSI", "LISA GBL"],
+              "url": "https://lingkungansehatasri.my.id/",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://lingkungansehatasri.my.id/images/logo-gbl.webp",
+                "caption": "Logo Gerakan Bicara Lingkungan"
+              },
+              "description": "Gerakan Bicara Lingkungan (GBL) adalah komunitas dan wadah aksi nyata anak muda yang fokus menyuarakan serta mengedukasi pentingnya menjaga kelestarian alam melalui kampanye visual, media sosial, dan inovasi kecerdasan buatan LISA.",
+              "sameAs": [
+                "https://www.instagram.com/gerakanbicaralingkungan_/",
+                "https://github.com/itsdvvn/lisa-chatbot-web"
+              ]
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://lingkungansehatasri.my.id/#website",
+              "url": "https://lingkungansehatasri.my.id/",
+              "name": "Gerakan Bicara Lingkungan",
+              "description": "Platform resmi Gerakan Bicara Lingkungan dan Chatbot AI LISA",
+              "publisher": { "@id": "https://lingkungansehatasri.my.id/#organization" },
+              "inLanguage": "id-ID"
+            },
+            {
+              "@type": "SoftwareApplication",
+              "@id": "https://lingkungansehatasri.my.id/#software",
+              "name": "LISA (Lingkungan Sehat dan Asri)",
+              "applicationCategory": "EducationalApplication",
+              "operatingSystem": "All",
+              "url": "https://lingkungansehatasri.my.id/chat",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "IDR"
+              },
+              "description": "Asisten AI cerdas untuk klasifikasi jenis sampah, tutorial daur ulang 3R, dan penemu lokasi bank sampah terdekat di Tangerang Selatan."
+            },
+            {
+              "@type": "FAQPage",
+              "@id": "https://lingkungansehatasri.my.id/#faq",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Apa itu Gerakan Bicara Lingkungan (GBL)?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Gerakan Bicara Lingkungan (GBL) adalah sebuah komunitas dan wadah aksi nyata anak muda yang diinisiasi oleh mahasiswa Ilmu Komunikasi UBSI untuk mengedukasi masyarakat dan siswa mengenai pengelolaan sampah, 3R, dan kelestarian lingkungan hidup."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Apa itu Chatbot LISA?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "LISA (Lingkungan Sehat dan Asri) adalah chatbot asisten AI cerdas gratis yang dikembangkan oleh Gerakan Bicara Lingkungan untuk membantu siswa dan masyarakat mengenali klasifikasi 139+ jenis sampah, panduan daur ulang 3R, serta memetakan 39 lokasi Bank Sampah."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Apakah layanan chatbot LISA berbayar?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Tidak! LISA 100% gratis digunakan untuk seluruh siswa, mahasiswa, dan masyarakat umum untuk belajar memilah sampah dan menerapkan 3R."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Bagaimana cara menemukan Bank Sampah terdekat?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Cukup buka menu chat LISA, lalu tanyakan 'Bank sampah di daerah [nama daerahmu]' atau klik chip Bank Sampah. LISA akan memberikan titik lokasi terdekat yang terhubung langsung ke Google Maps."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Apakah saya bisa mengirimkan foto sampah?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Ya, di halaman chat tersedia tombol lampiran gambar. Kamu bisa memfoto sampah yang ingin kamu tanyakan jenis atau cara pengelolaannya langsung ke AI LISA."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+        </script>
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8V9TQWP6X"></script>
