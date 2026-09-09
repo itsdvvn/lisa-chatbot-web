@@ -3,7 +3,7 @@ import { getFormattedDate, formatTime, generateUUID } from './utils';
 import type { Message } from '../types/chat';
 
 const HISTORY_KEY = 'lisaChatHistory';
-const WEBHOOK_URL = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || 'https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf';
+const WEBHOOK_URL = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || 'https://n8n.itsdvvn.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf';
 
 export function initChat() {
   const chatbox = document.getElementById('chatbox');
