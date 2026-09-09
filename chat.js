@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
   updateSendBtn();
 
   const webhookUrl =
-    "https://n8n.terato.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf";
+    "https://n8n.itsdvvn.my.id/webhook/50e27e1d-f8f3-43e8-a1a8-53fa5eafecdf";
   const HISTORY_KEY = "lisaChatHistory";
   const EXPIRATION_DAYS = 7;
 

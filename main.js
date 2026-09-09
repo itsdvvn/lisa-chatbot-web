@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin inline-block align-middle mr-2 text-[20px]">progress_activity</span>Mengirim...';
       submitBtn.classList.add("opacity-70", "cursor-not-allowed");
-      fetch("https://n8n.terato.my.id/webhook/56e0a50d-c505-4ad4-b1a2-f9af17761ce2", {
+      fetch("https://n8n.itsdvvn.my.id/webhook/56e0a50d-c505-4ad4-b1a2-f9af17761ce2", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, feedback, source: "LISA_Landing_Page_Feedback", timestamp: new Date().toISOString() })
