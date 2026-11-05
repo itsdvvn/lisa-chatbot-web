@@ -211,9 +211,11 @@ import '../styles/global.css';
                             <img alt="Hero Background" class="absolute inset-0 w-full h-[125%] -top-12 object-cover opacity-15 parallax" width="1200" height="800" fetchpriority="high" decoding="async" src="/images/hero-bg.webp" />
                         </div>
                         <div class="relative z-10 max-w-xl mx-auto flex flex-col items-center">
-                            <div class="hero-anim hero-anim-delay-1 inline-block px-3 py-1 mb-6 bg-primary/10 text-primary rounded-full text-xs font-medium tracking-wide" data-i18n="hero_badge">
-                                GERAKAN BICARA LINGKUNGAN PROUDLY PRESENTS
-                            </div>
+                            <button type="button" onclick="openArchiveModal()" class="hero-anim hero-anim-delay-1 inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-400 text-xs font-bold hover:bg-amber-500/20 transition-all cursor-pointer shadow-sm group">
+                                <span class="text-sm">🏆</span>
+                                <span data-i18n="archive_badge_pill">🏆 Winner PR Awards 2025 • Info Arsip Proyek</span>
+                                <span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">info</span>
+                            </button>
                             <h1 class="hero-anim hero-anim-delay-2 font-display text-6xl xl:text-7xl font-black text-primary mb-2 tracking-tight" data-i18n="hero_title">LISA</h1>
                             <div class="hero-anim hero-anim-delay-3 text-xl xl:text-2xl font-bold text-on-surface-variant mb-8 tracking-wide" data-i18n="hero_subtitle">
                                 Lingkungan Sehat dan Asri
@@ -562,6 +564,61 @@ import '../styles/global.css';
                 </div>
             </div>
 
+
+            <!-- PROJECT ARCHIVE INFO MODAL -->
+            <div class="modal-overlay fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4" id="projectArchiveModal">
+                <div class="modal-box bg-white dark:bg-surface-container rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-outline-variant/30 relative">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl shadow-inner border border-amber-500/20">
+                            🏆
+                        </div>
+                        <button onclick="closeArchiveModal()" class="w-9 h-9 rounded-full bg-surface-container hover:bg-outline-variant/30 flex items-center justify-center text-on-surface-variant transition active:scale-90 border-none cursor-pointer" aria-label="Tutup">
+                            <span class="material-symbols-outlined text-[20px]">close</span>
+                        </button>
+                    </div>
+
+                    <h3 class="text-2xl font-black text-on-surface font-display mb-1" data-i18n="archive_title">Status Arsip Proyek LISA</h3>
+                    <p class="text-xs font-bold text-amber-600 dark:text-amber-400 tracking-wide mb-6 flex items-center gap-1.5" data-i18n="archive_award">
+                        Winner: Creative AI Creator (Sesi 6) • PR Awards 2025
+                    </p>
+
+                    <div class="space-y-3.5 text-sm text-on-surface-variant mb-6">
+                        <div class="p-3.5 rounded-2xl bg-surface-container/50 border border-outline-variant/20 flex gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl shrink-0 mt-0.5">event</span>
+                            <div>
+                                <span class="font-bold text-on-surface block text-xs uppercase tracking-wide mb-0.5" data-i18n="archive_time_label">Waktu Pelaksanaan</span>
+                                <span data-i18n="archive_time_val">November 2025 — Inovasi kampanye sosial mahasiswa Public Relations UBSI (Ciledug & Ciputat).</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-2xl bg-surface-container/50 border border-outline-variant/20 flex gap-3">
+                            <span class="material-symbols-outlined text-outline text-xl shrink-0 mt-0.5">history_edu</span>
+                            <div>
+                                <span class="font-bold text-on-surface block text-xs uppercase tracking-wide mb-0.5" data-i18n="archive_prev_domain_label">Domain Sebelumnya</span>
+                                <span class="text-xs font-mono bg-surface dark:bg-surface px-1.5 py-0.5 rounded text-outline line-through border border-outline-variant/20">lingkungansehatasri.my.id</span>
+                                <span class="block text-xs mt-1 text-on-surface-variant/80" data-i18n="archive_prev_domain_val">Domain resmi selama kampanye publik & kompetisi.</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-2xl bg-primary/10 border border-primary/20 flex gap-3">
+                            <span class="material-symbols-outlined text-primary text-xl shrink-0 mt-0.5">verified</span>
+                            <div>
+                                <span class="font-bold text-primary block text-xs uppercase tracking-wide mb-0.5" data-i18n="archive_curr_domain_label">Domain Arsip Aktif</span>
+                                <span class="text-xs font-mono font-bold text-primary bg-primary/15 px-1.5 py-0.5 rounded">lisa.itsdvvn.my.id</span>
+                                <span class="block text-xs mt-1 text-on-surface-variant" data-i18n="archive_curr_domain_val">Kini diarsipkan secara permanen sebagai live tech portfolio di lisa.itsdvvn.my.id. Seluruh data & AI chatbot tetap aktif 24 jam.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="closeArchiveModal()" class="w-full py-3.5 px-6 bg-primary hover:bg-primary-variant text-white font-bold rounded-full transition active:scale-[0.98] text-sm shadow-md cursor-pointer flex items-center justify-center gap-2">
+                            <span data-i18n="archive_cta">Jelajahi Projek LISA</span>
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- FEEDBACK MODAL -->
             <div class="modal-overlay fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4" id="subModal">
                 <div class="modal-box bg-white dark:bg-surface-container rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto p-8 shadow-2xl border border-outline-variant/20">
@@ -594,6 +651,39 @@ import '../styles/global.css';
 
         <script is:inline src="/utils.js"></script>
         <script is:inline src="/main.js"></script>
+
+        <script is:inline>
+            function openArchiveModal() {
+                const modal = document.getElementById('projectArchiveModal');
+                if (modal) modal.classList.add('active');
+            }
+            function closeArchiveModal() {
+                const modal = document.getElementById('projectArchiveModal');
+                if (modal) {
+                    modal.classList.remove('active');
+                    localStorage.setItem('lisa_archive_notice_seen', 'true');
+                }
+            }
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = document.getElementById('projectArchiveModal');
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) closeArchiveModal();
+                    });
+                }
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+                        closeArchiveModal();
+                    }
+                });
+                if (!localStorage.getItem('lisa_archive_notice_seen')) {
+                    setTimeout(() => {
+                        openArchiveModal();
+                    }, 800);
+                }
+            });
+        </script>
+
     </body>
 </html>
 

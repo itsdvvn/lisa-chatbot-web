@@ -69,5 +69,15 @@
   "greeting_desc": "Ask me anything about waste, 3R, waste banks, and the school environment. I'm here to help 24/7!",
   "suggestion_1": "What is 3R?",
   "suggestion_2": "Plastic recycling",
-  "suggestion_3": "Waste bank"
+  "suggestion_3": "Waste bank",
+  "archive_badge_pill": "🏆 PR Awards 2025 Winner • Project Archive Info",
+  "archive_title": "LISA Project Archive Status",
+  "archive_award": "Winner: Creative AI Creator (Session 6) • PR Awards 2025",
+  "archive_time_label": "Timeline",
+  "archive_time_val": "November 2025 — Social campaign innovation by UBSI Public Relations students (Ciledug & Ciputat).",
+  "archive_prev_domain_label": "Previous Domain",
+  "archive_prev_domain_val": "Official domain during public campaign & competition.",
+  "archive_curr_domain_label": "Active Archive Domain",
+  "archive_curr_domain_val": "Permanently archived as a live tech portfolio at lisa.itsdvvn.my.id. All data & AI chatbot remain active 24/7.",
+  "archive_cta": "Explore LISA Project"
 }
