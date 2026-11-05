@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lingkungansehatasri.my.id/sitemap.xml
+Sitemap: https://lisa.itsdvvn.my.id/sitemap.xml
