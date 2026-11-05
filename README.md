@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://files.itsdvvn.my.id/landingPage/5_20251125_183529_0004.png" alt="Logo GBL" width="80" />
+  <img src="https://cdn-lisa.itsdvvn.my.id/landingPage/5_20251125_183529_0004.png" alt="Logo GBL" width="80" />
   <h1 align="center">🌿 LISA</h1>
   <p align="center"><strong>Lingkungan Sehat dan Asri</strong></p>
   <p align="center">
@@ -176,5 +176,6 @@ Didukung oleh:
 
 Hak Cipta © 2025–2026 LISA — Gerakan Bicara Lingkungan.  
 Dibuat dengan ❤️ untuk Bumi.
+
 
 

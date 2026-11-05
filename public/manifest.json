@@ -9,16 +9,17 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://files.itsdvvn.my.id/lisa-profile-picture.jpg",
+      "src": "https://cdn-lisa.itsdvvn.my.id/lisa-profile-picture.jpg",
       "sizes": "192x192",
       "type": "image/jpg",
       "purpose": "any maskable"
     },
     {
-      "src": "https://files.itsdvvn.my.id/lisa-profile-picture.jpg",
+      "src": "https://cdn-lisa.itsdvvn.my.id/lisa-profile-picture.jpg",
       "sizes": "512x512",
       "type": "image/jpg",
       "purpose": "any maskable"
     }
   ]
 }
+
