@@ -71,7 +71,7 @@
   "suggestion_2": "Daur ulang plastik",
   "suggestion_3": "Bank sampah",
   "archive_badge_pill": "🏆 Winner PR Awards 2025 • Info Arsip Proyek",
-  "archive_title": "Status Arsip Proyek LISA",
+  "archive_title": "Catatan Rilis & Status Proyek LISA",
   "archive_award": "Winner: Creative AI Creator (Sesi 6) • PR Awards 2025",
   "archive_time_label": "Waktu Pelaksanaan",
   "archive_time_val": "November 2025 — Inovasi kampanye sosial mahasiswa Public Relations UBSI (Ciledug & Ciputat).",
@@ -79,5 +79,11 @@
   "archive_prev_domain_val": "Domain resmi selama kampanye publik & kompetisi.",
   "archive_curr_domain_label": "Domain Arsip Aktif",
   "archive_curr_domain_val": "Kini diarsipkan secara permanen sebagai live tech portfolio di lisa.itsdvvn.my.id. Seluruh data & AI chatbot tetap aktif 24 jam.",
-  "archive_cta": "Jelajahi Projek LISA"
+  "archive_cta": "Jelajahi Projek LISA",
+  "archive_sec1_title": "Latar Belakang & Tujuan",
+  "archive_sec1_desc": "LISA (Lingkungan Sehat dan Asri) diinisiasi pada November 2025 oleh mahasiswa Public Relations Universitas Bina Sarana Informatika (UBSI) kampus Ciledug dan Ciputat. Proyek ini hadir sebagai kampanye Cyber PR berbasis kecerdasan buatan untuk menjembatani kesenjangan informasi pengelolaan sampah 3R dan integrasi titik bank sampah bagi pelajar.",
+  "archive_sec2_title": "Pencapaian",
+  "archive_sec2_desc": "Dalam perjalanannya, inovasi ini dianugerahi penghargaan Winner: Creative AI Creator (Sesi 6) pada ajang PR Awards 2025.",
+  "archive_sec3_title": "Status Arsip & Migrasi Domain",
+  "archive_sec3_desc": "Menyusul tuntasnya seluruh rangkaian kompetisi dan program kampanye yang sebelumnya beroperasi di lingkungansehatasri.my.id, ekosistem LISA resmi diarsipkan secara permanen ke domain portofolio pribadi lisa.itsdvvn.my.id. Seluruh fitur obrolan AI, kurasi data 139+ panduan sampah, dan peta bank sampah tetap dibuka aktif 24 jam untuk kebutuhan riset, edukasi, dan dokumentasi publik."
 }

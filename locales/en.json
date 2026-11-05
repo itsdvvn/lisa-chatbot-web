@@ -71,7 +71,7 @@
   "suggestion_2": "Plastic recycling",
   "suggestion_3": "Waste bank",
   "archive_badge_pill": "🏆 PR Awards 2025 Winner • Project Archive Info",
-  "archive_title": "LISA Project Archive Status",
+  "archive_title": "Release Notes & Project Archive Status",
   "archive_award": "Winner: Creative AI Creator (Session 6) • PR Awards 2025",
   "archive_time_label": "Timeline",
   "archive_time_val": "November 2025 — Social campaign innovation by UBSI Public Relations students (Ciledug & Ciputat).",
@@ -79,5 +79,11 @@
   "archive_prev_domain_val": "Official domain during public campaign & competition.",
   "archive_curr_domain_label": "Active Archive Domain",
   "archive_curr_domain_val": "Permanently archived as a live tech portfolio at lisa.itsdvvn.my.id. All data & AI chatbot remain active 24/7.",
-  "archive_cta": "Explore LISA Project"
+  "archive_cta": "Explore LISA Project",
+  "archive_sec1_title": "Background & Objective",
+  "archive_sec1_desc": "LISA (Healthy and Beautiful Environment) was initiated in November 2025 by Public Relations students from Universitas Bina Sarana Informatika (UBSI) Ciledug and Ciputat campuses. The project serves as an AI-powered Cyber PR campaign to bridge the information gap regarding 3R waste management and local waste bank integration for youth.",
+  "archive_sec2_title": "Achievement",
+  "archive_sec2_desc": "Throughout its journey, this innovation was awarded Winner: Creative AI Creator (Session 6) at the PR Awards 2025.",
+  "archive_sec3_title": "Archive Status & Domain Migration",
+  "archive_sec3_desc": "Following the conclusion of the official competition and campaign previously hosted at lingkungansehatasri.my.id, the LISA ecosystem is now permanently archived as a live personal portfolio at lisa.itsdvvn.my.id. All AI chat features, curated 139+ waste management guides, and interactive waste bank maps remain active 24/7 for research, education, and public documentation."
 }
