@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://files.lingkungansehatasri.my.id/landingPage/5_20251125_183529_0004.png" alt="Logo GBL" width="80" />
+  <img src="https://files.itsdvvn.my.id/landingPage/5_20251125_183529_0004.png" alt="Logo GBL" width="80" />
   <h1 align="center">🌿 LISA</h1>
   <p align="center"><strong>Lingkungan Sehat dan Asri</strong></p>
   <p align="center">
@@ -7,7 +7,7 @@
     bantu masyarakat memahami sampah, 3R, dan bank sampah dalam satu percakapan cerdas.
   </p>
   <p align="center">
-    <a href="https://lingkungansehatasri.my.id" target="_blank">🌐 Kunjungi LISA (Live App)</a>
+    <a href="https://lisa.itsdvvn.my.id" target="_blank">🌐 Kunjungi LISA (Live App)</a>
     &nbsp;·&nbsp;
     <a href="https://instagram.com/gerakanbicaralingkungan_" target="_blank">📸 Instagram GBL</a>
   </p>
@@ -166,7 +166,7 @@ Didukung oleh:
 
 ## 📄 Media & Kontak
 
-- **Live Chatbot:** [lingkungansehatasri.my.id](https://lingkungansehatasri.my.id)
+- **Live Chatbot:** [lisa.itsdvvn.my.id](https://lisa.itsdvvn.my.id)
 - **Instagram:** [@gerakanbicaralingkungan_](https://instagram.com/gerakanbicaralingkungan_)
 - **Email PR:** [publicrelation2344@gmail.com](mailto:publicrelation2344@gmail.com)
 
@@ -176,4 +176,5 @@ Didukung oleh:
 
 Hak Cipta © 2025–2026 LISA — Gerakan Bicara Lingkungan.  
 Dibuat dengan ❤️ untuk Bumi.
+
 
