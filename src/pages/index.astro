@@ -337,29 +337,25 @@ import '../styles/global.css';
                         <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
                         <div class="max-w-6xl mx-auto flex flex-col xl:flex-row xl:items-center xl:gap-12 text-center xl:text-left">
                             <div class="xl:w-1/2 reveal reveal-delay-1 mb-10 xl:mb-0">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div class="rounded-3xl overflow-hidden shadow-md border-2 border-white dark:border-surface-container group bg-surface-container/40">
-                                        <div class="aspect-video overflow-hidden">
-                                            <img alt="Arsitektur AI LISA" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width="600" height="338" loading="lazy" decoding="async" src="/images/about-lisa.webp" />
-                                        </div>
-                                        <div class="p-3 text-left">
-                                            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-primary">
-                                                <span class="material-symbols-outlined text-[15px]">psychology</span>
-                                                <span>Arsitektur AI & RAG Engine</span>
-                                            </span>
-                                        </div>
+                                <div class="w-full max-w-md mx-auto xl:max-w-lg bg-surface-container-low dark:bg-surface-container rounded-3xl p-3 sm:p-4 border border-outline-variant/30 shadow-sm">
+                                    <!-- Toggle Switcher -->
+                                    <div class="flex items-center justify-center gap-2 mb-3">
+                                        <button type="button" id="tabBehindTeam" onclick="switchBehindMedia('team')" class="px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-xs cursor-pointer">
+                                            🏆 Tim PR Awards 2025
+                                        </button>
+                                        <button type="button" id="tabBehindArch" onclick="switchBehindMedia('arch')" class="px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-surface hover:bg-surface-container text-on-surface-variant cursor-pointer border border-outline-variant/30">
+                                            ⚙️ Arsitektur AI
+                                        </button>
                                     </div>
-                                    <div class="rounded-3xl overflow-hidden shadow-md border-2 border-white dark:border-surface-container group bg-surface-container/40">
-                                        <div class="aspect-video overflow-hidden">
-                                            <img alt="Tim Pengembang LISA - PR Awards 2025" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width="600" height="338" loading="lazy" decoding="async" src="/images/pr-awards-team.webp" />
-                                        </div>
-                                        <div class="p-3 text-left">
-                                            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-800 dark:text-amber-300">
-                                                <span class="material-symbols-outlined text-[15px]">groups</span>
-                                                <span>Tim GBL • PR Awards 2025</span>
-                                            </span>
-                                        </div>
+
+                                    <!-- Image Container (100% Uncropped with Natural Aspect Ratio) -->
+                                    <div class="rounded-2xl overflow-hidden bg-white dark:bg-surface flex items-center justify-center p-2 min-h-[320px] sm:min-h-[400px]">
+                                        <img id="imgBehindTeam" alt="Tim Pengembang LISA - Dokumentasi PR Awards 2025" class="w-full h-auto max-h-[450px] object-contain rounded-xl" width="700" height="876" loading="lazy" decoding="async" src="/images/pr-awards-team.webp" />
+                                        <img id="imgBehindArch" alt="Arsitektur AI LISA" class="w-full h-auto max-h-[450px] object-contain rounded-xl hidden" width="555" height="487" loading="lazy" decoding="async" src="/images/about-lisa.webp" />
                                     </div>
+                                    <p id="captionBehindMedia" class="text-[11px] text-center text-on-surface-variant font-medium mt-2.5">
+                                        Dokumentasi tim mahasiswa Ilmu Komunikasi UBSI di PR Awards 2025
+                                    </p>
                                 </div>
                             </div>
                             <div class="xl:w-1/2 xl:text-left reveal reveal-delay-2">
@@ -438,12 +434,12 @@ import '../styles/global.css';
                                 <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
                                     <!-- FASE 1 -->
                                     <div class="bg-white dark:bg-surface-container p-5 sm:p-6 rounded-3xl border border-outline-variant/30 shadow-xs relative overflow-hidden group hover:border-primary/50 transition-all">
-                                        <div class="flex items-start justify-between gap-4 mb-2">
-                                            <div class="flex items-center gap-2">
-                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20" data-i18n="fase_1_badge">Fase 1 • Selesai</span>
-                                                <span class="text-[11px] font-semibold text-outline">Nov 2025</span>
+                                        <div class="flex items-center justify-between gap-3 mb-2.5">
+                                            <div class="flex items-center gap-2 min-w-0">
+                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 whitespace-nowrap shrink-0" data-i18n="fase_1_badge">Fase 1 • Selesai</span>
+                                                <span class="text-[11px] font-semibold text-outline truncate">Nov 2025</span>
                                             </div>
-                                            <span class="material-symbols-outlined text-primary text-xl">verified</span>
+                                            <span class="material-symbols-outlined text-primary text-xl shrink-0">verified</span>
                                         </div>
                                         <h3 class="font-bold text-base sm:text-lg text-on-surface mb-1.5" data-i18n="fase_1_title">Riset Lapangan & Validasi PR Awards 2025</h3>
                                         <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed" data-i18n="fase_1_desc">
@@ -453,12 +449,12 @@ import '../styles/global.css';
 
                                     <!-- FASE 2 -->
                                     <div class="bg-white dark:bg-surface-container p-5 sm:p-6 rounded-3xl border border-outline-variant/30 shadow-xs relative overflow-hidden group hover:border-primary/50 transition-all">
-                                        <div class="flex items-start justify-between gap-4 mb-2">
-                                            <div class="flex items-center gap-2">
-                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20" data-i18n="fase_2_badge">Fase 2 • Aktif</span>
-                                                <span class="text-[11px] font-semibold text-primary">Live di lisa.itsdvvn.my.id</span>
+                                        <div class="flex items-center justify-between gap-3 mb-2.5">
+                                            <div class="flex items-center gap-2 min-w-0">
+                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20 whitespace-nowrap shrink-0" data-i18n="fase_2_badge">Fase 2 • Aktif</span>
+                                                <span class="text-[11px] font-semibold text-primary truncate">Live di lisa.itsdvvn.my.id</span>
                                             </div>
-                                            <span class="material-symbols-outlined text-primary text-xl">rocket_launch</span>
+                                            <span class="material-symbols-outlined text-primary text-xl shrink-0">rocket_launch</span>
                                         </div>
                                         <h3 class="font-bold text-base sm:text-lg text-on-surface mb-1.5" data-i18n="fase_2_title">Web App PWA & Supabase Vector Engine</h3>
                                         <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed" data-i18n="fase_2_desc">
@@ -466,15 +462,14 @@ import '../styles/global.css';
                                         </p>
                                     </div>
 
-                                    <!-- FASE 3 (HIGHLIGHTED: KALKULATOR CUAN & KARBON) -->
-                                    <div class="bg-white dark:bg-surface-container p-5 sm:p-6 rounded-3xl border-2 border-primary/40 shadow-md relative overflow-hidden group hover:border-primary transition-all">
-                                        <div class="absolute top-0 right-0 w-28 h-28 bg-amber-500/10 rounded-bl-full pointer-events-none"></div>
-                                        <div class="flex items-start justify-between gap-4 mb-2">
-                                            <div class="flex items-center gap-2">
-                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30" data-i18n="fase_3_badge">Fase 3 • Segera Hadir</span>
-                                                <span class="text-[11px] font-bold text-amber-700 dark:text-amber-400">Economic & Climate Layer</span>
+                                    <!-- FASE 3 (KALKULATOR CUAN & KARBON) -->
+                                    <div class="bg-white dark:bg-surface-container p-5 sm:p-6 rounded-3xl border border-outline-variant/30 shadow-xs relative overflow-hidden group hover:border-primary/50 transition-all">
+                                        <div class="flex items-center justify-between gap-3 mb-2.5">
+                                            <div class="flex items-center gap-2 min-w-0">
+                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 whitespace-nowrap shrink-0" data-i18n="fase_3_badge">Fase 3 • Mendatang</span>
+                                                <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 truncate">Kalkulator Cuan & Emisi</span>
                                             </div>
-                                            <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-xl">calculate</span>
+                                            <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-xl shrink-0">calculate</span>
                                         </div>
                                         <h3 class="font-bold text-base sm:text-lg text-on-surface mb-1.5" data-i18n="fase_3_title">Kalkulator Cuan & Jejak Karbon</h3>
                                         <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed" data-i18n="fase_3_desc">
@@ -484,12 +479,12 @@ import '../styles/global.css';
 
                                     <!-- FASE 4 -->
                                     <div class="bg-white dark:bg-surface-container p-5 sm:p-6 rounded-3xl border border-outline-variant/30 shadow-xs relative overflow-hidden group hover:border-primary/50 transition-all">
-                                        <div class="flex items-start justify-between gap-4 mb-2">
-                                            <div class="flex items-center gap-2">
-                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20" data-i18n="fase_4_badge">Fase 4 • Rencana</span>
-                                                <span class="text-[11px] font-semibold text-outline">Proximity & Vision AI</span>
+                                        <div class="flex items-center justify-between gap-3 mb-2.5">
+                                            <div class="flex items-center gap-2 min-w-0">
+                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20 whitespace-nowrap shrink-0" data-i18n="fase_4_badge">Fase 4 • Rencana</span>
+                                                <span class="text-[11px] font-semibold text-outline truncate">Proximity & Vision AI</span>
                                             </div>
-                                            <span class="material-symbols-outlined text-primary text-xl">explore</span>
+                                            <span class="material-symbols-outlined text-primary text-xl shrink-0">explore</span>
                                         </div>
                                         <h3 class="font-bold text-base sm:text-lg text-on-surface mb-1.5" data-i18n="fase_4_title">PostGIS Spasial & Lapor Titik Sampah</h3>
                                         <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed" data-i18n="fase_4_desc">
@@ -822,6 +817,36 @@ import '../styles/global.css';
         <script is:inline src="/main.js"></script>
 
         <script is:inline>
+            function switchBehindMedia(tab) {
+                const teamImg = document.getElementById('imgBehindTeam');
+                const archImg = document.getElementById('imgBehindArch');
+                const teamTab = document.getElementById('tabBehindTeam');
+                const archTab = document.getElementById('tabBehindArch');
+                const caption = document.getElementById('captionBehindMedia');
+
+                if (tab === 'team') {
+                    if (teamImg) teamImg.classList.remove('hidden');
+                    if (archImg) archImg.classList.add('hidden');
+                    if (teamTab) {
+                        teamTab.className = 'px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-xs cursor-pointer';
+                    }
+                    if (archTab) {
+                        archTab.className = 'px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-surface hover:bg-surface-container text-on-surface-variant cursor-pointer border border-outline-variant/30';
+                    }
+                    if (caption) caption.textContent = 'Dokumentasi tim mahasiswa Ilmu Komunikasi UBSI di PR Awards 2025';
+                } else {
+                    if (teamImg) teamImg.classList.add('hidden');
+                    if (archImg) archImg.classList.remove('hidden');
+                    if (teamTab) {
+                        teamTab.className = 'px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-white dark:bg-surface hover:bg-surface-container text-on-surface-variant cursor-pointer border border-outline-variant/30';
+                    }
+                    if (archTab) {
+                        archTab.className = 'px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-xs cursor-pointer';
+                    }
+                    if (caption) caption.textContent = 'Alur arsitektur chatbot AI, Supabase pgvector, dan automasi n8n';
+                }
+            }
+
             function openArchiveModal() {
                 const modal = document.getElementById('projectArchiveModal');
                 if (modal) modal.classList.add('active');
