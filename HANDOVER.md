@@ -1,38 +1,37 @@
 # 🤝 HANDOVER NOTE: Chatbot LISA Web
 
-**Terakhir Diperbarui:** 2026-11-06 18:31 WIB  
+**Terakhir Diperbarui:** 2026-11-06 18:42 WIB  
 **Device Sumber:** Mac (mac-local-workspace)  
-**Status Produksi:** Live & Sinkron (Commit `2204164` di `main` & `mac-local-workspace`)  
+**Status Produksi:** Live & Sinkron (Bebas Jargon Teknis)  
 **Domain Live:** `https://lisa.itsdvvn.my.id/`  
 **VPS:** `ubuntu@43.134.71.78` (`/root/server/lisa-html` & `/root/server/lisa-chatbot-repo`)  
 
 ---
 
 ## 1. 📌 Ringkasan Pekerjaan Selesai
-1. **Penyempurnaan Desain & Layout Landing Page:**
-   - **Section "Di Balik Chatbot LISA":**
-     - Menghapus tumpukan dua card kaku dan menggantinya dengan wadah galeri tunggal bersistem Switcher Tab responsif: `[ 🏆 Tim PR Awards 2025 ]` dan `[ ⚙️ Arsitektur AI ]`.
-     - Mengatasi masalah foto terpotong: Foto tim `pr-awards-team.webp` (portrait $700 \times 876$) kini menggunakan `object-contain` dan rasio natural (`max-h-[450px]`), tampil 100% utuh tanpa ada kepala atau spanduk yang terpotong.
-   - **Section "Roadmap & Kolaborasi Co-Development" (2-Kolom):**
-     - Kolom Kiri: 4 Fase evolusi (Fase 1 Selesai, Fase 2 Aktif, Fase 3 Kalkulator Cuan & Jejak Karbon Mendatang, Fase 4 Spasial PostGIS).
-     - Seluruh card stroke diratakan menggunakan border minimalis yang seragam (`border border-outline-variant/30 shadow-xs`), menghapus stroke tebal `border-2`.
-     - Kolom Kanan: Card Co-Development hijau tua dengan tombol WhatsApp untuk kolaborasi riset dan pengembangan bot.
-   - **Perbaikan Sintaks HTML & i18n:**
-     - Menutup tag `<section>` pada Media Kit.
-     - Menambahkan 76 string dwi-bahasa (ID/EN) di `public/locales/id.json` dan `public/locales/en.json`.
-2. **Keamanan & Backup VPS:**
-   - Backup direktori sebelum ekstraksi tersimpan di `/root/server/lisa-html-backup-20261106182917`.
-   - Dist build terbaru berhasil di-deploy ke `/root/server/lisa-html` dan repo di `/root/server/lisa-chatbot-repo` sinkron dengan commit `2204164`.
+1. **Pembersihan Seluruh Jargon Teknis (Copywriting Manfaat Nyata Pengunjung):**
+   - Merespons koreksi Mas Yudhi mengenai kalimat teknis yang tidak relevan bagi pengunjung umum/pelajar:
+     - **Fase 2:** Dari *"Web App PWA & Supabase Vector Engine"* $\rightarrow$ *"Aplikasi Web & Chat Pintar 24 Jam"*; deskripsi dibersihkan dari sebutan *pgvector* & *Astro v5* menjadi *"Akses cepat 24 jam dalam dua bahasa (ID/EN), kemampuan memahami obrolan santai sehari-hari, direktori lokasi bank sampah resmi, dan ringan dibuka di semua perangkat."*
+     - **Fase 3:** Sub-tag *"Kalkulator Cuan & Emisi"*, deskripsi difokuskan pada nilai tabungan rupiah sampah terpilah (botol plastik, kardus, minyak jelantah, kaleng) dan pengurangan jejak emisi karbon.
+     - **Fase 4:** Dari *"PostGIS Spasial & Lapor Titik Sampah"* $\rightarrow$ *"Panduan Rute Terdekat & Lapor Titik Sampah"*, sub-tag *"Navigasi & Foto Sampah"*; deskripsi diubah menjadi *"Panduan rute menuju bank sampah terdekat dari lokasimu, kenali jenis sampah otomatis lewat foto kamera, serta fitur lapor lokasi tumpukan sampah liar."*
+     - **Di Balik Layar:** Tombol tab diganti menjadi `[ ⚙️ Cara Kerja LISA ]`, teks penjelasan dan caption gambar diubah menghilangkan istilah internal *Supabase vector database* dan *automasi n8n*.
+     - **Kartu Co-Development:** Point riset diubah menjadi *"Pengembangan deteksi jenis sampah lewat kamera & formula kalkulator tabungan sampah."*
+   - Pembaruan diterapkan serentak pada `src/pages/index.astro`, `public/locales/id.json`, `public/locales/en.json`, `src/locales/id.json`, dan `src/locales/en.json`.
+2. **Dokumentasi Lesson Otomatis ke Notion Second Brain:**
+   - Dicatat langsung ke database **Lesson** (`3fc10415-e0b0-8086-9253-e15d858c48e6`): *"Copywriting Landing Page Publik Bebas Jargon Teknis"*, Domain: `Writing & Copy`.
+3. **Build & Deployment Live:**
+   - `npm run build` sukses.
+   - Diekstrak langsung ke server produksi `/root/server/lisa-html` pada VPS.
+   - Terverifikasi HTTP 200 dan teks terbaru live di `https://lisa.itsdvvn.my.id/`.
 
 ---
 
 ## 2. 🚀 Status Branch & Remote
-- `origin/main`: Commit `2204164` (Up to date)
-- `origin/mac-local-workspace`: Commit `2204164` (Up to date)
+- `origin/main` & `origin/mac-local-workspace`: Siap sinkron.
 - Working tree: Clean.
 
 ---
 
 ## 3. 🎯 Langkah Selanjutnya (Next Actions)
-- Jika Mas Yudhi ingin mengganti nomor WhatsApp default `6281234567890` pada tombol CTA Co-Development dengan nomor kontak aslinya, tinggal perbarui href tautan `wa.me/...` di `src/pages/index.astro` baris terkait.
-- Pengembangan Fase 3 (*Kalkulator Cuan & Jejak Karbon*) sesuai roadmap di `LISA_ACTION_DRIVEN_TRANSFORMATION_PLAN.md`.
+- Mengganti nomor WhatsApp default `6281234567890` pada tombol CTA Co-Development dengan nomor kontak asli jika sudah siap.
+- Pengembangan Fase 3 (*Kalkulator Cuan & Jejak Karbon*) sesuai rencana roadmap.
