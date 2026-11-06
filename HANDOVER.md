@@ -33,5 +33,5 @@
 ---
 
 ## 3. 🎯 Langkah Selanjutnya (Next Actions)
-- Mengganti nomor WhatsApp default `6281234567890` pada tombol CTA Co-Development dengan nomor kontak asli jika sudah siap.
+- Nomor WhatsApp kolaborasi Co-Development telah diperbarui ke kontak aktif Mas Yudhi: `6285701924579`.
 - Pengembangan Fase 3 (*Kalkulator Cuan & Jejak Karbon*) sesuai rencana roadmap.
