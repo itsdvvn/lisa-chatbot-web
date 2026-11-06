@@ -335,45 +335,49 @@ import '../styles/global.css';
                     <!-- BEHIND LISA -->
                     <section class="py-24 px-6 bg-white dark:bg-surface relative overflow-hidden reveal">
                         <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-                        <div class="max-w-5xl mx-auto flex flex-col xl:flex-row xl:items-center xl:gap-12 text-center xl:text-left">
-                            <div class="xl:w-5/12 reveal reveal-delay-1">
-                                <div class="w-full max-w-sm xl:max-w-full aspect-video rounded-3xl overflow-hidden shadow-2xl mb-10 xl:mb-0 border-4 border-white dark:border-surface-container transform rotate-1 hover:rotate-0 transition-transform duration-300">
-                                    <img alt="Arsitektur AI LISA" class="w-full h-full object-cover" width="600" height="338" loading="lazy" decoding="async" src="/images/about-lisa.webp" />
+                        <div class="max-w-6xl mx-auto flex flex-col xl:flex-row xl:items-center xl:gap-12 text-center xl:text-left">
+                            <div class="xl:w-1/2 reveal reveal-delay-1 mb-10 xl:mb-0">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="rounded-3xl overflow-hidden shadow-md border-2 border-white dark:border-surface-container group bg-surface-container/40">
+                                        <div class="aspect-video overflow-hidden">
+                                            <img alt="Arsitektur AI LISA" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width="600" height="338" loading="lazy" decoding="async" src="/images/about-lisa.webp" />
+                                        </div>
+                                        <div class="p-3 text-left">
+                                            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-primary">
+                                                <span class="material-symbols-outlined text-[15px]">psychology</span>
+                                                <span>Arsitektur AI & RAG Engine</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="rounded-3xl overflow-hidden shadow-md border-2 border-white dark:border-surface-container group bg-surface-container/40">
+                                        <div class="aspect-video overflow-hidden">
+                                            <img alt="Tim Pengembang LISA - PR Awards 2025" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width="600" height="338" loading="lazy" decoding="async" src="/images/pr-awards-team.webp" />
+                                        </div>
+                                        <div class="p-3 text-left">
+                                            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-800 dark:text-amber-300">
+                                                <span class="material-symbols-outlined text-[15px]">groups</span>
+                                                <span>Tim GBL • PR Awards 2025</span>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="xl:w-7/12 xl:text-left reveal reveal-delay-2">
+                            <div class="xl:w-1/2 xl:text-left reveal reveal-delay-2">
                                 <div class="inline-flex items-center gap-2 px-3.5 py-1.5 mb-4 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs font-bold">
                                     <span>🏆</span>
                                     <span>Winner: Creative AI Creator (Sesi 6) • PR Awards 2025</span>
                                 </div>
-                                <h2 class="font-display text-3xl font-extrabold text-primary mb-6" data-i18n="behind_title">Di Balik Chatbot Lisa</h2>
-                                <div class="bg-surface-container/30 p-8 rounded-3xl border border-outline-variant/20">
-                                    <p class="text-base xl:text-lg text-on-surface-variant leading-relaxed font-medium">
+                                <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-primary mb-6" data-i18n="behind_title">Di Balik Chatbot LISA</h2>
+                                <div class="bg-surface-container/30 p-7 sm:p-8 rounded-3xl border border-outline-variant/20">
+                                    <p class="text-base sm:text-lg text-on-surface-variant leading-relaxed font-medium">
                                         <span data-i18n="behind_desc_before">Bukan sekadar bot, LISA adalah hasil</span>
                                         <span class="text-primary font-bold bg-primary/10 px-2 py-0.5 rounded" data-i18n="behind_desc_highlight">kurasi ratusan data lapangan yang solid.</span>
                                         <span data-i18n="behind_desc_after">Dengan kecerdasan AI modern, teknologi vector database Supabase, dan automasi n8n, ia aktif 24 jam untuk menjawab pertanyaan lingkungan dengan bahasa yang luwes dan akrab bagi siswa.</span>
                                     </p>
-                                    <p class="text-sm xl:text-base text-on-surface-variant leading-relaxed mt-4 pt-4 border-t border-outline-variant/20">
+                                    <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed mt-4 pt-4 border-t border-outline-variant/20" data-i18n="behind_desc_context">
                                         LISA lahir dari inisiatif mahasiswa Ilmu Komunikasi UBSI dalam kompetisi PR Awards 2025. Berangkat dari keresahan minimnya edukasi sampah praktis dan sulitnya mencari titik bank sampah resmi di Tangerang Selatan, platform ini dirancang untuk menjembatani informasi tersebut dalam satu obrolan yang interaktif.
                                     </p>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- TEAM DOCUMENTATION CARD -->
-                        <div class="mt-12 max-w-5xl mx-auto bg-surface-container/40 dark:bg-surface-container rounded-[2.5rem] p-6 sm:p-8 border border-outline-variant/30 flex flex-col lg:flex-row items-center gap-8 shadow-sm reveal">
-                            <div class="w-full lg:w-1/2 aspect-video rounded-2xl overflow-hidden shadow-lg border-2 border-white dark:border-outline-variant/30 group">
-                                <img alt="Tim Pengembang LISA - Dokumentasi PR Awards 2025" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" width="600" height="338" loading="lazy" decoding="async" src="/images/pr-awards-team.webp" />
-                            </div>
-                            <div class="w-full lg:w-1/2 text-left">
-                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-3">
-                                    <span class="material-symbols-outlined text-[16px]">groups</span>
-                                    <span>Dokumentasi PR Awards 2025</span>
-                                </div>
-                                <h3 class="font-display text-2xl font-black text-on-surface mb-3">Tim Pengembang LISA</h3>
-                                <p class="text-sm text-on-surface-variant leading-relaxed">
-                                    Foto bersama tim Gerakan Bicara Lingkungan (GBL) di penghujung rangkaian kompetisi PR Awards 2025. Dedikasi riset lapangan, pemetaan direktori 39 bank sampah Tangsel, dan kolaborasi mahasiswa Ilmu Komunikasi UBSI melahirkan asisten lingkungan interaktif pertama yang ramah bagi pelajar.
-                                </p>
                             </div>
                         </div>
                     </section>
@@ -415,94 +419,135 @@ import '../styles/global.css';
                         </div>
                     </section>
 
-                    <!-- ROADMAP & FUTURE FEATURES SECTION -->
+                    <!-- ROADMAP & CO-DEVELOPMENT SECTION -->
                     <section class="py-20 px-6 bg-surface-container-low/60 rounded-3xl mx-4 lg:mx-12 my-12 reveal" id="roadmap">
-                        <div class="max-w-5xl mx-auto">
-                            <div class="text-center mb-16">
+                        <div class="max-w-6xl mx-auto">
+                            <div class="text-center mb-14">
                                 <div class="inline-flex items-center gap-2 px-3.5 py-1.5 mb-3 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold">
                                     <span class="material-symbols-outlined text-[16px]">timeline</span>
-                                    <span>Roadmap Transformasi & Pengembangan</span>
+                                    <span data-i18n="roadmap_badge">Roadmap & Kolaborasi Riset</span>
                                 </div>
-                                <h2 class="font-display text-3xl sm:text-4xl font-black text-primary mb-3">Roadmap LISA & Fitur Mendatang</h2>
-                                <p class="text-on-surface-variant text-sm max-w-lg mx-auto">
+                                <h2 class="font-display text-3xl sm:text-4xl font-black text-primary mb-3" data-i18n="roadmap_title">Evolusi LISA & Kolaborasi Riset</h2>
+                                <p class="text-on-surface-variant text-sm sm:text-base max-w-xl mx-auto leading-relaxed" data-i18n="roadmap_subtitle">
                                     Perjalanan bertahap asisten lingkungan LISA, dari validasi kompetisi kampus hingga pengembangan sistem kalkulator cuan dan teknologi spasial.
                                 </p>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                                <!-- TAHAP 1 -->
-                                <div class="bg-white dark:bg-surface-container p-6 rounded-3xl border border-outline-variant/30 shadow-xs flex flex-col justify-between relative overflow-hidden group hover:border-primary/50 transition-all">
-                                    <div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full pointer-events-none"></div>
-                                    <div>
-                                        <div class="flex items-center justify-between mb-4">
-                                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">Fase 1 • Selesai</span>
+                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                                <!-- LEFT COLUMN: ROADMAP TIMELINE (7 COLS) -->
+                                <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
+                                    <!-- FASE 1 -->
+                                    <div class="bg-white dark:bg-surface-container p-5 sm:p-6 rounded-3xl border border-outline-variant/30 shadow-xs relative overflow-hidden group hover:border-primary/50 transition-all">
+                                        <div class="flex items-start justify-between gap-4 mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20" data-i18n="fase_1_badge">Fase 1 • Selesai</span>
+                                                <span class="text-[11px] font-semibold text-outline">Nov 2025</span>
+                                            </div>
                                             <span class="material-symbols-outlined text-primary text-xl">verified</span>
                                         </div>
-                                        <h3 class="font-bold text-lg text-on-surface mb-2">Validasi & PR Awards 2025</h3>
-                                        <p class="text-xs text-on-surface-variant leading-relaxed mb-4">
-                                            Riset edukasi 3R & survei lapangan bank sampah Tangsel bersama mahasiswa Ilkom UBSI, prototipe AI n8n, dan meraih Winner Creative AI Creator Sesi 6.
+                                        <h3 class="font-bold text-base sm:text-lg text-on-surface mb-1.5" data-i18n="fase_1_title">Riset Lapangan & Validasi PR Awards 2025</h3>
+                                        <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed" data-i18n="fase_1_desc">
+                                            Survei lapangan 39 titik bank sampah Tangsel bersama mahasiswa Ilkom UBSI, kurasi 139+ panduan pemilahan 3R, dan peraihan Winner Creative AI Creator Sesi 6.
                                         </p>
                                     </div>
-                                    <div class="pt-3 border-t border-outline-variant/20 text-[11px] font-semibold text-primary flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-[14px]">calendar_today</span>
-                                        <span>November 2025</span>
-                                    </div>
-                                </div>
 
-                                <!-- TAHAP 2 -->
-                                <div class="bg-white dark:bg-surface-container p-6 rounded-3xl border border-outline-variant/30 shadow-xs flex flex-col justify-between relative overflow-hidden group hover:border-primary/50 transition-all">
-                                    <div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full pointer-events-none"></div>
-                                    <div>
-                                        <div class="flex items-center justify-between mb-4">
-                                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20">Fase 2 • Aktif</span>
+                                    <!-- FASE 2 -->
+                                    <div class="bg-white dark:bg-surface-container p-5 sm:p-6 rounded-3xl border border-outline-variant/30 shadow-xs relative overflow-hidden group hover:border-primary/50 transition-all">
+                                        <div class="flex items-start justify-between gap-4 mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20" data-i18n="fase_2_badge">Fase 2 • Aktif</span>
+                                                <span class="text-[11px] font-semibold text-primary">Live di lisa.itsdvvn.my.id</span>
+                                            </div>
                                             <span class="material-symbols-outlined text-primary text-xl">rocket_launch</span>
                                         </div>
-                                        <h3 class="font-bold text-lg text-on-surface mb-2">Web App & Direktori 39 Titik</h3>
-                                        <p class="text-xs text-on-surface-variant leading-relaxed mb-4">
-                                            Rilis web PWA, mode gelap/terang, multi-bahasa (ID/EN), kurasi 139+ panduan sampah, integrasi vector database Supabase, dan migrasi performa tinggi ke Astro v5.
+                                        <h3 class="font-bold text-base sm:text-lg text-on-surface mb-1.5" data-i18n="fase_2_title">Web App PWA & Supabase Vector Engine</h3>
+                                        <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed" data-i18n="fase_2_desc">
+                                            Akses 24 jam multi-bahasa (ID/EN), semantic search berbasis Supabase pgvector, pencarian titik bank sampah terdekat, dan performa tinggi Astro v5.
                                         </p>
                                     </div>
-                                    <div class="pt-3 border-t border-outline-variant/20 text-[11px] font-semibold text-primary flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-[14px]">calendar_today</span>
-                                        <span>Live di lisa.itsdvvn.my.id</span>
-                                    </div>
-                                </div>
 
-                                <!-- TAHAP 3 -->
-                                <div class="bg-white dark:bg-surface-container p-6 rounded-3xl border-2 border-primary/30 shadow-md flex flex-col justify-between relative overflow-hidden group hover:border-primary transition-all">
-                                    <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-bl-full pointer-events-none"></div>
-                                    <div>
-                                        <div class="flex items-center justify-between mb-4">
-                                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">Fase 3 • Mendatang</span>
+                                    <!-- FASE 3 (HIGHLIGHTED: KALKULATOR CUAN & KARBON) -->
+                                    <div class="bg-white dark:bg-surface-container p-5 sm:p-6 rounded-3xl border-2 border-primary/40 shadow-md relative overflow-hidden group hover:border-primary transition-all">
+                                        <div class="absolute top-0 right-0 w-28 h-28 bg-amber-500/10 rounded-bl-full pointer-events-none"></div>
+                                        <div class="flex items-start justify-between gap-4 mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30" data-i18n="fase_3_badge">Fase 3 • Segera Hadir</span>
+                                                <span class="text-[11px] font-bold text-amber-700 dark:text-amber-400">Economic & Climate Layer</span>
+                                            </div>
                                             <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-xl">calculate</span>
                                         </div>
-                                        <h3 class="font-bold text-lg text-on-surface mb-2">Kalkulator Cuan & Jejak Karbon</h3>
-                                        <p class="text-xs text-on-surface-variant leading-relaxed mb-4">
+                                        <h3 class="font-bold text-base sm:text-lg text-on-surface mb-1.5" data-i18n="fase_3_title">Kalkulator Cuan & Jejak Karbon</h3>
+                                        <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed" data-i18n="fase_3_desc">
                                             Fitur taksiran tabungan rupiah (cuan) sampah terpilah (PET, kardus, jelantah, kaleng) dan kalkulator konversi reduksi emisi karbon (kg CO2) per setoran.
                                         </p>
                                     </div>
-                                    <div class="pt-3 border-t border-outline-variant/20 text-[11px] font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-[14px]">savings</span>
-                                        <span>Economic & Climate Layer</span>
+
+                                    <!-- FASE 4 -->
+                                    <div class="bg-white dark:bg-surface-container p-5 sm:p-6 rounded-3xl border border-outline-variant/30 shadow-xs relative overflow-hidden group hover:border-primary/50 transition-all">
+                                        <div class="flex items-start justify-between gap-4 mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20" data-i18n="fase_4_badge">Fase 4 • Rencana</span>
+                                                <span class="text-[11px] font-semibold text-outline">Proximity & Vision AI</span>
+                                            </div>
+                                            <span class="material-symbols-outlined text-primary text-xl">explore</span>
+                                        </div>
+                                        <h3 class="font-bold text-base sm:text-lg text-on-surface mb-1.5" data-i18n="fase_4_title">PostGIS Spasial & Lapor Titik Sampah</h3>
+                                        <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed" data-i18n="fase_4_desc">
+                                            Pencarian cerdas radius terdekat &lt; 5 KM berbasis PostGIS, deteksi foto multi-sampah AI Vision, serta integrasi pelaporan tumpukan sampah liar via GPS.
+                                        </p>
                                     </div>
                                 </div>
 
-                                <!-- TAHAP 4 -->
-                                <div class="bg-white dark:bg-surface-container p-6 rounded-3xl border border-outline-variant/30 shadow-xs flex flex-col justify-between relative overflow-hidden group hover:border-primary/50 transition-all">
-                                    <div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full pointer-events-none"></div>
-                                    <div>
-                                        <div class="flex items-center justify-between mb-4">
-                                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20">Fase 4 • Rencana</span>
-                                            <span class="material-symbols-outlined text-primary text-xl">explore</span>
+                                <!-- RIGHT COLUMN: CO-DEVELOPMENT CARD (5 COLS) -->
+                                <div class="lg:col-span-5 bg-gradient-to-br from-primary via-[#005a3e] to-[#004731] text-white rounded-3xl p-7 sm:p-8 shadow-xl flex flex-col justify-between relative overflow-hidden">
+                                    <div class="absolute -right-12 -top-12 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                                    <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-amber-400/10 rounded-full blur-xl pointer-events-none"></div>
+                                    
+                                    <div class="relative z-10">
+                                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-white text-xs font-bold mb-5 border border-white/20">
+                                            <span class="material-symbols-outlined text-[16px]">handshake</span>
+                                            <span data-i18n="codev_tag">Kolaborasi Co-Development</span>
                                         </div>
-                                        <h3 class="font-bold text-lg text-on-surface mb-2">PostGIS Spasial & Lapor Komunitas</h3>
-                                        <p class="text-xs text-on-surface-variant leading-relaxed mb-4">
-                                            Pencarian cerdas radius terdekat &lt; 5 KM berbasis PostGIS, deteksi foto sampah multi-file berbasis visi AI, serta fitur lapor titik sampah liar terintegrasi GPS.
+                                        <h3 class="font-display text-2xl sm:text-3xl font-black mb-3 leading-tight" data-i18n="codev_title">
+                                            Mari Berkolaborasi Mengembangkan LISA!
+                                        </h3>
+                                        <p class="text-white/85 text-xs sm:text-sm leading-relaxed mb-6 font-medium" data-i18n="codev_desc">
+                                            LISA lahir dari inisiatif riset terbuka. Kami mengundang developer, akademisi, pengurus bank sampah, dan komunitas lingkungan untuk bersama mengembangkan kecerdasan bot dan fitur aksi nyata:
                                         </p>
+
+                                        <ul class="space-y-3 mb-8 text-xs sm:text-sm text-white/90">
+                                            <li class="flex items-start gap-2.5">
+                                                <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-0.5 text-white">
+                                                    <span class="material-symbols-outlined text-[14px]">check</span>
+                                                </span>
+                                                <span data-i18n="codev_point1">Validasi & pembaruan data harga riil serta jadwal penimbangan Bank Sampah.</span>
+                                            </li>
+                                            <li class="flex items-start gap-2.5">
+                                                <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-0.5 text-white">
+                                                    <span class="material-symbols-outlined text-[14px]">check</span>
+                                                </span>
+                                                <span data-i18n="codev_point2">Riset model AI Vision klasifikasi sampah & formula kalkulator cuan.</span>
+                                            </li>
+                                            <li class="flex items-start gap-2.5">
+                                                <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-0.5 text-white">
+                                                    <span class="material-symbols-outlined text-[14px]">check</span>
+                                                </span>
+                                                <span data-i18n="codev_point3">Adopsi modul edukasi interaktif untuk kurikulum sekolah & kampus.</span>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="pt-3 border-t border-outline-variant/20 text-[11px] font-semibold text-primary flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-[14px]">share_location</span>
-                                        <span>Proximity & Vision AI</span>
+
+                                    <div class="relative z-10 pt-4 border-t border-white/20">
+                                        <a href="https://wa.me/6281234567890?text=Halo%20Mas%20Yudhi%2C%20saya%20tertarik%20berkolaborasi%20dalam%20riset%20dan%20pengembangan%20fitur%20Chatbot%20LISA." target="_blank" rel="noopener noreferrer" class="w-full py-4 px-6 bg-white hover:bg-emerald-50 text-primary font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-3 group text-sm sm:text-base">
+                                            <svg class="w-5 h-5 fill-[#25D366] shrink-0" viewBox="0 0 24 24">
+                                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.696c1.004.577 1.777.854 2.806.854 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.737-5.768-5.737zm7.969 5.766c-.001 4.397-3.578 7.974-7.971 7.974-1.393 0-2.695-.363-3.829-1.003l-4.2 1.1 1.12-4.091c-.72-1.197-1.11-2.58-1.11-4.004 0-4.397 3.578-7.974 7.971-7.974 4.393 0 7.97 3.577 7.97 7.974z"/>
+                                            </svg>
+                                            <span data-i18n="codev_cta">Hubungi Tim via WhatsApp</span>
+                                            <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                        </a>
+                                        <p class="text-[11px] text-white/70 text-center mt-3 font-medium" data-i18n="codev_footer_note">
+                                            Terbuka untuk developer, akademisi, pengurus bank sampah, dan komunitas.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -552,6 +597,8 @@ import '../styles/global.css';
                                 </a>
                             </div>
                         </div>
+                    </section>
+
                     <!-- FAQ SECTION -->
                     <section class="py-16 px-6 bg-surface-container-low/50 rounded-3xl mx-4 lg:mx-12 mb-16 reveal" id="faq">
                         <div class="max-w-3xl mx-auto">
